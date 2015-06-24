@@ -93,15 +93,12 @@ INSTALLED_APPS = (
     'widget_tweaks',
     'easy_pjax',
     'django_countries',
-    'drealtime',
     'endless_pagination',
-    
+
     #my apps
     'usr',
     'ajax',
     'books',
-    'user_messages',
-    'realtime_test',
 )
 
 
@@ -118,7 +115,6 @@ HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
 
 MIDDLEWARE_CLASSES = (
-    'drealtime.middleware.iShoutCookieMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
