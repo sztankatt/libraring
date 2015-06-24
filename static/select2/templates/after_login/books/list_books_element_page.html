@@ -1,0 +1,40 @@
+{% load thumbnail %}
+{% load highlight %}
+
+<div class="book-container book-grid-sizer">
+    <div class="thumbnail">
+    <a href="{{book.get_absolute_url}}">
+    {%if book.image|is_portrait%}
+        {% thumbnail book.image "400" crop="center" as im%}
+            <img src="{{im.url}}" width="{{im.width}}" class="img-responsive" />
+        {% endthumbnail %}
+    {% else%}
+        {% thumbnail book.image "400" crop="center" as im%}
+            <img src="{{im.url}}" width="{{im.width}}" class="img-responsive" />
+        {% endthumbnail %}
+    {%endif%}
+    </a>
+      <div class="caption">
+        <a href="{{book.get_absolute_url}}"><h3>{{book.title}}</h3></a>
+        <p>Author(s):
+            {% for author in book.author.all %}
+                {% if forloop.last%}
+                    {% if query %}
+                        {% highlight author.name with query %} 
+                    {% else %}
+                        {{ author.name}}
+                    {% endif%}
+                {%else%}
+                    {%if query%}
+                        {% highlight author.name with query %}
+                    {% else %}
+                        {{author.name}},
+                    {% endif %}
+                {%endif%}
+            {% endfor%}
+        </p>
+        <h4>Price: {{book.price}}&pound;</h4>
+        <p>Location: {{book.get_location}}</p>
+      </div>
+    </div>
+</div>

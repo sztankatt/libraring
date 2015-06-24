@@ -1,0 +1,35 @@
+{% extends "before_login/registration/register_wizard_base.html" %}
+{% load widget_tweaks %}
+{% block registration_content %}
+  <form id="registration_user_form" action="" method="post" autocomplete="off" class="form-horizontal" role="form">
+	{% csrf_token %}
+	{{wizard.management_form}}
+	{% with form=wizard.form %}
+		<p>Please enter the wanted username and password</p>
+		
+	    {% for field in form%}
+		  <div class="form-group {%if field.errors %}has-feedback has-error{%endif%}">
+			<label for="{{field.id_for_label}}" class="col-sm-3 control-label">
+			      {{field.label}}
+			</label>
+			<div class="col-md-6">
+			      {% render_field field placeholder=field.label class='form-control' autocomplete='off'%}
+			      
+			      {% comment %}{%if field.errors%}
+				    <span class="glyphicon glyphicon-remove form-control-feedback"></span>
+				    {% for error in field.errors%}
+					  <span class="help-block">{{error}}</span>
+				    {%endfor%}
+			      {%endif%}{%endcomment%}
+			</div>
+		  </div>
+	    {% endfor %}
+	    <div class="form-group">
+		  <div class="col-md-offset-3 col-md-6">
+			<button id="id_submit" type="submit" class="btn btn-primary">To the next step</button>
+		  </div>
+	    </div>
+		
+	{% endwith %}
+  </form>
+{% endblock %}

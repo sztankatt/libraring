@@ -1,0 +1,14 @@
+{% extends 'after_login/framework/base.html' %}
+
+{% block content %}
+<h3>Accepted Offer!</h3>
+{% with offer=transaction.offer %}
+<p>You have accepted {{offer.made_by}}'s offer of {{offer.offered_price}}&pound;
+for {{offer.book}}.
+<h3>Next step</h3>
+<p>Soon, you will be contacted by the buyer via your email address: <b>{{ offer.book.user.email}}</b>, where you can talk through the payment and transport details</p>
+<p>In case you are not contacted within the next 48 hours, your book will be marked as 'selling' again, and you will have accept another offer.</p>
+<p>Should you have any further questions please visit our info page at ...</p>
+<p>the Libraring team</p>
+{% endwith %}
+{% endblock %}

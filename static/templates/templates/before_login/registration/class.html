@@ -1,0 +1,25 @@
+{% extends "before_login/registration/register_wizard_base.html" %}
+{%block registration_content %}
+<h2>Plese fill in the course you are currently pursuing</h2>
+<form action="" method="post">
+{% csrf_token %}
+{{wizard.management_form}}
+{% with form=wizard.form %}	
+	
+	{% for field in form %}
+	<div class="register-form">
+		{{ field.errors }}
+		{{ field.label }}
+		{{ field }}<div class="register-form-helper-field"></div>
+	</div>
+	
+	{% endfor %}
+	
+	<div class="register_form">
+		<input type="submit" value="Create the account">
+	</div>
+
+{% endwith %}
+</form>
+
+{% endblock %}

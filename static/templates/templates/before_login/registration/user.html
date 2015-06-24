@@ -1,0 +1,29 @@
+{% extends "before_login/registration/register_wizard_base.html" %}
+
+{% block registration_content %}
+  <form action="" method="post" autocomplete="off">
+	{% csrf_token %}
+	{{wizard.management_form}}
+	{% with form=wizard.form %}
+		<h2>Please enter a username and a password</h2>
+		<div class="registration_form">
+
+			{{ form.username.errors}}
+			{{ form.username }}{{form.username.help_text}}
+		</div>		
+		<div class="registration_form">
+			{{ form.password1.errors}}
+			{{ form.password1 }}
+		</div>		
+		<div class="registration_form">
+			{{ form.password2.errors }}
+			{{ form.password2 }}{{ form.password2.help_text}}
+		</div>
+		<div class="registration_form">
+	    	<label for="id_submit"></label>
+	    	<input id="id_submit" type="submit" value="To the next step">
+		</div>
+		
+	{% endwith %}
+  </form>
+{% endblock %}

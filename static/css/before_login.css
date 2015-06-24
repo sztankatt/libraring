@@ -1,0 +1,37 @@
+html{
+	position: relative;
+	min-height: 100%;
+
+}
+
+body{
+	margin-bottom: 40px;
+}
+
+#footer{
+    position:absolute;
+    bottom: 0;
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    background-color: #26747F;
+}
+
+
+#footer nav a{
+	color: white;
+}
+
+#footer nav ul{
+	list-style: none;
+}
+
+#footer nav ul li{
+	float: left;
+	padding: 0px 10px;
+}
+
+#footer .footer-container{
+	width: 768px;
+	margin: auto;
+}

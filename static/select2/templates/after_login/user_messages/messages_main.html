@@ -1,0 +1,61 @@
+{% extends 'after_login/framework/base.html'%}
+
+{% block content%}
+    <h2>Messages</h2>
+    <div class="row">
+        <div class="col-sm-3">
+            <ul class="nav nav-tabs" id="messages_list_nav">
+                <li class="active"><a href="#message_selling" role="tab" data-toggle="tab">Selling</a></li>
+                <li><a href="#message_buying" role="tab" data-toggle="tab">Buying</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="message-show-all tab-pane active" id="message_selling">
+                    <div class="message-show-all-body">
+                    {% if selling_c_list%}
+                        {% for conversation in selling_c_list %}
+                            <div id="link_to_conversation_{{conversation.pk}}">
+                                <a href="/messages/{{conversation.book_to_sell.pk}}/{{conversation.buying_user.pk}}/"
+                                   {% if conversation.new_selling_messages%}class="new-message"{%endif%}>
+                                    {{conversation.book_to_sell.title}} in {{conversation.book_to_sell.get_location}}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        Selling conversations empty
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="message-show-all tab-pane" id="message_buying">
+                    <div class="message-show-all-body">
+                    {% if buying_c_list%}
+                        {% for conversation in buying_c_list %}
+                            <div id="link_to_conversation_{{conversation.pk}}">
+                                <a href="/messages/{{conversation.book_to_sell.pk}}/{{conversation.selling_user.pk}}/" 
+                                {% if conversation.new_buying_messages%}class="new-message"{%endif%}>
+                                    {{conversation.book_to_sell.title}} in {{conversation.book_to_sell.get_location}}
+                                </a>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        Buying conversations empty
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6" id="pjax-container">
+            {% block show_message %}{% endblock %}
+        </div>
+    </div>    
+{% endblock %}
+
+{% load staticfiles %}
+
+{% block js %}
+{{block.super}}
+{% load drealtimetags %}
+
+    {% ishout_js %}
+<script type="text/javascript" src="{% static 'js/jquery.pjax.js'%}"></script>
+<script type="text/javascript" src="{% static 'js/user_messages/messages.js'%}"></script>
+{% endblock %}

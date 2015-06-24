@@ -1,0 +1,27 @@
+{% extends "before_login/framework/base.html" %}
+
+{% block content%}
+    <div class="row main-row">
+        <div class="col-md-9 col-md-offset-2">
+            {% if message%}
+            <div id="messages" class="messages-field alert alert-{{message.type}}">
+                <div class="messages-field-header">
+                    {{message.header}}
+                </div>
+                <div class="messages-field-body">
+                 <p>Dear {{user.first_name}}!</p>
+                    <p>{{message.message}}</p>
+                </div>
+                <div class="messages-footer">
+                    the LIBRARING team
+                </div>
+            </div>
+        {%endif%}
+        {% if registration_complete%}
+            <a href="{% url 'usr:login'%}">To the login page</a>
+        {%endif%}
+        </div>
+    </div>
+    
+
+{% endblock%}

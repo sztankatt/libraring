@@ -1,0 +1,35 @@
+{% if sections %}
+
+	{% for section in sections %}
+		<div class="book-gutter-sizer"></div>
+		{% if section.section_name %}
+		<div class="book-container book-container-header">
+			<h3><span class="reverse">{{section.section_name}}</span></h3>
+		</div>
+		{% endif %}
+		{% for book in section.book_set %}
+			{% include 'after_login/books/list_books_element_page.html' with book=book %}
+		{% endfor %}
+		{% if section.load_more %}
+			<div class="book-container book-container-footer">
+			<a href="#load_all_{{section.section_id}}" class="load-more-books" data-section="{{section.section_id}}">
+				<h4>load all</h4>
+			</a>
+			</div>
+		{% endif %}
+	{% empty %}
+		This section is empty
+	{% endfor %}
+{% else %}
+	{% if books %}
+	    {% for book in books %}
+
+	    	{% include  'after_login/books/list_books_element_page.html' with book=book%}
+
+	    {% empty %}
+	    	No books
+	    {%endfor%}
+	{%else%}
+	    No books
+	{%endif%}
+{% endif %}

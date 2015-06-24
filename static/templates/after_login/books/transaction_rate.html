@@ -1,0 +1,62 @@
+{% extends 'after_login/framework/base.html'%}
+
+{% block title %} Rating the Transaction {% endblock%}
+
+{% load thumbnail %}
+{% block content%}
+<div class="rate-row">
+	<h3>Congratulations!</h3>
+	<h4>You have finalised the purchase of <span class="reverse">{{tr.transaction.book}}</span>!</h4>
+</div>
+<div class="row rate-row">
+	<div class="col-xs-2">
+		{% thumbnail tr.transaction.book.image "x400" as im %}
+            <img src="{{im.url}}" class="img-responsive" />
+        {% endthumbnail %}
+	</div>
+	<div class="col-xs-6 alert alert-success">
+		<p>{% with book = tr.transaction.book %}
+			Title: {{book.title}}; 
+			Author(s): {% for author in book.author.all%}
+                                {% if forloop.last%}
+                                    <a href="/books/author/{{author.id}}/">{{author.name}}</a>
+                                {%else%}
+                                    <a href="/books/author/{{author.id}}/">{{author.name}}</a>,
+                                {%endif%}
+                            {%endfor%};
+           	Edition: {{book.edition}};
+           	<b>Accepted Price:{{book.transaction.accepted_price}}<i class="fa fa-gbp"></i></b>
+           	Previous Location: {{book.get_location}};
+           	</p>
+           	<p>Thank You for using Libraring!</p>
+		{% endwith %}
+	</div>
+</div>
+<div class="rate-row">
+{% if selling and tr.buyer_rating  or not selling and tr.seller_rating %}
+<h4>You have already rated this transaction!</h4></div>
+{% else %}
+	<h4>Please rate {% if selling %}{{tr.buyer}}{%else%}{{tr.seller}}{%endif%} for this transaction</h4>
+	<div class="rate-form-container">
+	<form method="post" action="/ajax/rate/transaction/" id="rate_transaction" class="form-inline">
+		{% csrf_token %}
+		<input type="hidden" name="tr_id" value="{{tr.pk}}" />
+		<div class="form-group">
+			<input class="rating" data-max="5" data-min="1" id="star_rating" name="rating" type="number" data-inactive-icon="fa-star-o" data-active-icon="fa-star" data-icon-lib="fa" value="3"/>
+		</div>
+		<div class="form-group">
+			<button type="submit" class="btn btn-secondary btn-sm">Rate!</button>
+		</div>
+	</form>
+	</div>
+</div>
+
+{%endif%}
+{% endblock %}
+
+{%load staticfiles%}
+{% block js %}
+	{{block.super}}
+	<script src="{% static 'js/bootstrap-rating-input.min.js' %}" type="text/javascript"></script>
+	<script src="{% static 'js/user_messages/transaction_rate.js' %}" type="text/javascript"></script>
+{% endblock %}

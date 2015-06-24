@@ -1,0 +1,178 @@
+{% extends 'after_login/framework/base.html'%}
+
+{% block title %} Page of {{book.title}} {% endblock%}
+
+{% block content%}
+{% load staticfiles%}
+{% load thumbnail %}
+{% if book%}
+    <div id="book_container" class="row">
+        <div class="col-md-6">
+            {% thumbnail book.image "x400" as im %}
+                <img src="{{im.url}}" class="img-responsive" />
+            {% endthumbnail %}  
+        </div>
+        <div class="col-md-6">
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Title:</div>
+                    <div class="col-xs-9">{{book.title}}</div>
+                </div>
+            </div>
+            <div class="book-field">
+                 <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Author(s):</div>
+                    <div class="col-xs-9">
+                        {% for author in book.author.all%}
+                            {% if forloop.last%}
+                                <a href="/books/author/{{author.id}}/">{{author.name}}</a>
+                            {%else%}
+                                <a href="/books/author/{{author.id}}/">{{author.name}}</a>,
+                            {%endif%}
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Price:</div>
+                    <div class="col-xs-9">{{book.price}} &pound;</div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Genre(s):</div>
+                    <div class="col-xs-9">
+                    {% for genre in book.genre.all%}
+                        <a href="/books/genre/{{genre.name}}/">{{genre.name}} </a>
+                    {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Edition No.:</div>
+                    <div class="col-xs-9">
+                    {{book.edition}}
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Publisher</div>
+                    <div class="col-xs-9">
+                    {% if book.publisher %}
+                        <a href="/books/publisher/{{book.publisher.id}}/">{{book.publisher.name}}</a>
+                    {%else %}
+                        Not specified
+                    {%endif%}
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Publication city</div>
+                    <div class="col-xs-9">
+                    {% if book.publication_city %}
+                        {{book.publication_city}}
+                    {%else %}
+                        Not specified
+                    {%endif%}
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Publication country</div>
+                    <div class="col-xs-9">
+                    {% if book.publication_country %}
+                        {{book.publication_country}}
+                    {%else %}
+                        Not specified
+                    {%endif%}
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Publication year</div>
+                    <div class="col-xs-9">
+                    {% if book.publication_year %}
+                    {{book.publication_year}}
+                    {%else %}
+                    Not specified
+                    {%endif%}
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">ISBN:</div>
+                    <div class="col-xs-9">
+                    {% if book.isbn%}
+                        {{book.isbn}}
+                    {% else %}
+                        Not specified
+                    {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">User:</div>
+                    {% if user.id == book.user.id%}
+                        <div class="col-xs-9">This book is yours</div>
+                    {% else %}
+                        <div class="col-xs-9"><a href="{% url 'usr:profile' book.user.id %}">{{book.user.username}}</a></div>    
+                    {%endif%}
+                    
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="book-field-header row">
+                    <div class="book-field-header-title col-xs-3">Location:</div>
+                    <div class="col-xs-9">{{book.get_location}}</div>
+                </div>
+            </div>
+            {% if user.id != book.user.id %}
+            <div class="book-field">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <button class="watchlist btn btn-default bnt-lg btn-block" value="{{book.id}}">
+                            <span class="glyphicon glyphicon-plus"></span>
+                            <span class="watchlist-text">Add to watchlist</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="book-field">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <a href="/messages/{{book.id}}/{{user.id}}/">
+                        <button class=" btn btn-default bnt-lg btn-block" value="{{book.id}}">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                            <span class="watchlist-text">Message the owner</span>
+                        </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{%else%}
+wrong page    
+{% endif%}
+
+{% endblock%}
+{% block js %}
+{% load staticfiles %}
+
+{{block.super}}
+{% if not user.id == book.user.id%}
+    <script type="text/javascript" src="{% static 'js/books/watchlist.js' %}"></script>
+{%endif%}
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "before_login/framework/base.html"%}
+{%block title%}Libraring{%endblock%}
+{%block content%}
+
+<style>
+    body{
+        background: url('/static/img/index_background.jpeg') 50% 0px / cover no-repeat fixed;
+        min-height:100%;
+    }
+    
+</style>
+
+    <!-- INDEX DIV START -->
+    <div id="index-page" class="row main-row">
+        <div class="col-md-4 col-md-offset-2">
+            <div class="index-page-content">
+            <h3>Login</h3>
+            <div class="index-page-content-body">
+                <form class="form-horizontal" action="/usr/login/" method="post">
+                    {% csrf_token%}
+                    <div class="form-group">
+                        <label for="id_username" class="col-sm-3 control-label">Username:</label>
+                        <div class="col-sm-8 col-sm-offset-1">
+                            <input type="text" id="id_username" class="form-control" placeholder="username" name="username"/>                                
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password" class="col-sm-3 control-label">Password:</label>
+                        <div class="col-sm-8 col-sm-offset-1">
+                            <input type="password" id="id_password" class="form-control" placeholder="password" name="password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-8">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>    
+                    </div>
+                </form>
+                </div>
+        </div>
+            <div class="index-page-content">
+                <h3>About</h3>
+                <div class="index-page-content-body">
+                   <p>Libraing is a free and online market where users can buy and resell their textbooks and/or any course related material. The website is designed to provide a university specific, dynamic and online service for students to swiftly trade their unwanted books with other users regardless of university or course as it happens on a joint platform.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-md-offset-1">
+            
+            <div class="index-page-content">
+                <h3>Like us on facebook!</h3>
+                <div class="index-page-content-body">
+                    <div class="fb-like-box" data-href="https://www.facebook.com/Libraring" data-height="250" data-colorscheme="light" data-show-faces="true" data-header="false" data-stream="false" data-show-border="false"></div>   
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- INDEX DIV END -->
+
+{%endblock%}

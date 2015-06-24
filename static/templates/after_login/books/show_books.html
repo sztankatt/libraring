@@ -1,0 +1,39 @@
+{% extends "after_login/framework/base.html"%}
+{% load widget_tweaks staticfiles endless%}
+
+{%block title%}{%endblock%}
+
+
+{% block content%}
+{% paginate books %}
+{% get_pages %}
+
+	{% if type == 'genre' %}
+		<h2>Books by Genre. All books in {{genre.name}}</h2>
+	{% elif type == 'author' %}
+		<h2>Books by Author. All books by {{author.name}}</h2>
+	{% elif type == 'publisher' %}
+		<h2>Books by Publisher. All books published by {{publisher.name}}</h2>
+	{% endif %}
+	<h3><span class="reverse">Page {% show_current_number %} of {{pages|length}}</span></h3>
+	<div class="genre-books-container">
+	<div class="book-gutter-sizer"></div>
+	{% for book in books %}
+		{% include  'after_login/books/list_books_element_page.html' with book=book%}
+	{% endfor %}
+	</div>
+
+{% show_pages %}
+
+
+
+{% endblock %}
+
+{% block js %}
+{{block.super}}
+
+<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/books/genre.js' %}"></script>
+
+{% endblock%}

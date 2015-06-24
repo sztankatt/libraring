@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    
+    {% load staticfiles django_select2_tags %}
+    <head>
+        <title>{%block title%}{%endblock%}</title>   
+        
+            <!-- BOOTSTRAP CSS -->
+            <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+            <!-- FONTAWESOME CSS -->
+            <link href="{% static 'fontawesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css" />
+            <!-- TIMECIRCLES CSS -->
+            <link href="{%static 'css/TimeCircles.css'%}" rel="stylesheet" type="text/css" />
+            <!-- TOASTR CSS -->
+            <link href="{%static 'css/toastr.min.css'%}" rel="stylesheet" type="text/css"/>
+            <!-- bootstrap validator -->
+            <link href="{%static 'css/bootstrapValidator.min.css'%}" rel="stylesheet" type="text/css" />
+            <link href="{%static 'css/select2-bootstrap.css'%}" rel="stylesheet" type="text/css" />
+            {% import_django_select2_css %}
+
+            <!-- FONTS -->
+            <link href='http://fonts.googleapis.com/css?family=ABeeZee|Raleway' rel='stylesheet' type='text/css'>
+            <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}" />
+            <!-- META TAGS -->
+            <meta name="author" content="Tamás Sztanka-Tóth, Gergely Reményi">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                
+            <!-- FAVICON -->
+            <link rel="shortcut icon" href="{%static 'img/logo_favicon.ico' %}" />
+     
+       <link href="{% static 'css/before_login.css' %}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Facebook -->
+            <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=202997949770698&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+        <!-- end Facebook -->
+        <!-- GOOGLE ANALYTICS COMES HERE -->
+
+        <!-- CONTENT START -->
+        <section id="container">
+            <!-- HEADER START -->
+            <nav class="header navbar navbar-fixed-top" role="navigation">
+                <!-- NAVBAR HEADER START -->
+                <div class="navbar-header">
+                    <!-- SMALL RESOLUTION MENU BUTTON START -->
+                    {%comment%}<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>{%endcomment%}
+                    <!-- SMALL RESOLUTION MENU BUTTON END -->
+                    <!-- BRAND START -->
+                    <a class="navbar-brand" href="http://www.libraring.co.uk"><img src="{%static 'img/logo.png'%}"/>Libraring <span class="beta">(beta)</span></a>
+                    <!-- BRAND END -->
+                </div>
+                <!-- NAVBAR HEADER END -->
+                <!-- HEADER MENU -->
+                
+               {% include 'before_login/framework/menu.html'%}
+                <!-- HEADER MENU END -->
+            </nav>
+            <!-- HEADER END -->
+
+            <!-- PAGE CONTENT START -->
+            <div id="content">
+                <section id="main-content">
+                    <section class="wrapper">
+                         {%block content%}{%endblock%}
+                    </section>
+                </section>
+            </div>
+            <!-- PAGE CONTENT END -->
+            <div id="#footer">
+
+            </div>
+            <!-- FOOTER START -->
+            <div id="footer">
+                
+                <div class="footer-container">
+                    <nav>
+                        <ul>
+                            <li><a href="{% url 'manager:terms_conditions' %}">Terms and Conditions</a></li>
+                            <li><a href="{% url 'manager:privacy' %}">Privacy Policy</a></li>
+                            <li>More info: <a href="mailto:info@libraring.co.uk">info@libraring.co.uk</a></li>
+                            <li>&copy; LIBRARING, 2014</li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- FOOTER END -->
+        </section>
+        <!-- CONTENT END -->
+        
+            <!-- JQUERY 2.0.2 -->
+            <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+        {% block js %}
+
+            <!-- BOOTSTRAP JS -->
+            <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+            <script src="{% static 'js/jquery.cookie.js' %}"></script>
+
+            <!-- BASIC JS -->
+        {% endblock %}
+        
+       <div class="modal fade" id="error">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="error_title"></h4>
+                    </div>
+                    <div class="modal-body"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="loading-modal"><!-- Place at bottom of page --></div>
+       
+    </body>
+</html>

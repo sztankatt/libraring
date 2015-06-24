@@ -1,0 +1,42 @@
+{% extends "before_login/registration/register_wizard_base.html" %}
+{%block registration_content %}
+{% load widget_tweaks %}
+<form id="registration_class_form" action="" method="post" class="form-horizontal" role="form">
+{% csrf_token %}
+{{wizard.management_form}}
+{% with form=wizard.form %}	
+	<p>Plese fill in the course you are currently pursuing</p>
+	{% for field in form%}
+		<div class="form-group {%if field.errors %}has-feedback has-error{%endif%}">
+			{% if not field.html_name == 'class-terms_conditions' %}
+			<label for="{{field.id_for_label}}" class="col-sm-3 control-label">
+			      {{field.label}}
+			</label>
+			{% endif %}
+			
+				{% if field.html_name == 'class-email' %}
+					<div class="col-md-6">
+					{% render_field field placeholder=field.label class='form-control' autocomplete='off'%}
+					<p class="help-block email-ending-help"></p>
+				{% elif field.html_name == 'class-terms_conditions' %}
+				<div class="col-md-6 col-sm-offset-3">
+					{% render_field field %} I accept the <a href="{% url 'manager:terms_conditions' %}">terms and conditions</a> and the <a href="{% url 'manager:privacy' %}">privacy policy</a>
+				{% else %}
+				<div class="col-md-6">
+					{% render_field field placeholder=field.label class='form-control' autocomplete='off'%}
+				{% endif %}
+			</div>
+		</div>
+		  
+	    {% endfor %}
+	    
+	<div class="form-group">
+		<div class="col-md-offset-3 col-md-6">
+		      <button id="id_submit" type="submit" class="btn btn-primary">Complete the registration</button>
+		</div>
+	  </div>
+
+{% endwith %}
+</form>
+
+{% endblock %}

@@ -1,0 +1,78 @@
+import datetime
+from django.utils import timezone
+from django.db import models
+from django.contrib.auth.models import User
+
+#location model for Institution
+class Location(models.Model):
+	LOCATION_COUNTRY_CHOICES = (
+		('UK', 'United Kingdom'),
+		('HU', 'Hungary'),
+	)
+
+	country 			= models.CharField(max_length=2, choices=LOCATION_COUNTRY_CHOICES)
+	county				= models.CharField(max_length=50, blank=True)
+	city				= models.CharField(max_length=50)
+	
+	def __unicode__(self):
+		return '%s, %s, %s' % (self.country, self.county, self.city)
+
+#Institution for Person, Classes
+class Institution(models.Model):
+	name 				= models.CharField(max_length=200, unique=True)
+	location 			= models.ForeignKey(Location)
+	
+	def __unicode__(self):
+		return self.name
+
+class Course(models.Model):
+	name 	= models.CharField(max_length=200, unique=True)
+
+	def __unicode__(self):
+		return self.name
+
+class Class(models.Model):
+	institution 		= models.ForeignKey(Institution)
+	course 				= models.ForeignKey(Course)
+	start_year 			= models.CharField('start year', max_length=4)
+	end_year			= models.CharField('end year', max_length=4)
+
+	def __unicode__(self):
+		return '%s-%s, %s, %s' % (self.start_year, self.end_year.year, self.course.name, self.institution.name)
+
+
+#the model of Person
+class Person(models.Model):
+	STUDENT = 'S'
+	TEACHER = 'T'
+	LECTURER = 'L'
+	
+	PERSON_TYPE_CHOICES = (
+		(STUDENT, 'Student'),
+		(TEACHER, 'Teacher'),
+		(LECTURER, 'University Lecturer'),
+	)
+
+	PERSON_TITLE_CHOICES = (
+		('MR', 'Mr.'),
+		('MRS', 'Mrs.'),
+		('MS', 'Ms.'),
+		('MSS', 'Miss.'),
+		('DR', 'Dr.'),
+		('PRF', 'Prof.'),
+	)     
+
+	user        		= models.OneToOneField(User, primary_key=True)
+	title				= models.CharField(max_length=3, choices=PERSON_TITLE_CHOICES)
+	date_born   		= models.DateField('date born', blank=True, null=True)
+	about       		= models.TextField(blank=True)
+	education   		= models.ManyToManyField(Class, blank=True, related_name='education')
+	person_type 		= models.CharField(max_length=1, choices=PERSON_TYPE_CHOICES, default=STUDENT)
+	current_education	= models.OneToOneField(Class, blank=True, null=True)
+	institution			= models.ForeignKey(Institution, blank=True, null=True)
+	current_education	= models.OneToOneField(Class, blank=True, null=True)
+	institution			= models.ForeignKey(Institution, blank=True, null=True)
+	
+	def __unicode__(self):
+		return "%s %s" % (self.user.first_name, self.user.last_name)
+

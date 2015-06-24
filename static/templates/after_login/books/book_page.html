@@ -1,0 +1,338 @@
+{% extends 'after_login/framework/base.html'%}
+
+{% block title %} Page of {{book.title}} {% endblock%}
+
+{% block content%}
+{% load staticfiles widget_tweaks %}
+{% load thumbnail %}
+{% if book%}
+    <div class="book-status-bar">
+    {% if book.user.id == user.id %}
+        {% if book.status == 'offered' %}
+            <div class="alert alert-info">You have at least one offer for this book. If you are satisfied with any of them, go ahead and accept the one you are satisfied with!</div>
+        {% elif book.status == 'selling' %}
+            <div class="alert alert-success">
+                <h3>Well done! You have accepted {{ book.sold_to }}'s offer of {{ book.is_sold.offered_price }} &pound;.</h3>
+                <p><b>Next step:</b> {{ book.sold_to }} will contact you shortly via your email address, {{ book.user.email }}, and you will be able to discuss the further details.</p>
+                <p>Once you are happy with this transaction, you can finalise it by clicking the 'Finalise' button below. Once both of you have clicked 'Finalised'
+                the transaction will be closed.</p>
+                <p>
+                {% if book.is_sold.transaction.finalised_by_seller %}
+                    <b>You have already finalised this transaction. Once {{ book.sold_to }} also finalises it, the transaction will be completed.</b>
+                {% else %}
+                    <form id="finalised_form" method="post" action="/books/finalise/transaction/">
+                        {% csrf_token %}
+                        <input type="hidden" name="seller" value="true" />
+                        <input type="hidden" name="transaction" value="{{ book.is_sold.transaction.id }}" />
+                        <button class="btn btn-primary" type="submit">Finalise</button>
+                    </form>
+                {% endif %}
+                </p>
+            </div>
+        {% elif book.status == 'finalised' %}
+            <div class="alert alert-info">
+                <h3>Transaction closed, you have successfully sold this book! Please rate the transaction below.</h3>
+                <div class="rate-row">
+                {% if book.is_sold.transaction.seller_rating %}
+                <h4>You have already rated this transaction!</h4></div>
+                {% else %}
+                    <h4>Please rate {{ book.is_sold.made_by }} for this transaction</h4>
+                    <div class="rate-form-container">
+                    <form method="post" action="/books/rate/transaction/" id="rate_transaction" class="form-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="tr_id" value="{{book.is_sold.transaction.rating.pk}}" />
+                        <div class="form-group">
+                            <input class="rating" data-max="5" data-min="1" id="star_rating" name="rating" type="number" data-inactive-icon="fa-star-o" data-active-icon="fa-star" data-icon-lib="fa" value="3"/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary btn-sm">Rate!</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+
+            {%endif%}
+            </div>
+        {% endif %}
+    {% elif book.sold_to.id == user.id %}
+        {% if book.status == 'offered' %}
+            <div class="alert alert-info">You have made an offer for this book already. You can always make further offers.</div>
+        {% elif book.status == 'selling' %}
+            <div class="alert alert-success">
+                <h3>Well done! Your offer of  {{ book.is_sold.offered_price }} &pound; has been accepted!</h3>
+                <p><b>Next step:</b> An email has been sent to you, please reply to that email to contact {{ book.user }} in order to discuss further details</p>
+                <p>Once you are happy with this transaction, you can finalise it by clicking the 'Finalise' button below. Once both of you have clicked 'Finalised'
+                the transaction will be closed.</p>
+                <p>
+                {% if book.is_sold.transaction.finalised_by_buyer %}
+                    <b>You have already finalised this transaction. Once {{ book.sold_to }} also finalises it, the transaction will be completed.</b>
+                {% else %}
+                    <form id="finalised_form" method="post" action="/books/finalise/transaction/">
+                        {% csrf_token %}
+                        <input type="hidden" name="seller" value="false" />
+                        <input type="hidden" name="transaction" value="{{ book.is_sold.transaction.id }}" />
+                        <button class="btn btn-primary" type="submit">Finalise</button>
+                    </form>
+                {% endif %}
+                </p>
+            </div>
+        {% elif book.status == 'finalised' %}
+            <div class="alert alert-info">
+                <h3>Transaction closed, you have successfully acquired this book! Please rate the transaction below.</h3>
+                <p>
+                    <b>Summary:</b> TODO here
+
+</p><br />
+                <div>
+                {% if book.is_sold.transaction.rating.buyer_rating %}
+                <h4>You have already rated this transaction!</h4></div>
+                {% else %}
+                    <h4>Please rate {{ book.is_sold.made_by }} for this transaction</h4>
+                    <div class="rate-form-container">
+                    <form method="post" action="/books/rate/transaction/" id="rate_transaction" class="form-inline">
+                        {% csrf_token %}
+                        <input type="hidden" name="tr_id" value="{{book.is_sold.transaction.rating.pk}}" />
+                        <div class="form-group">
+                            <input class="rating" data-max="5" data-min="1" id="star_rating" name="rating" type="number" data-inactive-icon="fa-star-o" data-active-icon="fa-star" data-icon-lib="fa" value="3"/>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-secondary btn-sm">Rate!</button>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+
+            {%endif%}
+            </div>
+        {% endif %}
+    {% else %}
+        {% if book.status == 'selling' or book.status == 'finalised' %}
+             <div class="alert alert-danger"><b>Aw snap!</b> This book has already been sold, you can't make an offer unfortunately. <i class="fa fa-frown-o"></i></div>
+        {% endif %}
+    {% endif %}
+
+    </div>
+    <div id="book_container" class="row">
+        <div class="col-md-4">
+            
+            <div class="book-image">
+                {% thumbnail book.image "x400" as im %}
+                    <img src="{{im.url}}" class="img-responsive" />
+                {% endthumbnail %}
+            </div>
+            {% if user.id != book.user.id %}
+            <button class="watchlist btn btn-default btn-block" value="{{book.id}}">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="watchlist-text">Add to watchlist</span>
+            </button>
+            {% endif %}
+
+        </div>
+        <div class="col-md-4 book-overview">
+            <div class="book-overview-initial">
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Title:</div>
+                        <div class="col-xs-6">{{book.title}}</div>
+                    </div>
+                </div>
+                <div class="book-field">
+                     <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Author(s):</div>
+                        <div class="col-xs-6">
+                            {% for author in book.author.all%}
+                                {% if forloop.last%}
+                                    <a href="/books/author/{{author.id}}/">{{author.name}}</a>
+                                {%else%}
+                                    <a href="/books/author/{{author.id}}/">{{author.name}}</a>,
+                                {%endif%}
+                            {%endfor%}
+                        </div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Price:</div>
+                        <div class="col-xs-6">{{book.price}} <i class="fa fa-gbp"></i></div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Genre(s):</div>
+                        <div class="col-xs-6">
+                        {% for genre in book.genre.all%}
+                            <a href="/books/genre/{{genre.name}}/">{{genre.name}} </a>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Edition No.:</div>
+                        <div class="col-xs-6">
+                        {{book.edition}}
+                        </div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Publisher</div>
+                        <div class="col-xs-6">
+                        {% if book.publisher %}
+                            <a href="/books/publisher/{{book.publisher.id}}/">{{book.publisher.name}}</a>
+                        {%else %}
+                            Not specified
+                        {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Publication city</div>
+                        <div class="col-xs-6">
+                        {% if book.publication_city %}
+                            {{book.publication_city}}
+                        {%else %}
+                            Not specified
+                        {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Publication country</div>
+                        <div class="col-xs-6">
+                        {% if book.publication_country %}
+                            {{book.publication_country}}
+                        {%else %}
+                            Not specified
+                        {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Publication year</div>
+                        <div class="col-xs-6">
+                        {% if book.publication_year %}
+                        {{book.publication_year}}
+                        {%else %}
+                        Not specified
+                        {%endif%}
+                        </div>
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">ISBN:</div>
+                        <div class="col-xs-6">
+                        {% if book.isbn%}
+                            {{book.isbn}}
+                        {% else %}
+                            Not specified
+                        {% endif %}
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">User:</div>
+                        {% if user.id == book.user.id%}
+                            <div class="col-xs-6">This book is yours</div>
+                        {% else %}
+                            <div class="col-xs-6"><a href="{% url 'usr:profile' book.user.id %}">{{book.user.username}}</a></div>    
+                        {%endif%}
+                        
+                    </div>
+                </div>
+                <div class="book-field">
+                    <div class="book-field-header row">
+                        <div class="book-field-header-title col-xs-6">Location:</div>
+                        <div class="col-xs-6">{{book.get_location}}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="book-overview-show-all">
+                <button class="btn btn-secondary btn-block">view all</button>
+            </div>
+            
+        </div>
+        <div class="col-md-4 book-offers">
+        {% if not book.is_sold %}    
+            <div class="book-offer-form book-field">
+            {% if offer_form %}
+                <form class="form-horizontal" role="form" action="/books/make/an/offer/"
+                    method="post" id="book_offer_form">{% csrf_token %}
+                    {% for field in offer_form %}
+                            {% if field.is_hidden %}
+                                {{field}}
+                            {% else %}  
+
+                            <div class="form-group">
+                                <label for="{{field.id_for_label}}" class="col-xs-6 control-label">Offer new price</label>
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        {{field|add_class:'form-control'}}
+                                        <span class="input-group-addon"><i class="fa fa-gbp"></i></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            {% endif %}
+                    {% endfor %}
+                    <div class="form-group">
+                        <div class="col-xs-12">
+                        <button class="btn btn-primary btn-block">Make an Offer!</button>
+                        </div>
+                    </div>
+                </form>
+
+            {% endif %}
+            </div>
+            <div class="book-offer-previous">
+                <div class="book-offer-previous-header">
+                    Previous Offers
+                </div>
+                {% if offers %}
+                    {% for offer in offers %}
+                        {% if not offer_form %}
+                            {% include 'after_login/books/book_offer.html' with offer=offer form=True %}
+                        {% else %}
+                            {% include 'after_login/books/book_offer.html' with offer=offer form=False %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    <div class="book-no-offer">
+                        No offers for this book, yet
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+            {% if not user.id == book.user.id and not user.id == book.sold_to.id%}
+            <div class="alert alert-danger">
+                This book has been sold. You can't make an offer.
+            </div>
+            {% endif %}
+        {% endif %}
+    </div>
+{%else%}
+wrong page    
+{% endif%}
+
+{% endblock%}
+{% block js %}
+{% load staticfiles %}
+
+{{block.super}}
+{% if not user.id == book.user.id%}
+    <script type="text/javascript" src="{% static 'js/books/watchlist.js' %}"></script>
+{%endif%}
+
+    <script type="text/javascript" src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/books/overview.js' %}"></script>
+	<script src="{% static 'js/bootstrap-rating-input.min.js' %}" type="text/javascript"></script>
+{% endblock %}
