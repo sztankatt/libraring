@@ -1,6 +1,0 @@
-/src/mysite/settings.py*
-/src/mysite/wsgi.py*
-/static-only
-/src/mysite/whoosh_index
-/src/mydatabase
-/src/schema.xml
