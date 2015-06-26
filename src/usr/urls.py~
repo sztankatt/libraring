@@ -1,9 +1,0 @@
-from django.conf.urls import patterns, include, url
-from usr import views as usr_views
-from books import views as books_views
-
-urlpatterns = patterns('',
-	url(r'^$', usr_views.profile, name='own_profile'),
-	url(r'^(?P<pk>\d+)/$', usr_views.profile, name='profile'),
-	url(r'^(?P<pk>\d+)/books/$', books_views.books, name='own_books'),
-)
