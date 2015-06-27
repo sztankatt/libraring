@@ -39,9 +39,9 @@ validators_feedback_icons = {
                         valid: 'glyphicon glyphicon-ok',
                         invalid: 'glyphicon glyphicon-remove',
                         validating: 'glyphicon glyphicon-refresh'
-                    }
+                    };
     var profile_update_validators = {
-            first_name : $('#first_name_form').bootstrapValidator({
+            'first_name' : $('#first_name_form').bootstrapValidator({
                     feedbackIcons: validators_feedback_icons,
                     fields: {
                         first_name:{
@@ -53,7 +53,7 @@ validators_feedback_icons = {
                         }
                     }
                 }),
-            last_name: $('#last_name_form').bootstrapValidator({
+            'last_name': $('#last_name_form').bootstrapValidator({
                 feedbackIcons: validators_feedback_icons,
                 fields: {
                     last_name:{
@@ -64,9 +64,9 @@ validators_feedback_icons = {
                         }
                     }
                 }
-                
+
             }),
-            current_education: $('#current_education_form')
+            'current_education': $('#current_education_form')
                 .find('[id="new_current_education_institution"]')
                 .change(function(e){
                     $('#current_education_form').bootstrapValidator(
@@ -119,7 +119,7 @@ validators_feedback_icons = {
                                     return {
                                         institution: validator.getFieldElements('institution').val()
                                     };
-                                },
+                                }
                             },
                             emailAddress:{
                                 message: 'Wrong email address.'
@@ -130,7 +130,7 @@ validators_feedback_icons = {
                 }
                 
             }),
-            previous_education: $('#previous_education_form').bootstrapValidator({
+            'previous_education': $('#previous_education_form').bootstrapValidator({
                 feedbackIcons: validators_feedback_icons,
                 fields: {
                     institution:{
@@ -164,7 +164,7 @@ validators_feedback_icons = {
                     }
                 }
             })
-    }
+    };
             
     
     
@@ -184,12 +184,12 @@ var validator_handle = function(validator){
                 var form_id = $form.attr('id');
                 
                 switch(form_id){
-                    case  "first_name_form":
+                    case "first_name_form":
                         var type = 'first_name';
                         input = {
                             "type":type,
                             "first_name": $('#first_name').val()
-                        }
+                        };
                         //on success
                         update_profile(input, function(data){
                            $("#"+type+"_container").children('.profile-field-header').
@@ -200,7 +200,7 @@ var validator_handle = function(validator){
                             $form.parent().slideUp();
                             //succes message
                             toastr.success("Success!");
-                        })
+                        });
                     break;
                     
                     case "last_name_form":
@@ -208,7 +208,7 @@ var validator_handle = function(validator){
                         input = {
                             "type":type,
                             "last_name": $('#last_name').val()
-                        }
+                        };
                         //on success
                         update_profile(input, function(data){
                             $("#"+type+"_container").children('.profile-field-header').
@@ -219,7 +219,7 @@ var validator_handle = function(validator){
                             $form.parent().slideUp();
                             //succes message
                             toastr.success("Success!");
-                        })
+                        });
                     break;
                     
                     case "current_education_form":
@@ -231,7 +231,7 @@ var validator_handle = function(validator){
                             "course"        : $(field+"course").val(),
                             "start_year"    : $(field+"start_year").val(),
                             "end_year"      : $(field+"end_year").val()
-                        }
+                        };
                         update_profile(input, function(data){
                             if (data.error){
                                 show_error(data);
@@ -241,7 +241,7 @@ var validator_handle = function(validator){
                                 bv.destroy();
                                 $form.submit();
                             }
-                        })
+                        });
                     break;
                     
                     case "previous_education_form":
@@ -253,7 +253,7 @@ var validator_handle = function(validator){
                             "course"        : $(field+"course").val(),
                             "start_year"    : $(field+"start_year").val(),
                             "end_year"      : $(field+"end_year").val()
-                        }
+                        };
                         console.log(input);
                         
                         update_profile(input, function(data){
@@ -265,12 +265,12 @@ var validator_handle = function(validator){
                                 bv.destroy();
                                 $form.submit();
                             }
-                        })
+                        });
                     break;
                 }
                 
         });
-}
+};
  for (key in profile_update_validators) {
     validator_handle(profile_update_validators[key]);
 }               
@@ -325,6 +325,16 @@ var validator_handle = function(validator){
                 validators:{
                     notEmpty:{
                         message: 'This field is required.'
+                    }
+                }
+            },
+            'person-email':{
+                validators:{
+                    notEmpty:{
+                        message: 'This field is required.'
+                    },
+                    emailAddress:{
+                        message: 'Not a valid email address.'
                     }
                 }
             },
@@ -397,7 +407,7 @@ var validator_handle = function(validator){
                         message: 'Please accept the terms and conditions and the privacy policy!'
                     }
                 }
-            },
+            }/*,
             'class-email':{
                 validators:{
                     notEmpty: {
@@ -411,13 +421,13 @@ var validator_handle = function(validator){
                             return {
                                 institution: validator.getFieldElements('class-institution').val()
                             };
-                        },
+                        }
                     },
                     emailAddress:{
                         message: 'Wrong email address.'
                     }
                 }
-            }
+            }*/
         }
     });
 
@@ -448,7 +458,7 @@ var validator_handle = function(validator){
         input ={
             'type':'email_change_confirmation',
             'confirmation_code' : confirmation_code
-        }
+        };
         
         email_confirmation(input, function(data){
             if(data.error){
