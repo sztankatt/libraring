@@ -1,9 +1,10 @@
 from django.forms import ModelForm
-from usr.models import Person, Class, Institution
+from usr.models import Person, Class, Institution, Location,COUNTRIES, alphanumeric_regex
 from django import forms
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
+
 
 
 class RegisterPersonForm(ModelForm):
@@ -16,17 +17,18 @@ class RegisterPersonForm(ModelForm):
     last_name = forms.CharField(max_length=100, required=True)
     date_born = forms.DateField(required=False, input_formats=DATE_INPUT_FORMATS, label='DD/MM/YYYY')
 
-    #TODO: inline location form plss
-
+    #location model parts
+    country 			= forms.ChoiceField(choices=[('','---------')]+COUNTRIES)
+    postcode			= forms.CharField(max_length=10, required=False, validators=[alphanumeric_regex])
+    city				= forms.CharField(max_length=50)
 
     class Meta:
         model = Person
         exclude = ('user', 'person_type', 'current_education', 'education', 'institution', 'date_born', 'confirmation_code',
-                   'block_code',)
+                   'block_code','location')
         widgets = {  # 'person_type' : forms.RadioSelect(),
                      'about': forms.Textarea(),
         }
-
 
 class ClassForm(ModelForm):
     #email = forms.CharField(max_length=100, required=True, widget=forms.TextInput(attrs={'placeholder': 'e-mail' \

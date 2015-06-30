@@ -11,6 +11,7 @@ from django.db.models import Max, Q, Count
 
 import datetime 
 
+#TODO:solve migrations problem
 
 
 class Author(models.Model):

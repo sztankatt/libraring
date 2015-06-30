@@ -42,14 +42,37 @@
 			</div>
 		</div>
         <div class="form-group">
-			{{ form.location.errors }}
-			<label for="{{form.location.id_for_label}}" class="col-sm-3 control-label">
-				What is your location?
+            <h4 class="control-label col-sm-3">Location</h4>
+        </div>
+        <div class="form-group">
+			{{ form.country.errors }}
+			<label for="{{form.country.id_for_label}}" class="col-sm-3 control-label">
+				Country
 			</label>
 			<div class="col-sm-5">
-				{% render_field form.location class='form-control' placeholder=form.location.label %}
+				{% render_field form.country class='form-control' placeholder=form.country.label %}
 			</div>
 		</div>
+        <div class="form-group">
+			{{ form.city.errors }}
+			<label for="{{form.city.id_for_label}}" class="col-sm-3 control-label">
+				City
+			</label>
+			<div class="col-sm-3">
+				{% render_field form.city class='form-control' placeholder=form.city.label %}
+			</div>
+		</div>
+
+        <div class="form-group">
+			{{ form.postcode.errors }}
+			<label for="{{form.postcode.id_for_label}}" class="col-sm-3 control-label">
+				Postcode
+			</label>
+			<div class="col-sm-3">
+				{% render_field form.postcode class='form-control' placeholder=form.postcode.label %}
+			</div>
+		</div>
+
 
 		{% comment %}
 		<div class="form-group">

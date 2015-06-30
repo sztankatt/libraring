@@ -2,19 +2,22 @@ import datetime
 from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import RegexValidator
 
 from books.models import Transaction
 
+COUNTRIES = [
+    ('UK', 'United Kingdom'),
+    ('HU', 'Hungary'),
+]
+
+alphanumeric_regex = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+
 #location model for Institution
 class Location(models.Model):
-    LOCATION_COUNTRY_CHOICES = (
-        ('UK', 'United Kingdom'),
-        ('HU', 'Hungary'),
-        ('PL', 'Poland'),
-    )
 
-    country 			= models.CharField(max_length=2, choices=LOCATION_COUNTRY_CHOICES)
-    county				= models.CharField(max_length=50, blank=True)
+    country 			= models.CharField(choices=COUNTRIES, max_length=2)
+    postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
     city				= models.CharField(max_length=50)
 
     def __unicode__(self):
@@ -70,15 +73,15 @@ class Person(models.Model):
     )
 
     user        		= models.OneToOneField(User, primary_key=True)
-    title			= models.CharField(max_length=3, choices=PERSON_TITLE_CHOICES)
+    title			    = models.CharField(max_length=3, choices=PERSON_TITLE_CHOICES)
     date_born   		= models.DateField('date born', blank=True, null=True)
     about       		= models.TextField(blank=True)
     education   		= models.ManyToManyField(Class, blank=True, related_name='students')
     person_type 		= models.CharField(max_length=1, choices=PERSON_TYPE_CHOICES, default=STUDENT)
-    institution		= models.ForeignKey(Institution, blank=True, null=True)
+    institution		    = models.ForeignKey(Institution, blank=True, null=True)
     confirmation_code	= models.CharField(max_length=50, unique=True)
-    block_code		= models.IntegerField(default=1, blank=True)
-    location = models.ForeignKey(Location)
+    block_code		    = models.IntegerField(default=1, blank=True)
+    location            = models.ForeignKey(Location)
 
     def is_student(self):
         if self.person_type == 'S':

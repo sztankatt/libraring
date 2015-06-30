@@ -358,6 +358,33 @@ var validator_handle = function(validator){
                         message: 'This field is required.'
                     }
                 }
+            },
+            'person-city':{
+                validators:{
+                    notEmpty:{
+                        message:'This field is required.'
+                    }
+                }
+            },
+            'person-postcode':{
+                validators:{
+                    notEmpty:{
+                        message:'This field is required.'
+                    },
+                    regexp:{
+                        regexp: /^[0-9a-zA-Z ]*$/,
+                        message: "Only alphanumeric characters are allowed."
+                    }
+
+                }
+            },
+            'person-country':{
+                validators:{
+                    notEmpty:{
+                        message:'This field is required.'
+
+                    }
+                }
             }
         }
     });

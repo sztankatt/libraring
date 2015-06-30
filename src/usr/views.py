@@ -14,7 +14,7 @@ from django.template import Context
 from django.db.models import Count
 
 from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
-from usr.models import Class, Person, PageMessages
+from usr.models import Class, Person, PageMessages, Location
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
 from books.models import Genre
@@ -107,6 +107,10 @@ class RegisterWizard(SessionWizardView):
         #saving user.email, according to which institution was selected
         user.email = email
         user.save()
+
+        obj, created = Location.objects.get_or_create(country=person_data['country'], postcode=person_data['postcode'], city=person_data['city'])
+
+        person.location = obj
 
         person.user = user
         #person.institution = institution
