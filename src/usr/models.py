@@ -20,17 +20,17 @@ class Location(models.Model):
     postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
     city				= models.CharField(max_length=50)
 
-    def __unicode__(self):
-        if self.county == '--None--':
-            return '%s, %s' % (self.city, self.country)
-        else:
-            return '%s, %s, %s' % (self.city, self.county, self.country)
+    # def __unicode__(self):
+    #     if self.country == '--None--':
+    #         return '%s, %s' % (self.city, self.country)
+    #     else:
+    #         return '%s, %s, %s' % (self.city, self.county, self.country)
 
 #Institution for Person, Classes
 class Institution(models.Model):
     name 				= models.CharField(max_length=200, unique=True)
     location 			= models.ForeignKey(Location)
-    email_ending			= models.CharField(max_length=100, unique=True)
+    email_ending		= models.CharField(max_length=100, unique=True)
 
     def __unicode__(self):
         return self.name

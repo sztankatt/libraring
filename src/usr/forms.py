@@ -40,9 +40,7 @@ class ClassForm(ModelForm):
 
 
 class NClassForm(ClassForm):
-    def __init__(self, *args, **kwargs):
-        super(ClassForm, self).__init__(*args, **kwargs)
-        self.fields.pop('email')
+    pass
 
 
 class InstitutionForm(forms.Form):

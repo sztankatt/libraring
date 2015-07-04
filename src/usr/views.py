@@ -271,11 +271,12 @@ def load_profile(request, id=""):
 	    'fields':fields,
         'settings': account_settings,
         'student': student,
-        'new_current_education_form': ClassForm(auto_id='new_current_education_%s'),
+        #'new_current_education_form': ClassForm(auto_id='new_current_education_%s'),
         'new_previous_education_form': NClassForm(auto_id='new_previous_education_%s')
     })
 
 
+#not used anymore
 @login_required
 def change_current_education(request):
     p_u = ProfileUpdate(request)

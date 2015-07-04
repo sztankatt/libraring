@@ -99,7 +99,7 @@ class Book(models.Model):
                 return False
 
     def get_location(self):
-        return self.user.person.location()
+        return self.user.person.location
     
     def get_absolute_url(self):
         return '/books/book/%s/' % (self.id)

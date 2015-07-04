@@ -1,7 +1,0 @@
-Dear {{user.username}}!
-
-Please click on the link below in order to complete your registration!</p>
-
-<a href="http://www.libraring.co.uk/usr/register/confirmation/{{user.person.confirmation_code}}/">http://www.libraring.co.uk/usr/register/confirmation/{{user.person.confirmation_code}}/</a>
-
-the LIBRARING team
