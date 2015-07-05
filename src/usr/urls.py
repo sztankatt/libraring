@@ -17,6 +17,6 @@ urlpatterns = patterns('',
         url(r'^deactivated/profile/$', 'usr.views.deactivated_profile', name='deactivated_profile'),
         
         #changing profile views
-        url(r'change/current/education/$', 'usr.views.change_current_education', name='change_current_education'),
+        #url(r'change/current/education/$', 'usr.views.change_current_education', name='change_current_education'),
         url(r'add/previous/education/$', 'usr.views.add_previous_education', name='add_previous_education')
 )

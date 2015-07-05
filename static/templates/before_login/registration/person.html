@@ -15,6 +15,13 @@
 				{% render_field form.title class='form-control' placeholder=form.title.label %}
 			</div>
 		</div>
+        <div class="form-group">
+			{{ form.email.errors }}
+			<label for="id_email" class="col-sm-3 control-label">Email address:</label>
+			<div class="col-sm-3">
+				{% render_field form.email class='form-control' placeholder=form.email.label %}
+			</div>
+		</div>
 		<div class="form-group">
 			{{ form.first_name.errors }}
 			<label for="{{form.first_name.id_for_label}}" class="col-sm-3 control-label">
@@ -34,6 +41,39 @@
 				{% render_field form.last_name class='form-control' placeholder=form.last_name.label %}
 			</div>
 		</div>
+        <div class="form-group">
+            <h4 class="control-label col-sm-3">Location</h4>
+        </div>
+        <div class="form-group">
+			{{ form.country.errors }}
+			<label for="{{form.country.id_for_label}}" class="col-sm-3 control-label">
+				Country
+			</label>
+			<div class="col-sm-5">
+				{% render_field form.country class='form-control' placeholder=form.country.label %}
+			</div>
+		</div>
+        <div class="form-group">
+			{{ form.city.errors }}
+			<label for="{{form.city.id_for_label}}" class="col-sm-3 control-label">
+				City
+			</label>
+			<div class="col-sm-3">
+				{% render_field form.city class='form-control' placeholder=form.city.label %}
+			</div>
+		</div>
+
+        <div class="form-group">
+			{{ form.postcode.errors }}
+			<label for="{{form.postcode.id_for_label}}" class="col-sm-3 control-label">
+				Postcode
+			</label>
+			<div class="col-sm-3">
+				{% render_field form.postcode class='form-control' placeholder=form.postcode.label %}
+			</div>
+		</div>
+
+
 		{% comment %}
 		<div class="form-group">
 			{{ form.person_type.errors }}
@@ -48,6 +88,7 @@
 				</div>
 			</div>
 		</div>
+
 		{% endcomment %}
 		{% endblock %}
 		{% block optional_data %}

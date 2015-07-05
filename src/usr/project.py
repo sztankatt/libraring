@@ -23,6 +23,7 @@ PROJECT_URL = 'www.libraring.co.uk'
 REGISTRATION_EMAIL = PROJECT_NAME + '@no-reply.co.uk'
 
 
+
 def project_info(request):
     #calculating the number of new messages
     

@@ -2,4 +2,6 @@
 *pyc
 /src/mysite/settings.py*
 /.idea
-
+/static-only
+*mydatabase*
+*migrations/
