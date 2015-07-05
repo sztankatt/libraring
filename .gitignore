@@ -5,3 +5,10 @@
 /static-only
 *mydatabase*
 *migrations/
+.gitignore
+.project
+apache2/
+lib/
+bin/
+.pydevproject
+whoosh/

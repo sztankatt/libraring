@@ -21,9 +21,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/', 'usr.views.test'),
     url(r'^select2/', include('django_select2.urls')),
-    
-
-    url(r'^realtime_test/', include('realtime_test.urls', namespace='realtime_test')),
     url(r'^', include('manager.urls', namespace='manager')),
 )
 if settings.DEBUG:
