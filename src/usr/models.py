@@ -82,7 +82,7 @@ class Person(models.Model):
     institution		    = models.ForeignKey(Institution, blank=True, null=True)
     confirmation_code	= models.CharField(max_length=50, unique=True)
     block_code		    = models.IntegerField(default=1, blank=True)
-    location            = models.ForeignKey(Location)
+    #location            = models.ForeignKey(Location)
 
     def is_student(self):
         if self.person_type == 'S':
