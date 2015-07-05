@@ -17,8 +17,9 @@ alphanumeric_regex = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric charac
 class Location(models.Model):
 
     country 			= models.CharField(choices=COUNTRIES, max_length=2)
-    postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
+    #postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
     city				= models.CharField(max_length=50)
+    county              = models.CharField(blank=True, null=True)
 
     # def __unicode__(self):
     #     if self.country == '--None--':
