@@ -269,8 +269,6 @@ def transaction_accept(request):
                 transaction.finalised_by_buyer = True
                 transaction.save()
 
-            #TODO: delete this from conversation and add to book
-
             if transaction.finalised_by_buyer and transaction.finalised_by_seller:
                 return HttpResponseRedirect(reverse('user_messages:transaction_rate', args=(transaction_id,)))
             else:

@@ -33,7 +33,7 @@
             <div class="alert alert-info">
                 <h3>Transaction closed, you have successfully sold this book! Please rate the transaction below.</h3>
                 <div class="rate-row">
-                {% if book.is_sold.transaction.seller_rating %}
+                {% if book.is_sold.transaction.rating.buyer_rating %}
                 <h4>You have already rated this transaction!</h4></div>
                 {% else %}
                     <h4>Please rate {{ book.is_sold.made_by }} for this transaction</h4>
@@ -84,7 +84,7 @@
 
 </p><br />
                 <div>
-                {% if book.is_sold.transaction.rating.buyer_rating %}
+                {% if book.is_sold.transaction.rating.seller_rating %}
                 <h4>You have already rated this transaction!</h4></div>
                 {% else %}
                     <h4>Please rate {{ book.is_sold.made_by }} for this transaction</h4>
