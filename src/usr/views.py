@@ -357,5 +357,5 @@ def register_confirmation_code(request, confirmation_code=None):
 
     return render(request, 'before_login/messages.html', {'user': user, 'registration_complete': True,
                                                           'message': PageMessages.objects.get(
-                                                              name='registry_confirmation_correct')})
+                                                              name='registry_confirmation_email')})
 
