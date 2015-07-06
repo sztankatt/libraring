@@ -1,0 +1,8 @@
+Dear {{ buyer.username }}
+
+{{ seller.username }} has accepted your offer of &pound;{{ book.accepted_offer.offered_price }} for {{ book }}!
+
+To discuss the details of the transaction please respond to this email. Once you are all set, please click on the 'Finalise'
+here: <a href="http://www.libraring.co.uk/books/book/{{ book.pk }}/">http://www.libraring.co.uk/books/book/{{ book.pk }}/</a>
+
+the LIBRARING team
