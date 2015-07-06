@@ -80,11 +80,10 @@ class Book(models.Model):
         return '%s' % (self.title)
 
     def is_sold(self):
-        accepted_offers = Offer.objects.filter(book=self).filter(accepted=True)
-        if len(accepted_offers) == 0:
-            return None
-
-        return accepted_offers[0]
+        if self.status == 'selling' or self.status == 'finalised':
+            return True
+        else:
+            return False
 
     def is_finalised(self):
         accepted_offer = self.is_sold()
@@ -97,6 +96,12 @@ class Book(models.Model):
                 return True
             except TransactionRating.DoesNotExist:
                 return False
+
+    def accepted_offer(self):
+        try:
+            return Offer.objects.filter(book=self).filter(accepted=True)[0]
+        except IndexError:
+            return None
 
     def get_location(self):
         return self.user.person.location

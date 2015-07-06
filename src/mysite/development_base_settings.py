@@ -26,14 +26,7 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-ALLOWED_HOSTS = ['www.libraring.org',
-                 'libraring.org',
-                 'www.libraring.co.uk',
-                 'libraring.co.uk',
-                 'www.libraring.eu',
-                 'libraring.eu',
-                 'www.libraring.net',
-                 'libraring.net']
+ALLOWED_HOSTS = []
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -48,9 +41,7 @@ THUMBNAIL_DEBUG = DEBUG
 
 THUMBNAIL_ENGINE = 'sorl.thumbnail.engines.pil_engine.Engine'
 
-TEMPLATE_DEBUG = True
-
-ALLOWED_HOSTS = []
+TEMPLATE_DEBUG = DEBUG
 
 LOGIN_REDIRECT_URL = '/usr/'
 
@@ -99,6 +90,7 @@ INSTALLED_APPS = (
     'usr',
     'ajax',
     'books',
+    'manager',
 )
 
 
@@ -132,9 +124,19 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.6/ref/settings/#databases
 
 DATABASES = {
+    #'default': {
+    #    'ENGINE': 'django.db.backends.sqlite3',
+    #    'NAME': 'mydatabase',
+    #},
+    #
+	#MYSQL default
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'libraring',
+        'USER':'root',
+        'PASSWORD':'123',
+        'HOST':'localhost',
+        'PORT':'3306',
     }
 }
 # Internationalization

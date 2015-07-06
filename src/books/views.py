@@ -7,6 +7,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import get_template
 from django.template import Context
+from django.core import mail
 
 from usr.project import user_is_not_blocked
 from books.forms import BookForm, OfferForm
@@ -30,7 +31,7 @@ def book_page(request, id=None):
         book = get_object_or_404(Book, pk=id)
         offers = Offer.objects.filter(book=book).order_by('-offered_price')
         #if the book is not sold, proceed
-        if book.is_sold() is None:
+        if book.is_sold() is False:
             if request.user != book.user:
                 offer_form = OfferForm({'book':book.id, 'made_by':request.user.id})
         
@@ -105,6 +106,24 @@ def make_an_offer(request):
     else:
         raise Http404
 
+def send_accepted_offer_email(seller, buyer, book):
+    sender = "LIBRARING: %s accepted your offer <%s>" % (seller.username, seller.email)
+    to = buyer.email
+    subject = "Your offer for %s has been accepted!" % book
+
+    text_content = get_template("after_login/books/accepted_offer_email.txt")
+    html_content = get_template("after_login/books/accepted_offer_email.html")
+
+    d = Context({"seller":seller, "buyer":buyer, "book":book})
+
+    text_content = text_content.render(d)
+    html_content = html_content.render(d)
+
+    m = mail.EmailMultiAlternatives(subject, text_content, sender, [to])
+    m.attach_alternative(html_content, 'text/html')
+    m.send()
+
+
 @login_required
 @user_is_not_blocked
 def accept_the_offer(request):
@@ -133,6 +152,8 @@ def accept_the_offer(request):
         book.status = 'selling'
         book.save()
 
+        #Seding the email to buyer
+        send_accepted_offer_email(book.user, book.sold_to, book)
 
         #redirect to the page of the book
         return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
@@ -268,8 +289,6 @@ def transaction_accept(request):
             else:
                 transaction.finalised_by_buyer = True
                 transaction.save()
-
-            #TODO: delete this from conversation and add to book
 
             if transaction.finalised_by_buyer and transaction.finalised_by_seller:
                 return HttpResponseRedirect(reverse('user_messages:transaction_rate', args=(transaction_id,)))

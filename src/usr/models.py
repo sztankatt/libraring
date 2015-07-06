@@ -19,6 +19,7 @@ class Location(models.Model):
     country 			= models.CharField(choices=COUNTRIES, max_length=2)
     postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
     city				= models.CharField(max_length=50)
+    #county              = models.CharField(blank=True, null=True, max_length=50)
 
     # def __unicode__(self):
     #     if self.country == '--None--':
