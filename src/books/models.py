@@ -8,8 +8,9 @@ from django_countries.fields import CountryField
 
 from django.db.models import Max, Q, Count
 
+from django.utils.translation import get_language
 
-import datetime 
+import datetime
 
 #TODO:solve migrations problem
 
@@ -107,7 +108,7 @@ class Book(models.Model):
         return self.user.person.location
     
     def get_absolute_url(self):
-        return '/books/book/%s/' % (self.id)
+        return '/'+get_language()+'/books/book/%s/' % (self.id)
 
     def get_highest_offer(self):
         try:
