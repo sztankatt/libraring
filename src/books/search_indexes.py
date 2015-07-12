@@ -1,12 +1,11 @@
 from haystack import indexes
 from books.models import Book
+import queued_search
 
 import datetime
 
-class BookIndex(indexes.SearchIndex, indexes.Indexable):
+class BookIndex(queued_search.indexes.QueuedSearchIndex, indexes.Indexable):
     text = indexes.CharField(document=True, use_template=True)
-    #title = indexes.CharField(model_attr='title')
-    #author = indexes.CharField(model_attr='author')
     
     def get_model(self):
         return Book

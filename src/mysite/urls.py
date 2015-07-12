@@ -10,12 +10,15 @@ import settings
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = i18n_patterns('',
+urlpatterns = [
+    url(r'^ajax/', include('ajax.urls', namespace='ajax'))
+]
+
+urlpatterns += i18n_patterns('',
     url(r'^$', 'usr.views.index', name='index'),
     url(r'^register/$', RegisterWizard.as_view(FORMS), name='register'),
     url(r'^usr/', include('usr.urls', namespace='usr')),
     #app for ajax requests
-    url(r'^ajax/', include('ajax.urls', namespace='ajax')),
     url(r'^books/', include('books.urls',namespace='books')),
     url(r'^messages/', include('user_messages.urls', namespace='user_messages')),
     url(r'^admin/', include(admin.site.urls)),
