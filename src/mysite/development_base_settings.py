@@ -90,7 +90,6 @@ INSTALLED_APPS = (
     'usr',
     'ajax',
     'books',
-    'manager',
 )
 
 
@@ -103,8 +102,13 @@ HAYSTACK_CONNECTIONS = {
     },
 }
 
-HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+HAYSTACK_SIGNAL_PROCESSOR = 'queued_search.signals.QueuedSignalProcessor'
 
+QUEUE_BACKEND = 'sqs'
+AWS_ACCESS_KEY_ID = 'AKIAILBR5EVBRKC2MOCA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_REGION = 'eu-west-1'
+SEARCH_QUEUE_NAME = 'libraring_books_local'
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -142,7 +146,12 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en'
+
+LANGUAGES = (
+    ('en', 'English'),
+    ('hu', 'Hungarian'),
+)
 
 TIME_ZONE = 'UTC'
 
