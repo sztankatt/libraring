@@ -99,7 +99,7 @@ class Book(models.Model, QueuedModel):
         return self.user.person.location
     
     def get_absolute_url(self):
-        return '/books/book/%s/' % (self.id)
+        return '/'+get_language()+'/books/book/%s/' % (self.id)
 
     def get_highest_offer(self):
         try:
