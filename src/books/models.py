@@ -1,19 +1,10 @@
 from django.db import models
-
 from django.contrib.auth.models import User
-
 from django.db.models.sql.query import FieldError
-
 from django_countries.fields import CountryField
-
 from django.db.models import Max, Q, Count
-
-from django.utils.translation import get_language
-
+from queued_search.models import QueuedModel
 import datetime
-
-#TODO:solve migrations problem
-
 
 class Author(models.Model):
     name = models.CharField(max_length=250)
@@ -45,7 +36,7 @@ class IntegerRangeField(models.IntegerField):
         defaults.update(kwargs)
         return super(IntegerRangeField, self).formfield(**defaults)
 
-class Book(models.Model):
+class Book(models.Model, QueuedModel):
     title = models.CharField(max_length=50)
     author = models.ManyToManyField(Author)
     genre = models.ManyToManyField(Genre)
