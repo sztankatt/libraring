@@ -4,6 +4,7 @@ from django.db.models.sql.query import FieldError
 from django_countries.fields import CountryField
 from django.db.models import Max, Q, Count
 from queued_search.models import QueuedModel
+from django.utils.translation import get_language
 import datetime
 
 class Author(models.Model):

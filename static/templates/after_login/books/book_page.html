@@ -142,9 +142,9 @@
                         <div class="col-xs-6">
                             {% for author in book.author.all%}
                                 {% if forloop.last%}
-                                    <a href="/books/author/{{author.id}}/">{{author.name}}</a>
+                                    <a href="{% url 'books:author' author.id %}">{{author.name}}</a>
                                 {%else%}
-                                    <a href="/books/author/{{author.id}}/">{{author.name}}</a>,
+                                    <a href="{% url 'books:author' author.id %}">{{author.name}}</a>,
                                 {%endif%}
                             {%endfor%}
                         </div>
@@ -161,7 +161,7 @@
                         <div class="book-field-header-title col-xs-6">Genre(s):</div>
                         <div class="col-xs-6">
                         {% for genre in book.genre.all%}
-                            <a href="/books/genre/{{genre.name}}/">{{genre.name}} </a>
+                            <a href="{% url 'books:genre' name=genre.name %}">{{genre.name}} </a>
                         {% endfor %}
                         </div>
                     </div>
@@ -180,7 +180,7 @@
                         <div class="book-field-header-title col-xs-6">Publisher</div>
                         <div class="col-xs-6">
                         {% if book.publisher %}
-                            <a href="/books/publisher/{{book.publisher.id}}/">{{book.publisher.name}}</a>
+                            <a href="{% url 'books:publisher' book.publisher.id %}">{{book.publisher.name}}</a>
                         {%else %}
                             Not specified
                         {%endif%}

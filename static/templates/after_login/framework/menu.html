@@ -4,7 +4,7 @@
         <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-user"></i> Profile</a></li>
         <li><a href="{% url 'books:main_page' %}"><i class="fa fa-book"></i> Books</a></li>
     </ul>
-    <form class="navbar-form navbar-left navbar-input-group search-form" role="search" method="get" action="/books/search/">
+    <form class="navbar-form navbar-left navbar-input-group search-form" role="search" method="get" action="{% url 'books:haystack_search' %}">
         <div class="form-group">
             <input type="text" name="q" class="form-control" placeholder="Search">
         </div>
