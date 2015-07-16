@@ -15,7 +15,7 @@
 			{% include  'after_login/books/list_books_element_page.html' with book=book%}
 		{% endfor %}
 		<div class="book-container-footer book-container">
-		<a href="/books/genre/{{genre.name}}">
+		<a href="{% url 'books:genre' genre.name %}">
 			<h4 class="genre-books-view-all">view all</h4>
 		</a>
 		</div>
