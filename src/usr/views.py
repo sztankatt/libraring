@@ -19,6 +19,7 @@ from usr.models import Class, Person, PageMessages, Location
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
 from books.models import Genre, Book
+from books.forms import GenreForm
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -195,9 +196,12 @@ def home(
         template='after_login/usr/home.html',
         home_books_template ='after_login/usr/load_books.html'
         ):
+    list = request.GET.getlist('genres')
     context = {
         'books': Book.objects.all(),
         'home_books_template': home_books_template,
+        'form':GenreForm(request.GET),
+        'list':list
     }
     if request.is_ajax():
         template = home_books_template

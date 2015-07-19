@@ -2,6 +2,14 @@
 {%block title%}{{project.name}} Home {%endblock%}
 {% load staticfiles endless%}
 {% block content%}
+
+    <form class="form-horizontal" action="" method="get">
+        {{ form.as_table }}
+        {% for checkbox in form.genres %}
+            {{ checkbox.tag }} {{ checkbox.choice_label }}
+        {% endfor %}
+    <input type="submit" />
+    </form>
 	<div id="genre_books_all">
 
 		<div class="book-gutter-sizer"></div>

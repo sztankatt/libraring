@@ -100,3 +100,7 @@ class OfferForm(forms.ModelForm):
 
         exclude =['transaction', 'accepted']
     
+class GenreForm(forms.Form):
+    GENRE_CHOICES = [(x,x) for x in Genre.objects.all()]
+
+    genres = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices = GENRE_CHOICES)
