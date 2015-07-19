@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-19 01:02+0100\n"
+"POT-Creation-Date: 2015-07-19 01:13+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,17 +256,18 @@ msgstr ""
 msgid "Publisher"
 msgstr ""
 
+#: after_login/books/book_page.html:264 after_login/books/book_page.html:276
+#: after_login/books/book_page.html:288 after_login/books/book_page.html:300
+#: after_login/books/book_page.html:312
+msgid "Not specified"
+msgstr ""
+
 #: after_login/books/book_page.html:271
 msgid "Publication city"
 msgstr ""
 
 #: after_login/books/book_page.html:283
 msgid "Publication country"
-msgstr ""
-
-#: after_login/books/book_page.html:288 after_login/books/book_page.html:300
-#: after_login/books/book_page.html:312
-msgid "Not specified"
 msgstr ""
 
 #: after_login/books/book_page.html:295
@@ -283,6 +284,7 @@ msgid "Location"
 msgstr ""
 
 #: after_login/books/book_page.html:338
+#: after_login/books/list_books_page.html:17
 msgid "view all"
 msgstr ""
 
@@ -333,6 +335,14 @@ msgstr ""
 
 #: after_login/books/list_books_element_page.html:69
 msgid "Goal price"
+msgstr ""
+
+#: after_login/books/list_books_page.html:22
+msgid "This section is empty"
+msgstr ""
+
+#: after_login/books/list_books_page.html:34
+msgid "No books"
 msgstr ""
 
 #: before_login/framework/index.html:23
