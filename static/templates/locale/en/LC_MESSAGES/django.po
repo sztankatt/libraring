@@ -1,0 +1,403 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-07-19 23:00+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: after_login/books/accepted_offer.html:4
+msgid "Accepted Offer!"
+msgstr ""
+
+#. Translators: reorder user, offer and book variables accoring to specific lang
+#: after_login/books/accepted_offer.html:8 after_login/books/book_page.html:21
+#, python-format
+msgid "You have accepted %(user)s's offer of %(offer)s&pound; for %(book)s."
+msgstr ""
+
+#: after_login/books/accepted_offer.html:12
+msgid "Next step"
+msgstr ""
+
+#: after_login/books/accepted_offer.html:14
+#, python-format
+msgid ""
+"Soon, you will be contacted by the buyer via your email address: <b>"
+"%(email)s</b>, where you can talk through the payment and transport details"
+msgstr ""
+
+#: after_login/books/accepted_offer.html:19
+msgid ""
+"In case you are not contacted within the next 48 hours, your book will be "
+"marked as 'selling' again, and you will have accept another offer."
+msgstr ""
+
+#: after_login/books/accepted_offer.html:24
+msgid "Should you have any further questions please visit our info page at ..."
+msgstr ""
+
+#: after_login/books/accepted_offer.html:28
+#: after_login/books/accepted_offer_email.html:21
+#: after_login/books/accepted_offer_email.txt:11
+msgid "the Libraring team"
+msgstr ""
+
+#: after_login/books/accepted_offer_email.html:3
+#: after_login/books/accepted_offer_email.txt:2
+#, python-format
+msgid "Dear <strong>%(username)s</strong>"
+msgstr ""
+
+#: after_login/books/accepted_offer_email.html:9
+#: after_login/books/accepted_offer_email.txt:5
+#, python-format
+msgid "%(username)s has accepted your offer of &pound;%(price)s for %(book)s!"
+msgstr ""
+
+#: after_login/books/accepted_offer_email.html:15
+#: after_login/books/accepted_offer_email.txt:8
+msgid ""
+"To discuss the details of the transaction please respond to this email. Once "
+"you are all set, please click on the 'Finalise' here:"
+msgstr ""
+
+#: after_login/books/book_offer.html:15
+msgid "Accept"
+msgstr ""
+
+#: after_login/books/book_offer.html:20
+msgid "Are you sure?"
+msgstr ""
+
+#: after_login/books/book_offer.html:23
+#, python-format
+msgid ""
+"Are you sure that you accept the &pound;%(price)s offer mady by %(user)s?"
+msgstr ""
+
+#: after_login/books/book_offer.html:28
+msgid ""
+"If you accept, your book will be marked as 'sold', and you will be "
+"redirected to the next step, when you can discuss the details of the "
+"transaction"
+msgstr ""
+
+#: after_login/books/book_offer.html:34
+msgid "Yes"
+msgstr ""
+
+#: after_login/books/book_offer.html:35
+msgid "No"
+msgstr ""
+
+#: after_login/books/book_page.html:13
+msgid ""
+"You have at least one offer for this book. If you are satisfied with any of "
+"them, go ahead and accept the one you are satisfied with!"
+msgstr ""
+
+#: after_login/books/book_page.html:20 after_login/books/book_page.html:101
+msgid "Well done!"
+msgstr ""
+
+#: after_login/books/book_page.html:27 after_login/books/book_page.html:107
+msgid "Next step:"
+msgstr ""
+
+#: after_login/books/book_page.html:29
+#, python-format
+msgid ""
+"%(user)s will contact you shortly via your email address, %(email)s, and you "
+"will be able to discuss the further details."
+msgstr ""
+
+#: after_login/books/book_page.html:34
+msgid ""
+"Once you are happy with this transaction, you can finalise it by clicking "
+"the 'Finalise' button below. Once both of you have clicked 'Finalised the "
+"transaction will be closed."
+msgstr ""
+
+#: after_login/books/book_page.html:41
+#, python-format
+msgid ""
+"You have already finalised this transaction. Once %(user)s also finalises "
+"it, the transaction will be completed."
+msgstr ""
+
+#: after_login/books/book_page.html:50 after_login/books/book_page.html:130
+msgid "Finalise"
+msgstr ""
+
+#: after_login/books/book_page.html:58
+msgid ""
+"Transaction closed, you have successfully sold this book! Please rate the "
+"transaction below."
+msgstr ""
+
+#: after_login/books/book_page.html:65 after_login/books/book_page.html:152
+msgid "You have already rated this transaction!"
+msgstr ""
+
+#: after_login/books/book_page.html:70
+#, python-format
+msgid "Please rate %(user)s for this transaction."
+msgstr ""
+
+#: after_login/books/book_page.html:82 after_login/books/book_page.html:171
+msgid "Rate!"
+msgstr ""
+
+#: after_login/books/book_page.html:94
+msgid ""
+"You have made an offer for this book already. You can always make further "
+"offers."
+msgstr ""
+
+#: after_login/books/book_page.html:102
+#, python-format
+msgid "Your offer of   &pound;%(price)s has been accepted!"
+msgstr ""
+
+#: after_login/books/book_page.html:108
+#, python-format
+msgid ""
+"An email has been sent to you, please reply to that email to contact "
+"%(user)s in order to discuss further details"
+msgstr ""
+
+#: after_login/books/book_page.html:113
+msgid ""
+"\n"
+"                    Once you are happy with this transaction, you can "
+"finalise it by clicking the 'Finalise' button below. Once both of you have "
+"clicked 'Finalised'\n"
+"                the transaction will be closed.\n"
+"                    "
+msgstr ""
+
+#: after_login/books/book_page.html:121
+#, python-format
+msgid ""
+"\n"
+"                        You have already finalised this transaction. Once "
+"%(book.sold_to)s also finalises it, the transaction will be completed.\n"
+"                        "
+msgstr ""
+
+#: after_login/books/book_page.html:138
+msgid ""
+"Transaction closed, you have successfully acquired this book! Please rate "
+"the transaction below.\n"
+"                    "
+msgstr ""
+
+#: after_login/books/book_page.html:143
+msgid "Summary:"
+msgstr ""
+
+#: after_login/books/book_page.html:145
+#, python-format
+msgid "You have bought this book from %(user)s for &pound;%(price)s."
+msgstr ""
+
+#: after_login/books/book_page.html:159
+#, python-format
+msgid "Please rate %(user)s for this transaction"
+msgstr ""
+
+#: after_login/books/book_page.html:184
+#: after_login/books/list_books_element_page.html:57
+msgid "Aw snap!"
+msgstr ""
+
+#: after_login/books/book_page.html:186
+msgid "This book has already been sold, you can't make an offer unfortunately."
+msgstr ""
+
+#: after_login/books/book_page.html:205
+msgid "Add to watchlist"
+msgstr ""
+
+#: after_login/books/book_page.html:214
+msgid "Title"
+msgstr ""
+
+#: after_login/books/book_page.html:220
+msgid "Author(s)"
+msgstr ""
+
+#: after_login/books/book_page.html:234
+msgid "Price"
+msgstr ""
+
+#: after_login/books/book_page.html:240
+msgid "Genre(s)"
+msgstr ""
+
+#: after_login/books/book_page.html:251
+msgid "Edition no."
+msgstr ""
+
+#: after_login/books/book_page.html:259
+msgid "Publisher"
+msgstr ""
+
+#: after_login/books/book_page.html:264 after_login/books/book_page.html:276
+#: after_login/books/book_page.html:288 after_login/books/book_page.html:300
+#: after_login/books/book_page.html:312
+msgid "Not specified"
+msgstr ""
+
+#: after_login/books/book_page.html:271
+msgid "Publication city"
+msgstr ""
+
+#: after_login/books/book_page.html:283
+msgid "Publication country"
+msgstr ""
+
+#: after_login/books/book_page.html:295
+msgid "Publication year"
+msgstr ""
+
+#: after_login/books/book_page.html:323
+msgid "This book is yours"
+msgstr ""
+
+#: after_login/books/book_page.html:332
+#: after_login/books/list_books_element_page.html:72
+msgid "Location"
+msgstr ""
+
+#: after_login/books/book_page.html:338
+#: after_login/books/list_books_page.html:17
+msgid "view all"
+msgstr ""
+
+#: after_login/books/book_page.html:354
+msgid "Offer new price"
+msgstr ""
+
+#: after_login/books/book_page.html:367
+msgid "Make an offer!"
+msgstr ""
+
+#: after_login/books/book_page.html:376
+msgid "Previous offers"
+msgstr ""
+
+#: after_login/books/book_page.html:388
+#: after_login/books/list_books_element_page.html:67
+msgid "No offers for this book, yet."
+msgstr ""
+
+#: after_login/books/book_page.html:396
+msgid "This book has been sold. You can't make an offer. "
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:37
+msgid "No authors specified"
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:44
+#, python-format
+msgid "You have sold this book for &pound;%(price)s!"
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:50
+#, python-format
+msgid "You are currently selling this book to %(user)s for &pound;%(price)s."
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:58
+msgid "This book has already been sold."
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:63
+#: after_login/books/list_books_element_page.html:65
+#: after_login/books/list_books_element_page.html:67
+msgid "Highest offer"
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:69
+msgid "Goal price"
+msgstr ""
+
+#: after_login/books/list_books_page.html:22
+msgid "This section is empty"
+msgstr ""
+
+#: after_login/books/list_books_page.html:34
+msgid "No books"
+msgstr ""
+
+#: before_login/framework/index.html:23
+msgid "Username"
+msgstr ""
+
+#: before_login/framework/index.html:36
+msgid "Login"
+msgstr ""
+
+#: before_login/framework/index.html:44
+msgid "Not registered yet?"
+msgstr ""
+
+#: before_login/framework/index.html:50
+#, python-format
+msgid "You can register <a href=\"%(reg_url)s\">here</a>!"
+msgstr ""
+
+#: before_login/framework/index.html:58
+msgid ""
+"Libraing is a free and online market where users can buy and resell their "
+"textbooks and/or any course related material. The website is designed to "
+"provide a university specific, dynamic and online service for students to "
+"swiftly trade their unwanted books with other users regardless of university "
+"or course as it happens on a joint platform."
+msgstr ""
+
+#: before_login/framework/index.html:64
+msgid "Like us on facebook!"
+msgstr ""
+
+#: before_login/framework/menu.html:4
+msgid "Our team"
+msgstr ""
+
+#: before_login/framework/menu.html:5
+msgid "Tour"
+msgstr ""
+
+#: before_login/framework/menu.html:6
+msgid "Brainstorm"
+msgstr ""
+
+#: before_login/framework/menu.html:9
+msgid "Register"
+msgstr ""
+
+#: before_login/framework/menu.html:24
+msgid "Go"
+msgstr ""
+
+#: before_login/messages.html:9
+#, python-format
+msgid ""
+"\n"
+"                    %(header)s\n"
+"                    "
+msgstr ""
