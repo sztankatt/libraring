@@ -12,3 +12,5 @@ lib/
 bin/
 .pydevproject
 whoosh/
+*.mo
+media/
