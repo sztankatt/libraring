@@ -1,20 +1,47 @@
 {% extends "after_login/framework/base.html"%}
 {%block title%}{{project.name}} Home {%endblock%}
-{% load staticfiles endless%}
+{% load staticfiles endless widget_tweaks i18n %}
 {% block content%}
 
-    <form class="form-horizontal" action="" method="get">
-        {{ form.as_table }}
-        {% for checkbox in form.genres %}
-            {{ checkbox.tag }} {{ checkbox.choice_label }}
-        {% endfor %}
-    <input type="submit" />
-    </form>
+
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <h3>Showing all books</h3>
+            <div class="btn-group pull-right">
+                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#filter_modal">{% trans "Add filters" %}</a>
+            </div>
+        </div>
+    </div>
 	<div id="genre_books_all">
 
 		<div class="book-gutter-sizer"></div>
     {% include home_books_template %}
 	</div>
+    <div id="filter_modal" class="modal fade bs-example-modal-lg" role="dialog" aria-hidden="true" aria-labelledby="add_filters">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">{% trans "Filter books" %}</h4>
+                </div>
+                <div class="modal-body">
+                <form class="form-horizontal" action="" method="get">
+                            <div class="form-group">
+                        {% for checkbox in form.genres %}
+                                <div class="col-sm-2 checkbox">
+                                    {{ checkbox.tag}}
+                                    <label for="id_genres_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
+                                </div>
+                        {% endfor %}
+
+                            </div>
+                    <input type="submit" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock%}
 
 {%block js%}

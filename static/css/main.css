@@ -80,7 +80,6 @@ a {
 }
 .navbar-nav.navbar-right:last-child {
   margin: 0px;
-  margin-right: 100px;
 }
 .navbar-nav li a:hover {
   background-color: #fff;
@@ -114,6 +113,9 @@ a {
   border-top-left-radius: 0px!important;
   border-bottom-left-radius: 0px!important;
   border-left: 0px;
+}
+.panel-primary {
+  border: 1px solid #26747f;
 }
 /*
  *
