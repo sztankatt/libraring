@@ -40,13 +40,13 @@
             {% if request.user.id == book.user.id %}
                     {% if book.is_finalised %}
                         <div class="alert alert-success">
-                            {% blocktrans trimmed with price=book.is_sold.offered_price %}
+                            {% blocktrans trimmed with price=book.accepted_offer.offered_price %}
                             You have sold this book for &pound;{{price}}!
                             {% endblocktrans %}
                         </div>
                     {% else %}
                         <div class="alert alert-info">
-                            {% blocktrans trimmed with user=book.sold_to price=book.is_sold_to %}
+                            {% blocktrans trimmed with user=book.sold_to price=book.accepted_offer.offered_price %}
                             You are currently selling this book to {{user}} for &pound;{{price}}.
                             {% endblocktrans %}
                         </div>

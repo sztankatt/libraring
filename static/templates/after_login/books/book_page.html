@@ -18,7 +18,7 @@
             <div class="alert alert-success">
                 <h3>
                     {% blocktrans %}Well done!{% endblocktrans %}
-                    {% blocktrans trimmed with user=book.sold_to offer=book.is_sold.offered_price %}
+                    {% blocktrans trimmed with user=book.sold_to offer=book.accepted_offer.offered_price %}
                         You have accepted {{user}}'s offer of {{offer}}&pound; for {{book}}.
                     {% endblocktrans %}
                 </h3>
@@ -36,7 +36,7 @@
                     {% endblocktrans %}
                 </p>
                 <p>
-                {% if book.is_sold.transaction.finalised_by_seller %}
+                {% if book.accepted_offer.transaction.finalised_by_seller %}
                     <b>
                         {% blocktrans trimmed with user=book.sold_to%}
                         You have already finalised this transaction. Once {{ user }} also finalises it, the transaction will be completed.
@@ -46,7 +46,7 @@
                     <form id="finalised_form" method="post" action="{% url 'books:finalise_transaction' %}">
                         {% csrf_token %}
                         <input type="hidden" name="seller" value="true" />
-                        <input type="hidden" name="transaction" value="{{ book.is_sold.transaction.id }}" />
+                        <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
                         <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
                     </form>
                 {% endif %}
@@ -67,14 +67,14 @@
                 </div>
                 {% else %}
                     <h4>
-                        {% blocktrans trimmed with user=book.is_sold.made_by %}
+                        {% blocktrans trimmed with user=book.accepted_offer.made_by %}
                         Please rate {{ user }} for this transaction.
                         {% endblocktrans %}
                     </h4>
                     <div class="rate-form-container">
                     <form method="post" action="{% url 'books:rate_transaction' %}" id="rate_transaction" class="form-inline">
                         {% csrf_token %}
-                        <input type="hidden" name="tr_id" value="{{book.is_sold.transaction.rating.pk}}" />
+                        <input type="hidden" name="tr_id" value="{{book.accepted_offer.transaction.rating.pk}}" />
                         <div class="form-group">
                             <input class="rating" data-max="5" data-min="1" id="star_rating" name="rating" type="number" data-inactive-icon="fa-star-o" data-active-icon="fa-star" data-icon-lib="fa" value="3"/>
                         </div>
@@ -99,7 +99,7 @@
             <div class="alert alert-success">
                 <h3>
                     {% blocktrans %}Well done!{% endblocktrans %}
-                    {% blocktrans trimmed with price=book.is_sold.offered_price%}
+                    {% blocktrans trimmed with price=book.accepted_offer.offered_price%}
                     Your offer of   &pound;{{ price }} has been accepted!
                     {% endblocktrans %}
                 </h3>
@@ -116,7 +116,7 @@
                     {% endblocktrans %}
                 </p>
                 <p>
-                {% if book.is_sold.transaction.finalised_by_buyer %}
+                {% if book.accepted_offer.transaction.finalised_by_buyer %}
                     <b>
                         {% blocktrans %}
                         You have already finalised this transaction. Once {{ book.sold_to }} also finalises it, the transaction will be completed.
@@ -126,7 +126,7 @@
                     <form id="finalised_form" method="post" action="{% url 'books:finalise_transaction' %}">
                         {% csrf_token %}
                         <input type="hidden" name="seller" value="false" />
-                        <input type="hidden" name="transaction" value="{{ book.is_sold.transaction.id }}" />
+                        <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
                         <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
                     </form>
                 {% endif %}
@@ -156,14 +156,14 @@
                 </div>
                 {% else %}
                     <h4>
-                        {% blocktrans trimmed with user=book.is_sold.made_by %}
+                        {% blocktrans trimmed with user=book.accepted_offer.made_by %}
                         Please rate {{ user }} for this transaction
                         {% endblocktrans %}
                     </h4>
                     <div class="rate-form-container">
                     <form method="post" action="{% url 'books:rate_transaction' %}" id="rate_transaction" class="form-inline">
                         {% csrf_token %}
-                        <input type="hidden" name="tr_id" value="{{book.is_sold.transaction.rating.pk}}" />
+                        <input type="hidden" name="tr_id" value="{{book.accepted_offer.transaction.rating.pk}}" />
                         <div class="form-group">
                             <input class="rating" data-max="5" data-min="1" id="star_rating" name="rating" type="number" data-inactive-icon="fa-star-o" data-active-icon="fa-star" data-icon-lib="fa" value="3"/>
                         </div>

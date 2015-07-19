@@ -10,7 +10,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core import mail
 from django.template.loader import get_template
-from django.template import Context
+from django.template import Context, RequestContext
 from django.db.models import Count
 from django.utils.translation import ugettext as _
 
@@ -18,7 +18,7 @@ from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationFor
 from usr.models import Class, Person, PageMessages, Location
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
-from books.models import Genre
+from books.models import Genre, Book
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -190,10 +190,22 @@ def logout_view(request):
 
 #view which handles the loading of main page for logged in users. Only called within 'index' view
 @user_is_not_blocked
-def home(request):
-    g = Genre.objects.annotate(book_num=Count('book')).order_by('-book_num').exclude(book_num=0)
+def home(
+        request,
+        template='after_login/usr/home.html',
+        home_books_template ='after_login/usr/load_books.html'
+        ):
+    context = {
+        'books': Book.objects.all(),
+        'home_books_template': home_books_template,
+    }
+    if request.is_ajax():
+        template = home_books_template
 
-    return render(request, 'after_login/usr/home.html', {'genres': g})
+    return render_to_response(template, context, context_instance=RequestContext(request))
+    #g = Genre.objects.annotate(book_num=Count('book')).order_by('-book_num').exclude(book_num=0)
+
+    #return render(request, 'after_login/usr/home.html', {'books': books})
 
 
 #view which handles the access to the '/'

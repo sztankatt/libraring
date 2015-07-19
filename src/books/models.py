@@ -79,16 +79,10 @@ class Book(models.Model, QueuedModel):
             return False
 
     def is_finalised(self):
-        accepted_offer = self.is_sold()
-        if accepted_offer is None:
-            return False
+        if self.status == 'finalised':
+            return True
         else:
-            t = Transaction.objects.get(offer=accepted_offer)
-            try:
-                tr = TransactionRating.objects.get(transaction=t)
-                return True
-            except TransactionRating.DoesNotExist:
-                return False
+            return False
 
     def accepted_offer(self):
         try:

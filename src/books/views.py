@@ -14,7 +14,6 @@ from usr.project import user_is_not_blocked
 from books.forms import BookForm, OfferForm
 from books.models import Book, Genre, Author, Publisher, Offer, Transaction, TransactionRating
 
-
 @login_required
 @ensure_csrf_cookie 
 @user_is_not_blocked
