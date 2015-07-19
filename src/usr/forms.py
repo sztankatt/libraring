@@ -1,21 +1,19 @@
 from django.forms import ModelForm
-from usr.models import Person, Class, Institution, Location,COUNTRIES, alphanumeric_regex
+from usr.models import Person, Class, Institution, Location, COUNTRIES, alphanumeric_regex
 from django import forms
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext, ugettext_lazy as _
+from datetimewidget.widgets import DateWidget
 
 
 
 class RegisterPersonForm(ModelForm):
-    DATE_INPUT_FORMATS = [
-        '%d/%m/%Y'
-    ]
 
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'placeholder':'e-mail'}))
     first_name = forms.CharField(max_length=100, required=True)
     last_name = forms.CharField(max_length=100, required=True)
-    date_born = forms.DateField(required=False, input_formats=DATE_INPUT_FORMATS, label='DD/MM/YYYY')
+    #date_born = forms.DateField(required=False, input_formats=DATE_INPUT_FORMATS, label='DD/MM/YYYY')
 
     #location model parts
     country 			= forms.ChoiceField(choices=[('','---------')]+COUNTRIES)
@@ -23,11 +21,18 @@ class RegisterPersonForm(ModelForm):
     city				= forms.CharField(max_length=50)
 
     class Meta:
+        datetimeOptions ={
+            'format':'dd/mm/yyyy',
+            'autoclose':True,
+            'showMeridian':True,
+            'startView':4,
+        }
         model = Person
-        exclude = ('user', 'person_type', 'current_education', 'education', 'institution', 'date_born', 'confirmation_code',
+        exclude = ('user', 'person_type', 'current_education', 'education', 'institution', 'confirmation_code',
                    'block_code','location')
         widgets = {  # 'person_type' : forms.RadioSelect(),
                      'about': forms.Textarea(),
+                     'date_born': DateWidget(attrs={'id':"yourdatetimeid"}, usel10n = True, bootstrap_version=3, options=datetimeOptions)
         }
 
 class ClassForm(ModelForm):
