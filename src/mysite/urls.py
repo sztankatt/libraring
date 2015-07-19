@@ -5,13 +5,17 @@ from django.conf.urls.i18n import i18n_patterns
 
 from usr.views import RegisterWizard, FORMS
 
+from django.views.i18n import set_language
+
 import settings
 
 from django.contrib import admin
 admin.autodiscover()
 
+
 urlpatterns = [
-    url(r'^ajax/', include('ajax.urls', namespace='ajax'))
+    url(r'^ajax/', include('ajax.urls', namespace='ajax')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
 
 urlpatterns += i18n_patterns('',

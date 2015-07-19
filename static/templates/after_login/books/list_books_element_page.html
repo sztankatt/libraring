@@ -1,6 +1,6 @@
 {% load thumbnail %}
 {% load highlight %}
-
+{% load i18n %}
 {% comment %} TODO: do this section {% endcomment %}
 <div class="book-container book-grid-sizer">
     <div class="thumbnail">
@@ -33,37 +33,42 @@
                     {% endif %}
                 {%endif%}
             {% empty %}
-                No authors specified
+                {% trans "No authors specified" %}
             {% endfor%}
         </p>
         {% if book.is_sold %}
             {% if request.user.id == book.user.id %}
                     {% if book.is_finalised %}
                         <div class="alert alert-success">
-                            You have sold this book for {{book.is_sold.offered_price}}<i class="fa fa-gbp"></i>!
+                            {% blocktrans trimmed with price=book.is_sold.offered_price %}
+                            You have sold this book for &pound;{{price}}!
+                            {% endblocktrans %}
                         </div>
                     {% else %}
                         <div class="alert alert-info">
-                            You are currently selling this book to {{book.sold_to}} for {{book.is_sold.offered_price}}<i class="fa fa-gbp"></i>
+                            {% blocktrans trimmed with user=book.sold_to price=book.is_sold_to %}
+                            You are currently selling this book to {{user}} for &pound;{{price}}.
+                            {% endblocktrans %}
                         </div>
                     {% endif %}
             {% else %}
                 <div class="alert alert-danger">
-                    <b>Aw snap!</b> This book has already been sold. <i class="fa fa-frown-o"></i>
+                    <b>{% trans "Aw snap!" %}</b>
+                    {% blocktrans %}This book has already been sold.{% endblocktrans %}<i class="fa fa-frown-o"></i>
                 </div>
             {% endif %}
         {% else %}
             {% if book.highest_offer %}
-                <h4><span class="reverse">Highest offer: {{book.highest_offer}}<i class="fa fa-gbp"></i></span></h4>
+                <h4><span class="reverse">{% trans "Highest offer" %}: {{book.highest_offer}}<i class="fa fa-gbp"></i></span></h4>
             {% elif book.get_highest_offer %}
-                <h4><span class="reverse">Highest offer: {{book.get_highest_offer.offered_price}}<i class="fa fa-gbp"></i></span></h4>
+                <h4><span class="reverse">{% trans "Highest offer" %}: {{book.get_highest_offer.offered_price}}<i class="fa fa-gbp"></i></span></h4>
             {% else %}
-                <h4>Highest offer: No offers yet</h4>
+                <h4>{% trans "Highest offer" %}: {% trans "No offers for this book, yet." %}</h4>
             {% endif %}
-            <h4>Goal price: {{book.price}}<i class="fa fa-gbp"></i></h4>
+            <h4>{% trans "Goal price" %}: {{book.price}}<i class="fa fa-gbp"></i></h4>
 
             {% if not request.user.id == book.user.id %}
-                <p>Location: {{book.get_location}}</p>
+                <p>{% trans "Location" %}: {{book.get_location}}</p>
             {% endif %}
         {% endif %}
       </div>

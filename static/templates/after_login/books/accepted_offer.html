@@ -1,14 +1,30 @@
 {% extends 'after_login/framework/base.html' %}
-
+{% load i18n %}
 {% block content %}
-<h3>Accepted Offer!</h3>
+<h3>{% trans "Accepted Offer!" %}</h3>
 {% with offer=transaction.offer %}
-<p>You have accepted {{offer.made_by}}'s offer of {{offer.offered_price}}&pound;
-for {{offer.book}}.
-<h3>Next step</h3>
-<p>Soon, you will be contacted by the buyer via your email address: <b>{{ offer.book.user.email}}</b>, where you can talk through the payment and transport details</p>
-<p>In case you are not contacted within the next 48 hours, your book will be marked as 'selling' again, and you will have accept another offer.</p>
-<p>Should you have any further questions please visit our info page at ...</p>
-<p>the Libraring team</p>
+<p>
+    {% comment %}Translators: reorder user, offer and book variables accoring to specific lang{% endcomment %}
+    {% blocktrans trimmed with user=offer.made_by offer=offer.offered_price book=offer.book%}
+    You have accepted {{user}}'s offer of {{offer}}&pound; for {{book}}.
+    {% endblocktrans %}
+</p>
+<h3>{% trans "Next step" %}</h3>
+<p>
+{% blocktrans trimmed with email=offer.book.user.email%}
+    Soon, you will be contacted by the buyer via your email address: <b>{{ email}}</b>, where you can talk through the payment and transport details
+{% endblocktrans %}
+</p>
+<p>
+    {% blocktrans trimmed %}
+        In case you are not contacted within the next 48 hours, your book will be marked as 'selling' again, and you will have accept another offer.
+    {% endblocktrans %}
+</p>
+<p>
+    {% blocktrans trimmed %}
+        Should you have any further questions please visit our info page at ...
+    {% endblocktrans %}
+</p>
+<p>{% trans "the Libraring team" %}</p>
 {% endwith %}
 {% endblock %}

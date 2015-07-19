@@ -8,6 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.template.loader import get_template
 from django.template import Context
 from django.core import mail
+from django.utils.translation import ugettext as _
 
 from usr.project import user_is_not_blocked
 from books.forms import BookForm, OfferForm

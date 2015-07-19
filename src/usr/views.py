@@ -2,7 +2,7 @@
 # Created by: Tamas Sztanka-Toth
 
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -12,13 +12,13 @@ from django.core import mail
 from django.template.loader import get_template
 from django.template import Context
 from django.db.models import Count
+from django.utils.translation import ugettext as _
 
 from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
 from usr.models import Class, Person, PageMessages, Location
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
 from books.models import Genre
-
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -48,7 +48,7 @@ def is_not_student(wizard):
 def send_confirmation_email(user):
     sender = 'LIBRARING <no-reply@libraring.co.uk>'
     to = user.email
-    subject = 'Registration confirmation'
+    subject = _('Registration confirmation')
 
     text_content = get_template('before_login/registration/email.txt')
     html_content = get_template('before_login/registration/email.html')
@@ -147,7 +147,7 @@ def login_view(request):
         if form.is_valid():
             user = authenticate(username=request.POST['username'], \
                                 password=request.POST['password'])
-            error = 'Your username/password is incorrect. Are you registered?'
+            error = _('Your username/password is incorrect. Are you registered?')
 
     else:
         form = LoginForm()
@@ -322,8 +322,6 @@ def blocked_profile(request):
 @last_logged_user_exists
 def deactivated_profile(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
-
-    #todo: add user to the render
     return render(request, 'before_login/messages.html',
                   {'user': user, 'message': PageMessages.objects.get(name='deactivated_profile')})
 

@@ -1,8 +1,11 @@
-Dear {{ buyer.username }}
-
-{{ seller.username }} has accepted your offer of &pound;{{ book.accepted_offer.offered_price }} for {{ book }}!
-
+{% load i18n %}
+{% blocktrans trimmed with username=buyer.username %}
+Dear <strong>{{ username }}</strong>
+{% endblocktrans %}
+{% blocktrans trimmed with username=username price=book.accepted_offer.offered_price %}
+    {{ username }} has accepted your offer of &pound;{{ price }} for {{ book }}!
+{% endblocktrans %}
+{% blocktrans trimmed %}
 To discuss the details of the transaction please respond to this email. Once you are all set, please click on the 'Finalise'
-here: <a href="http://www.libraring.co.uk/books/book/{{ book.pk }}/">http://www.libraring.co.uk/books/book/{{ book.pk }}/</a>
-
-the LIBRARING team
+here: {% endblocktrans %} <a href="http://www.libraring.co.uk/books/book/{{ book.pk }}/">http://www.libraring.co.uk/books/book/{{ book.pk }}/</a>
+{% trans "the Libraring team" %}

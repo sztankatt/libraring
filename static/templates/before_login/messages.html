@@ -1,12 +1,14 @@
 {% extends "before_login/framework/base.html" %}
-
+{% load i18n %}
 {% block content%}
     <div class="row main-row">
         <div class="col-md-9 col-md-offset-2">
             {% if message%}
             <div id="messages" class="messages-field alert alert-{{message.type}}">
                 <div class="messages-field-header">
-                    {{message.header}}
+                    {% blocktrans with header=message.header %}
+                    {{header}}
+                    {% endblocktrans %}
                 </div>
                 <div class="messages-field-body">
                  <p>Dear {{user.first_name}}!</p>

@@ -1,6 +1,7 @@
 {% extends "before_login/framework/base.html"%}
 {%block title%}Libraring{%endblock%}
 {%block content%}
+{% load i18n %}
 
 <style>
     body{
@@ -19,7 +20,7 @@
                     <form class="form-horizontal" action="{% url 'usr:login' %}" method="post">
                         {% csrf_token%}
                         <div class="form-group">
-                            <label for="id_username" class="col-sm-3 control-label">Username:</label>
+                            <label for="id_username" class="col-sm-3 control-label">{% trans "Username" %}</label>
                             <div class="col-sm-8 col-sm-offset-1">
                                 <input type="text" id="id_username" class="form-control" placeholder="username" name="username"/>                                
                             </div>
@@ -32,7 +33,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-8">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                                <button type="submit" class="btn btn-primary">{% trans "Login" %}</button>
                             </div>    
                         </div>
                     </form>
@@ -40,12 +41,13 @@
                 <div class="page-content-body">
                     <div class="row">
                         <div class="col-sm-offset-4 col-sm-8">
-                            <p>Not registered yet?<p>
+                            <p>{% trans "Not registered yet?" %}<p>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-offset-4 col-sm-8">
-                            <p>You can register <a href="{% url 'register' %}">here</a>!</p>
+                            {% url 'register' as reg_url %}
+                            <p>{% blocktrans %}You can register <a href="{{ reg_url }}">here</a>!{% endblocktrans %}</p>
                         </div>
                     </div>
                 </div>
@@ -53,13 +55,13 @@
             <div class="index-page-content">
                 <h3>About</h3>
                 <div class="index-page-content-body">
-                   <p>Libraing is a free and online market where users can buy and resell their textbooks and/or any course related material. The website is designed to provide a university specific, dynamic and online service for students to swiftly trade their unwanted books with other users regardless of university or course as it happens on a joint platform.</p>
+                   <p>{% blocktrans %}Libraing is a free and online market where users can buy and resell their textbooks and/or any course related material. The website is designed to provide a university specific, dynamic and online service for students to swiftly trade their unwanted books with other users regardless of university or course as it happens on a joint platform.{% endblocktrans %}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3 col-md-offset-1">
             <div class="index-page-content">
-                <h3>Like us on facebook!</h3>
+                <h3>{% trans "Like us on facebook!" %}</h3>
                 <div class="index-page-content-body">
                     <div class="fb-like-box" data-href="https://www.facebook.com/Libraring" data-height="513" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="false"></div>   
                 </div>

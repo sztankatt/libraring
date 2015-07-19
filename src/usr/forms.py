@@ -37,6 +37,7 @@ class ClassForm(ModelForm):
 
     class Meta:
         model = Class
+        fields = '__all__'
 
 
 class NClassForm(ClassForm):
