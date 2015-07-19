@@ -30,6 +30,15 @@
             <link rel="shortcut icon" href="{%static 'img/logo_favicon.ico' %}" />
      
        <link href="{% static 'css/before_login.css' %}" rel="stylesheet" />
+
+     <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+            <!-- BOOTSTRAP JS -->
+            <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+            <script src="{% static 'js/jquery.cookie.js' %}"></script>
+
+            {{ form.media }}
+
     </head>
     <body>
         <!-- Facebook -->
@@ -98,15 +107,9 @@
             <!-- FOOTER END -->
         </section>
         <!-- CONTENT END -->
-        
-            <!-- JQUERY 2.0.2 -->
-            <script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+
         {% block js %}
-
-            <!-- BOOTSTRAP JS -->
-            <script src="{% static 'js/bootstrap.min.js' %}"></script>
-
-            <script src="{% static 'js/jquery.cookie.js' %}"></script>
+            <!-- JQUERY 2.0.2 -->
 
             <!-- BASIC JS -->
         {% endblock %}

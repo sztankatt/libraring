@@ -1,28 +1,12 @@
 {% extends "after_login/framework/base.html"%}
 {%block title%}{{project.name}} Home {%endblock%}
-{% load staticfiles %}
+{% load staticfiles endless%}
 {% block content%}
-
-	<h2>Latest Books by Genre</h2>
 	<div id="genre_books_all">
-	
-		<div class="book-gutter-sizer"></div>
-	{% for genre in genres %}
-		<div class="book-container-header book-container">
-			<h3 ><span class="reverse">{{genre.name}}</span></h3>
-		</div>
-		{% for book in genre.book_set.all|slice:":5"%}
-			{% include  'after_login/books/list_books_element_page.html' with book=book%}
-		{% endfor %}
-		<div class="book-container-footer book-container">
-		<a href="{% url 'books:genre' genre.name %}">
-			<h4 class="genre-books-view-all">view all</h4>
-		</a>
-		</div>
-		
-	{% endfor %}
-	</div>
 
+		<div class="book-gutter-sizer"></div>
+    {% include home_books_template %}
+	</div>
 {% endblock%}
 
 {%block js%}
@@ -32,5 +16,16 @@
 	<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
     <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
   	<script src="{% static 'js/usr/home_page.js'%}"></script>
-
+    <script src="{{ STATIC_URL }}endless_pagination/js/endless-pagination.js"></script>
+    <script>
+        //TODO: Rewrite this to some more secure code
+        $.endlessPaginate({
+        paginateOnScroll: true,
+        onCompleted: function(context, fragment) {
+            num = context.url.split("page=")[1];
+            $items = $('.page-num-'+num+' .book-grid-sizer');
+            msnry = $('#genre_books_all').data('masonry');
+            msnry.appended($items);
+        }
+    });</script>
 {%endblock%}
