@@ -261,7 +261,7 @@
                         {% if book.publisher %}
                             <a href="{% url 'books:publisher' book.publisher.id %}">{{book.publisher.name}}</a>
                         {%else %}
-                            Not specified
+                            {% trans "Not specified" %}
                         {%endif%}
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                         {% if book.publication_city %}
                             {{book.publication_city}}
                         {%else %}
-                            Not specified
+                            {% trans "Not specified" %}
                         {%endif%}
                         </div>
                     </div>
