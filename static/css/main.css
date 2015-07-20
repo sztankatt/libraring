@@ -83,18 +83,23 @@ a {
 }
 .navbar-nav li a:hover {
   background-color: #fff;
-  padding-bottom: 10px!important;
+  padding-bottom: 10px;
   border-bottom: 5px solid #00b6d1;
   color: #00b6d1;
+}
+.dropdown-menu > li > a {
+  color: #00b6d1;
+}
+.dropdown-menu > li > a:hover {
+  border-width: 0px;
+  padding-bottom: 3px;
+  color: #26747f;
 }
 .wrapper {
   margin-top: 100px;
 }
 .asteriskField {
   display: none;
-}
-.search-form {
-  margin-left: 100px;
 }
 .search-form input {
   width: 300px!important;

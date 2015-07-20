@@ -116,9 +116,19 @@ a{
 
 .navbar-nav li a:hover{
     background-color:#fff;
-    padding-bottom: 10px!important;
+    padding-bottom: 10px;
     border-bottom: 5px solid @main-color;
     color: @main-color;
+}
+
+.dropdown-menu>li>a{
+  color:@main-color;
+}
+
+.dropdown-menu>li>a:hover{
+  border-width: 0px;
+  padding-bottom: 3px;
+  color: @dark-color;
 }
 
 .wrapper {
@@ -130,8 +140,6 @@ a{
 }
 
 .search-form{
-    margin-left:100px;
-
     input{
         width: 300px!important;
     }
