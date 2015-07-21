@@ -1,19 +1,21 @@
 {% load i18n %}
 <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-        <li><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-        <li><a href="#">{% trans "Explore" %}</a></li>
-    </ul>
-    <form class="navbar-form navbar-left navbar-input-group search-form" role="search" method="get" action="{% url 'books:haystack_search' %}">
-        <div class="form-group">
-            <input type="text" name="q" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">{% trans "Go!" %}</button>
+        <li><a href="{% url 'index' %}" class="home-button menu-item">{% trans "Home" %}</a></li>
+        <li><a href="#" class="explore-button menu-item">{% trans "Explore" %}</a></li>
+
+    <form  class="navbar-left" role="search" method="get" action="{% url 'books:haystack_search' %}">
+        <li><input type="text" name="q" class="menu-search-input" placeholder="Search... type here!"></li>
     </form>
+        <li><a href="#" class="menu-search-submit">Go!</a></li>
+    </ul>
+    <div>
+
+    </div>
     <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><i class="fa fa-bell"></i></a></li>
        <li class="dropdown">
-           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i>{{ request.user.username }}</a>
+           <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.username }}</a>
            <ul class="dropdown-menu">
                <li><a href="#">{% trans "Offers" %}</a></li>
                <li><a href="#">{% trans "Books" %}</a></li>

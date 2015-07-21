@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-19 01:13+0100\n"
+"POT-Creation-Date: 2015-07-21 00:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,43 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: after_login/books/accepted_offer.html:4
-msgid "Accepted Offer!"
-msgstr ""
-
-#. Translators: reorder user, offer and book variables accoring to specific lang
-#: after_login/books/accepted_offer.html:8 after_login/books/book_page.html:21
-#, python-format
-msgid "You have accepted %(user)s's offer of %(offer)s&pound; for %(book)s."
-msgstr ""
-
-#: after_login/books/accepted_offer.html:12
-msgid "Next step"
-msgstr ""
-
-#: after_login/books/accepted_offer.html:14
-#, python-format
-msgid ""
-"Soon, you will be contacted by the buyer via your email address: <b>"
-"%(email)s</b>, where you can talk through the payment and transport details"
-msgstr ""
-
-#: after_login/books/accepted_offer.html:19
-msgid ""
-"In case you are not contacted within the next 48 hours, your book will be "
-"marked as 'selling' again, and you will have accept another offer."
-msgstr ""
-
-#: after_login/books/accepted_offer.html:24
-msgid "Should you have any further questions please visit our info page at ..."
-msgstr ""
-
-#: after_login/books/accepted_offer.html:28
-#: after_login/books/accepted_offer_email.html:21
-#: after_login/books/accepted_offer_email.txt:11
-msgid "the Libraring team"
-msgstr ""
 
 #: after_login/books/accepted_offer_email.html:3
 #: after_login/books/accepted_offer_email.txt:2
@@ -73,6 +36,13 @@ msgid ""
 "To discuss the details of the transaction please respond to this email. Once "
 "you are all set, please click on the 'Finalise' here:"
 msgstr ""
+
+#: after_login/books/accepted_offer_email.html:21
+#: after_login/books/accepted_offer_email.txt:11
+#, fuzzy
+#| msgid "the Libraring a"
+msgid "the Libraring team"
+msgstr "aaa"
 
 #: after_login/books/book_offer.html:15
 msgid "Accept"
@@ -111,6 +81,11 @@ msgstr ""
 
 #: after_login/books/book_page.html:20 after_login/books/book_page.html:101
 msgid "Well done!"
+msgstr ""
+
+#: after_login/books/book_page.html:21
+#, python-format
+msgid "You have accepted %(user)s's offer of %(offer)s&pound; for %(book)s."
 msgstr ""
 
 #: after_login/books/book_page.html:27 after_login/books/book_page.html:107
@@ -181,28 +156,22 @@ msgstr ""
 
 #: after_login/books/book_page.html:113
 msgid ""
-"\n"
-"                    Once you are happy with this transaction, you can "
-"finalise it by clicking the 'Finalise' button below. Once both of you have "
-"clicked 'Finalised'\n"
-"                the transaction will be closed.\n"
-"                    "
+"Once you are happy with this transaction, you can finalise it by clicking "
+"the 'Finalise' button below. Once both of you have clicked 'Finalised' the "
+"transaction will be closed."
 msgstr ""
 
 #: after_login/books/book_page.html:121
 #, python-format
 msgid ""
-"\n"
-"                        You have already finalised this transaction. Once "
-"%(book.sold_to)s also finalises it, the transaction will be completed.\n"
-"                        "
+"You have already finalised this transaction. Once %(book.sold_to)s also "
+"finalises it, the transaction will be completed."
 msgstr ""
 
 #: after_login/books/book_page.html:138
 msgid ""
 "Transaction closed, you have successfully acquired this book! Please rate "
-"the transaction below.\n"
-"                    "
+"the transaction below."
 msgstr ""
 
 #: after_login/books/book_page.html:143
@@ -343,6 +312,48 @@ msgstr ""
 
 #: after_login/books/list_books_page.html:34
 msgid "No books"
+msgstr ""
+
+#: after_login/framework/menu.html:4
+msgid "Home"
+msgstr ""
+
+#: after_login/framework/menu.html:5
+msgid "Explore"
+msgstr ""
+
+#: after_login/framework/menu.html:11
+#, fuzzy
+#| msgid "Go"
+msgid "Go!"
+msgstr "Mehet"
+
+#: after_login/framework/menu.html:18
+msgid "Offers"
+msgstr ""
+
+#: after_login/framework/menu.html:19
+msgid "Books"
+msgstr ""
+
+#: after_login/framework/menu.html:20
+msgid "Watchlist"
+msgstr ""
+
+#: after_login/framework/menu.html:22
+msgid "Settings"
+msgstr ""
+
+#: after_login/framework/menu.html:24
+msgid "Log out"
+msgstr ""
+
+#: after_login/usr/home.html:11
+msgid "Add filters"
+msgstr ""
+
+#: after_login/usr/home.html:25
+msgid "Filter books"
 msgstr ""
 
 #: before_login/framework/index.html:23

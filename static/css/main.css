@@ -53,7 +53,7 @@ a {
 }
 .beta {
   font-size: 12px;
-  color: black;
+  color: #ffffff;
 }
 .brand {
   font-family: 'Raleway', serif;
@@ -64,28 +64,24 @@ a {
 }
 .navbar {
   border: none!important;
-  margin-bottom: 5px!important;
   border-bottom: 1px solid #00b6d1 !important;
 }
 .navbar-brand {
   padding-top: 0px;
   padding-right: 30px;
   font-family: 'Raleway', serif;
+  background-color: #26747f;
+  color: #ffffff;
+  font-weight: 900;
 }
 .navbar-brand:hover {
-  color: #00b6d1;
+  color: #ffffff;
 }
 .navbar-brand img {
   max-height: 50px;
 }
 .navbar-nav.navbar-right:last-child {
   margin: 0px;
-}
-.navbar-nav li a:hover {
-  background-color: #fff;
-  padding-bottom: 10px;
-  border-bottom: 5px solid #00b6d1;
-  color: #00b6d1;
 }
 .dropdown-menu > li > a {
   color: #00b6d1;
@@ -94,6 +90,53 @@ a {
   border-width: 0px;
   padding-bottom: 3px;
   color: #26747f;
+}
+.home-button,
+.username-button {
+  background-color: #00b6d1;
+  color: #ffffff;
+}
+.home-button:hover,
+.username-button:hover {
+  color: #ffffff;
+  background-color: rgba(0, 182, 209, 0.8) !important;
+}
+.username-button {
+  border-left: 1px solid #00b6d1;
+}
+.explore-button {
+  background-color: #c1edf4;
+  color: #26747f;
+}
+.explore-button:hover {
+  color: #26747f;
+  background-color: rgba(193, 237, 244, 0.6) !important;
+}
+.menu-item {
+  min-width: 130px;
+  text-align: center;
+}
+.menu-search-input {
+  min-width: 200px;
+  padding-left: 10px;
+  height: 50px;
+  border: 0px;
+}
+.menu-search-submit {
+  border-right: 1px solid #00b6d1;
+}
+.menu-search-submit {
+  color: #26747f;
+}
+.menu-search-submit:hover {
+  color: #26747f;
+  background-color: rgba(0, 182, 209, 0.09) !important;
+}
+.dropdown-menu {
+  min-width: 130px;
+}
+.dropdown-menu > li > a:hover {
+  background-color: #ffffff;
 }
 .wrapper {
   margin-top: 100px;
@@ -620,14 +663,16 @@ input.form-control {
     width: 32%;
   }
 }
-@media (min-width: 800px) {
+/*
+@media (min-width: 800px){
+    .book-container{
+        width: 23.5%;
+    }
+}
+*/
+@media (min-width: 900px) {
   .book-container {
     width: 23.5%;
-  }
-}
-@media (min-width: 1000px) {
-  .book-container {
-    width: 18.4%;
   }
 }
 .book-container .thumbnail {

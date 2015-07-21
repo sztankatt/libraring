@@ -110,7 +110,7 @@
                     {% endblocktrans %}
                 </p>
                 <p>
-                    {% blocktrans %}
+                    {% blocktrans trimmed %}
                     Once you are happy with this transaction, you can finalise it by clicking the 'Finalise' button below. Once both of you have clicked 'Finalised'
                 the transaction will be closed.
                     {% endblocktrans %}
@@ -118,7 +118,7 @@
                 <p>
                 {% if book.accepted_offer.transaction.finalised_by_buyer %}
                     <b>
-                        {% blocktrans %}
+                        {% blocktrans trimmed %}
                         You have already finalised this transaction. Once {{ book.sold_to }} also finalises it, the transaction will be completed.
                         {% endblocktrans %}
                     </b>
@@ -135,7 +135,7 @@
         {% elif book.status == 'finalised' %}
             <div class="alert alert-info">
                 <h3>
-                    {% blocktrans %}Transaction closed, you have successfully acquired this book! Please rate the transaction below.
+                    {% blocktrans trimmed %}Transaction closed, you have successfully acquired this book! Please rate the transaction below.
                     {% endblocktrans %}
                 </h3>
                 <p>

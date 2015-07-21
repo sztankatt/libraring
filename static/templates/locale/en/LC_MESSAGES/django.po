@@ -52,7 +52,7 @@ msgstr ""
 #: after_login/books/accepted_offer_email.html:21
 #: after_login/books/accepted_offer_email.txt:11
 msgid "the Libraring team"
-msgstr ""
+msgstr "aaa"
 
 #: after_login/books/accepted_offer_email.html:3
 #: after_login/books/accepted_offer_email.txt:2

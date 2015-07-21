@@ -14,13 +14,15 @@ from usr.project import user_is_not_blocked
 from books.forms import BookForm, OfferForm
 from books.models import Book, Genre, Author, Publisher, Offer, Transaction, TransactionRating
 
+
 @login_required
-@ensure_csrf_cookie 
+@ensure_csrf_cookie
 @user_is_not_blocked
 def main_page(request):
     form = BookForm()
-            
+
     return render(request, 'after_login/books/main_page.html', {'form': form})
+
 
 @login_required
 def book_page(request, id=None):
@@ -30,28 +32,31 @@ def book_page(request, id=None):
         offer_form = None
         book = get_object_or_404(Book, pk=id)
         offers = Offer.objects.filter(book=book).order_by('-offered_price')
-        #if the book is not sold, proceed
+        # if the book is not sold, proceed
         if book.is_sold() is False:
             if request.user != book.user:
-                offer_form = OfferForm({'book':book.id, 'made_by':request.user.id})
-        
+                offer_form = OfferForm({'book': book.id, 'made_by': request.user.id})
+
         return render(request, 'after_login/books/book_page.html', {
-            'book':book, 
-            'user':request.user,
-            'offers':offers,
-            'offer_form':offer_form})
+            'book': book,
+            'user': request.user,
+            'offers': offers,
+            'offer_form': offer_form})
+
 
 @login_required
 @user_is_not_blocked
 def genre(request, name):
-	try:
-		genre = Genre.objects.get(name=name)
+    try:
+        genre = Genre.objects.get(name=name)
 
-		book_list = genre.book_set.all()
+        book_list = genre.book_set.all()
 
-		return render(request, 'after_login/books/show_books.html', {'books':book_list, 'genre':genre, 'type':'genre'})
-	except Genre.DoesNotExist:
-		raise Http404
+        return render(request, 'after_login/books/show_books.html',
+                      {'books': book_list, 'genre': genre, 'type': 'genre'})
+    except Genre.DoesNotExist:
+        raise Http404
+
 
 @login_required
 @user_is_not_blocked
@@ -61,7 +66,8 @@ def author(request, pk):
 
         book_list = author.book_set.all()
 
-        return render(request, 'after_login/books/show_books.html', {'books':book_list, 'author':author, 'type':'author'})
+        return render(request, 'after_login/books/show_books.html',
+                      {'books': book_list, 'author': author, 'type': 'author'})
 
     except Author.DoesNotExist:
         raise Http404
@@ -70,18 +76,19 @@ def author(request, pk):
 @login_required
 @user_is_not_blocked
 def publisher(request, pk):
-
     try:
         publisher = Publisher.objects.get(pk=pk)
 
         book_list = publisher.book_set.all()
 
-        return render(request, 'after_login/books/show_books.html', {'books':book_list, 'publisher':publisher, 'type':'publisher'})
+        return render(request, 'after_login/books/show_books.html',
+                      {'books': book_list, 'publisher': publisher, 'type': 'publisher'})
 
 
 
     except Publisher.DoesNotExist:
         raise Http404
+
 
 @login_required
 @user_is_not_blocked
@@ -98,13 +105,14 @@ def make_an_offer(request):
 
             template = get_template('after_login/books/book_offer.html')
 
-            context = Context({'offer':offer})
+            context = Context({'offer': offer})
 
             output = template.render(context)
 
             return HttpResponse(output)
     else:
         raise Http404
+
 
 def send_accepted_offer_email(seller, buyer, book):
     sender = "LIBRARING: %s accepted your offer <%s>" % (seller.username, seller.email)
@@ -114,7 +122,7 @@ def send_accepted_offer_email(seller, buyer, book):
     text_content = get_template("after_login/books/accepted_offer_email.txt")
     html_content = get_template("after_login/books/accepted_offer_email.html")
 
-    d = Context({"seller":seller, "buyer":buyer, "book":book})
+    d = Context({"seller": seller, "buyer": buyer, "book": book})
 
     text_content = text_content.render(d)
     html_content = html_content.render(d)
@@ -133,12 +141,10 @@ def accept_the_offer(request):
         if offer_id == False:
             raise Http404
 
-
-
         transaction = Transaction()
         transaction.save()
 
-        #geting the offer and marking as accepted
+        # geting the offer and marking as accepted
         offer = Offer.objects.get(pk=offer_id)
         offer.accepted = True
         offer.transaction = transaction
@@ -161,7 +167,6 @@ def accept_the_offer(request):
 
     else:
         raise Http404
-
 
     return HttpResponse(post)
 
@@ -201,13 +206,12 @@ def finalise_transaction(request):
             tr = TransactionRating(buyer=buyer, seller=seller)
             tr.save()
 
-            #change the status of the book
+            # change the status of the book
             book.status = 'finalised'
             book.save()
 
             transaction.rating = tr
             transaction.save()
-
 
         return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
 
@@ -230,15 +234,15 @@ def rate_transaction(request):
             tr = TransactionRating.objects.get(pk=tr_id)
 
             if user.id == tr.seller.id:
-                #rate the buyer
+                # rate the buyer
                 tr.buyer_rating = rating
                 tr.save()
             elif user.id == tr.buyer.id:
-                #rate the seller
+                # rate the seller
                 tr.seller_rating = rating
                 tr.save()
             else:
-                #not in the tr
+                # not in the tr
                 raise Http404
 
             return HttpResponseRedirect(reverse('books:book_page', args=(tr.transaction.offer.book.id,)))
@@ -250,12 +254,16 @@ def rate_transaction(request):
     else:
         raise Http404
 
-    #TODO: possible cleanup of unused methods
-    #TODO: check if book status is correct every time
-    #TODO: send an email to the user actually
+        # TODO: possible cleanup of unused methods
+        #TODO: check if book status is correct every time
+        #TODO: send an email to the user actually
+
+
 """
     NOT USED
 """
+
+
 @login_required
 @user_is_not_blocked
 def transaction_accept(request):
@@ -270,7 +278,6 @@ def transaction_accept(request):
 
         if user.id != int(user_id):
             raise Http404
-
 
         try:
             transaction = Transaction.objects.get(pk=transaction_id)
@@ -306,6 +313,8 @@ def transaction_accept(request):
 """
     NOT USED
 """
+
+
 @login_required
 @user_is_not_blocked
 def transaction_rate(request, pk):
@@ -313,7 +322,6 @@ def transaction_rate(request, pk):
 
     try:
         transaction = Transaction.objects.get(pk=pk)
-
 
         if user.id == transaction.offer.book.user.id:
             seller = user
@@ -326,12 +334,11 @@ def transaction_rate(request, pk):
         else:
             raise Http404
 
-
         obj, created = TransactionRating.objects.get_or_create(transaction=transaction, seller=seller, buyer=buyer)
 
         tr = obj
 
-        return render(request, 'after_login/books/transaction_rate.html', {'selling':selling, 'tr':tr})
+        return render(request, 'after_login/books/transaction_rate.html', {'selling': selling, 'tr': tr})
 
 
     except Transaction.DoesNotExist:
