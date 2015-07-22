@@ -1,0 +1,25 @@
+
+<div class="left-nav">
+    <div class="left-nav-body">
+        <div class="left-nav-body-title">
+            Showing {% if not list %} all {% else %} selected{% endif %}
+        </div>
+        <div class="left-nav-body-content">
+            <form class="form-horizontal" action="" method="get">
+                <ul>
+                {% for checkbox in form.genres %}
+                    <li class="checkbox">
+                    {{ checkbox.tag}}
+                    <label for="id_genres_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
+                    </li>
+                {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-dark btn-block">Filter</button>
+                <a href="{% url 'index' %}" class="btn btn-dark btn-block">Clear</a>
+            </form>
+        </div>
+    </div>
+    <div class="left-nav-footer">
+        <button class="btn btn-dark btn-block normal"><span class="text">Hide sidebar </span><i class="fa fa-minus"></i></button>
+    </div>
+</div>

@@ -1,14 +1,15 @@
 {% load i18n %}
 <div class="navbar-collapse collapse">
+    <form  class="" role="search" method="get" action="{% url 'books:haystack_search' %}">
     <ul class="nav navbar-nav">
         <li><a href="{% url 'index' %}" class="home-button menu-item">{% trans "Home" %}</a></li>
         <li><a href="#" class="explore-button menu-item">{% trans "Explore" %}</a></li>
 
-    <form  class="navbar-left" role="search" method="get" action="{% url 'books:haystack_search' %}">
         <li><input type="text" name="q" class="menu-search-input" placeholder="Search... type here!"></li>
-    </form>
-        <li><a href="#" class="menu-search-submit">Go!</a></li>
+
+        <li><input type="submit" class="menu-search-submit" value="GO!"></li>
     </ul>
+    </form>
     <div>
 
     </div>

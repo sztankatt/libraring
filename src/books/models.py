@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.sql.query import FieldError
 from django_countries.fields import CountryField
-from django.db.models import Max, Q, Count
 from queued_search.models import QueuedModel
 from django.utils.translation import get_language
 import datetime

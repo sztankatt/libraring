@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import mail
 from django.template.loader import get_template
 from django.template import Context, RequestContext
-from django.db.models import Count
+from django.db.models import Q
 from django.utils.translation import ugettext as _
 
 from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
@@ -197,8 +197,16 @@ def home(
         home_books_template ='after_login/usr/load_books.html'
         ):
     list = request.GET.getlist('genres')
+    books = Book.objects.all()
+    if list:
+        filter = Q()
+        for genre in list:
+            filter = filter | Q(genre__name=genre)
+
+        books = books.filter(filter).distinct()
+
     context = {
-        'books': Book.objects.all(),
+        'books': books,
         'home_books_template': home_books_template,
         'form':GenreForm(request.GET),
         'list':list

@@ -3,7 +3,7 @@
 {% load staticfiles endless widget_tweaks i18n %}
 {% block content%}
 
-
+{% comment %}
     <div class="panel panel-primary">
         <div class="panel-body">
             <h3>Showing all books</h3>
@@ -11,7 +11,12 @@
                 <a href="#" class="btn btn-default" data-toggle="modal" data-target="#filter_modal">{% trans "Add filters" %}</a>
             </div>
         </div>
+    </div>{% endcomment %}
+<div class="home-container">
+    <div class="left-side">
+        {% include 'after_login/usr/left_nav_home.html' with form=form%}
     </div>
+    <div class="right-side">
 	<div id="genre_books_all">
 
 		<div class="book-gutter-sizer"></div>
@@ -41,7 +46,8 @@
             </div>
         </div>
     </div>
-
+    </div>
+</div>
 {% endblock%}
 
 {%block js%}
@@ -60,7 +66,9 @@
             num = context.url.split("page=")[1];
             $items = $('.page-num-'+num+' .book-grid-sizer');
             msnry = $('#genre_books_all').data('masonry');
-            msnry.appended($items);
+            imagesLoaded($items, function(){
+                msnry.appended($items);
+            });
         }
     });</script>
 {%endblock%}

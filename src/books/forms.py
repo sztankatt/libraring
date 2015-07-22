@@ -1,5 +1,8 @@
+import operator
+
 from django.forms import ModelForm
 from django import forms
+from django.db.models import Count
 
 from books.models import Book, Author, Genre, Publisher, Offer
 
@@ -101,6 +104,8 @@ class OfferForm(forms.ModelForm):
         exclude =['transaction', 'accepted']
     
 class GenreForm(forms.Form):
-    GENRE_CHOICES = [(x,x) for x in Genre.objects.all()]
+    genre_query = Genre.objects.annotate(number_of_books=Count('book')).order_by('-number_of_books')[:10]
+    genre_query = sorted(genre_query, key=operator.attrgetter('name'))
+    GENRE_CHOICES = [(x,x) for x in genre_query]
 
     genres = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices = GENRE_CHOICES)

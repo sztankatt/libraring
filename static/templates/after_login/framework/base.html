@@ -81,10 +81,11 @@
             <div id="content">
                 <section id="main-content">
                     <section class="wrapper">
-                        <div id="body" class="row main-row">
-                            <div class="col-md-10 col-md-offset-1" >
-                         {%block content%}{%endblock%}</div>
-                        </div>
+                        {% comment %}<div id="body" class="row main-row">
+                            <div class="col-md-10 col-md-offset-1" >{% endcomment %}
+                         {%block content%}{%endblock%}
+            {% comment %}</div>
+                        </div>{% endcomment %}
                     </section>
                 </section>
             </div>
@@ -126,6 +127,19 @@
         
 
         <script src="{% static 'js/jquery.cookie.js' %}"></script>
+        <script>
+            $(document).ready(function(){
+                $('.btn').mouseup(function(){
+                    $(this).blur()
+                });
+                $('a').mouseup(function(){
+                    $(this).blur();
+                });
+                $('button').mouseup(function(){
+                    $(this).blur();
+                });
+            });
+        </script>
 
 
 
