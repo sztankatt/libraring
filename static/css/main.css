@@ -148,7 +148,8 @@ a {
   color: #26747f;
 }
 .home-button,
-.username-button {
+.username-button,
+.username-button:focus {
   background-color: #00b6d1;
   color: #ffffff;
 }
@@ -157,8 +158,12 @@ a {
   color: #ffffff;
   background-color: rgba(0, 182, 209, 0.8) !important;
 }
-.username-button {
+.username-button,
+.username-button:focus {
   border-left: 1px solid #00b6d1;
+}
+.username-button:focus {
+  background-color: rgba(0, 182, 209, 0.8) !important;
 }
 .explore-button {
   background-color: #c1edf4;

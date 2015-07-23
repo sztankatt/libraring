@@ -20,6 +20,7 @@
 	<div id="genre_books_all">
 
 		<div class="book-gutter-sizer"></div>
+
     {% include home_books_template %}
 	</div>
     <div id="filter_modal" class="modal fade bs-example-modal-lg" role="dialog" aria-hidden="true" aria-labelledby="add_filters">
@@ -56,19 +57,6 @@
 
 	<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
     <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'endless_pagination/js/endless-pagination.js' %}"></script>
   	<script src="{% static 'js/usr/home_page.js'%}"></script>
-    <script src="{{ STATIC_URL }}endless_pagination/js/endless-pagination.js"></script>
-    <script>
-        //TODO: Rewrite this to some more secure code
-        $.endlessPaginate({
-        paginateOnScroll: true,
-        onCompleted: function(context, fragment) {
-            num = context.url.split("page=")[1];
-            $items = $('.page-num-'+num+' .book-grid-sizer');
-            msnry = $('#genre_books_all').data('masonry');
-            imagesLoaded($items, function(){
-                msnry.appended($items);
-            });
-        }
-    });</script>
 {%endblock%}

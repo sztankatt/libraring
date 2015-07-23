@@ -1,5 +1,5 @@
 {% load endless %}
-{% lazy_paginate books %}
+{% lazy_paginate first_page,8 books  %}
     <div class="page-num-{% show_current_number %}">
 {% for book in books %}
 

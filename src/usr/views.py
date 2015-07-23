@@ -197,6 +197,8 @@ def home(
         home_books_template ='after_login/usr/load_books.html'
         ):
     list = request.GET.getlist('genres')
+    first_page = request.GET.get('load-until', 1)
+    first_page = int(first_page)*8
     books = Book.objects.all()
     if list:
         filter = Q()
@@ -209,7 +211,8 @@ def home(
         'books': books,
         'home_books_template': home_books_template,
         'form':GenreForm(request.GET),
-        'list':list
+        'list':list,
+        'first_page':first_page
     }
     if request.is_ajax():
         template = home_books_template
