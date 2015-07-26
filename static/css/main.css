@@ -61,9 +61,6 @@ p {
   height: 100%;
   position: relative;
 }
-.left-side .left-nav .left-nav-body-title {
-  font-size: 20px;
-}
 .left-side .left-nav .left-nav-footer {
   bottom: 60px;
   position: absolute;
@@ -87,8 +84,22 @@ p {
   float: right;
   cursor: pointer;
 }
-.left-side .left-nav-body {
-  clear: both;
+.left-side .left-nav-body .left-nav-body-title {
+  font-size: 20px;
+}
+.left-side .left-nav-body .left-nav-body-content h4 {
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+.left-side .left-nav-body .left-nav-body-content ul {
+  padding: 0px;
+}
+.left-side .left-nav-body .left-nav-body-content ul li {
+  display: inline;
+}
+.left-side .left-nav-body .left-nav-body-content .watchlist {
+  margin-top: 30px;
 }
 .right-side {
   margin-left: 200px;
@@ -568,22 +579,23 @@ input.form-control {
   color: #ffffff;
   background-color: #bd362f;
 }
-.book-field {
-  margin-bottom: 15px;
-  margin-top: 15px;
-}
-.book-field-header {
-  margin: 0px!important;
-}
-.book-field-header div {
-  padding: 6px 12px;
-}
-.book-field-header-title {
+.book-field .book-field-header {
   font-weight: 700;
-  /*background-color: @light-color;*/
-
-  height: 100%;
   border-bottom: 2px solid #00b6d1 !important;
+}
+.book-field .book-field-val {
+  padding: 10px 5px;
+}
+.book-field .book-field-val ul {
+  padding: 0px;
+}
+.book-field .book-field-val ul li {
+  display: block;
+  padding: 5px 0px;
+}
+.book-field h3 {
+  margin-top: 0px;
+  color: #26747f;
 }
 .book-update {
   border: 2px solid #00b6d1 !important;
@@ -613,16 +625,6 @@ input.form-control {
 /*loading books*/
 .book-page-row .book-list {
   width: 100%;
-}
-.book-image {
-  min-height: 400px;
-}
-.book-overview-initial {
-  height: 0px;
-  overflow: hidden;
-}
-.book-overview-show-all {
-  margin-top: 10px;
 }
 .book-offer-previous-header {
   font-size: 24px;
@@ -756,38 +758,27 @@ input.form-control {
 .book-container .thumbnail {
   margin-bottom: 0px;
 }
-.book-container-footer {
-  margin-bottom: 10px;
-  border: 1px solid #26747f;
-  border-radius: 3px;
-}
-.book-container-footer a {
-  display: block;
-  padding: 40px 50px;
-  color: white;
-  background-color: #26747f;
-}
-.book-container-footer h4 {
-  color: white;
-}
-.book-container-footer a:hover {
-  text-decoration: none;
-  background-color: #3C828C;
-}
-.book-container-header {
-  width: 100%;
-  margin-bottom: 10px;
-  border: 1px solid #00b6d1;
-  border-radius: 3px;
-}
-.book-container-header h3 {
-  display: block;
-  margin: 0px;
+.book-container .thumbnail .caption {
   padding: 0px;
 }
-.book-container-header span {
+.book-container .thumbnail .caption .book-container-body {
+  background-color: white;
+  color: #26747f;
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: rgba(27, 81, 89, 0.09);
+}
+.book-container .thumbnail .caption .book-container-body:first-child {
+  border-top: 1px solid #26747f;
+  font-size: 20px;
+}
+.book-container .thumbnail .caption a {
   display: block;
-  padding: 10px;
+  color: #26747f;
+}
+.book-container .thumbnail .caption a:hover {
+  color: #26747f;
+  text-decoration: none;
 }
 .heightAuto {
   height: auto;
@@ -797,4 +788,10 @@ input.form-control {
 }
 .manager-page-content h4 {
   text-transform: uppercase;
+}
+.book-main-page {
+  padding-top: 20px;
+}
+.book-main-page .row {
+  margin: 0px;
 }

@@ -3,18 +3,10 @@
 {% load staticfiles endless widget_tweaks i18n %}
 {% block content%}
 
-{% comment %}
-    <div class="panel panel-primary">
-        <div class="panel-body">
-            <h3>Showing all books</h3>
-            <div class="btn-group pull-right">
-                <a href="#" class="btn btn-default" data-toggle="modal" data-target="#filter_modal">{% trans "Add filters" %}</a>
-            </div>
-        </div>
-    </div>{% endcomment %}
+
 <div class="home-container">
     <div class="left-side">
-        {% include 'after_login/usr/left_nav_home.html' with form=form%}
+        {% include 'after_login/usr/left_nav_home.html' with type='home' form=form%}
     </div>
     <div class="right-side">
 	<div id="genre_books_all">
@@ -58,5 +50,4 @@
 	<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
     <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'endless_pagination/js/endless-pagination.js' %}"></script>
-  	<script src="{% static 'js/usr/home_page.js'%}"></script>
 {%endblock%}

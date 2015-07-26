@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="navbar-collapse collapse">
+<div class="navbar-collapse collapse" id="main-menu">
     <form  class="" role="search" method="get" action="{% url 'books:haystack_search' %}">
     <ul class="nav navbar-nav">
         <li><a href="{% url 'index' %}" class="home-button menu-item">{% trans "Home" %}</a></li>

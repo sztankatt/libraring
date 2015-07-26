@@ -97,6 +97,8 @@ $(document).ready(function(){
             $('#id_new_publisher').attr({'disabled':'false'})
         }
     });
-    
+
+
+
 
 });

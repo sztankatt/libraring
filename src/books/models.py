@@ -123,16 +123,6 @@ class Transaction(models.Model):
 
     rating = models.OneToOneField(TransactionRating, null=True)
 
-    # def new_selling_messages(self):
-    #     from user_messages.models import Message
-    #     return Message.objects.filter(transaction=self,
-    #         seen=False).exclude(sender=self.book.user).count() > 0
-    #
-    # def new_buying_messages(self):
-    #     from user_messages.models import Message
-    #     return Message.objects.filter(transaction=self,
-    #         seen=False).exclude(sender=self.book.sold_to).count() > 0
-
     def is_finalised(self):
         return (self.finalised_by_seller and self.finalised_by_buyer)
 

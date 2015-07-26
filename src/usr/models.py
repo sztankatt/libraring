@@ -1,10 +1,10 @@
 import datetime
-from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
+from django.db.models import Sum
 
-from books.models import Transaction
+from books.models import TransactionRating
 
 COUNTRIES = [
     ('UK', 'United Kingdom'),
@@ -19,13 +19,9 @@ class Location(models.Model):
     country 			= models.CharField(choices=COUNTRIES, max_length=2)
     postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
     city				= models.CharField(max_length=50)
-    #county              = models.CharField(blank=True, null=True, max_length=50)
 
-    # def __unicode__(self):
-    #     if self.country == '--None--':
-    #         return '%s, %s' % (self.city, self.country)
-    #     else:
-    #         return '%s, %s, %s' % (self.city, self.county, self.country)
+    def __unicode__(self):
+        return self.city+", "+self.country
 
 #Institution for Person, Classes
 class Institution(models.Model):
@@ -101,11 +97,28 @@ class Person(models.Model):
     def previous_education(self):
         return self.education.filter(end_year__lt=self.education.order_by('-end_year')[0].end_year).order_by('-end_year')
 
-    # def location(self):
-    # 	if self.institution is None:
-    # 		return self.current_education().institution.location.__unicode__()
-    # 	else:
-    # 		return self.institution.location.__unicode__()
+
+    def get_average_rating(self):
+        rating = None
+
+        as_seller = TransactionRating.objects.filter(seller=self.user)
+        as_buyer = TransactionRating.objects.filter(buyer=self.user)
+
+        seller_count = as_seller.count()
+        buyer_count = as_buyer.count()
+
+        if seller_count != 0 and buyer_count != 0:
+            rating_sum = float(as_seller.aggregate(Sum('seller_rating'))+as_buyer.aggregate(Sum('buyer_rating')))
+            rating = rating_sum/(seller_count+buyer_count)
+        elif seller_count == 0:
+            rating = float(as_buyer.aggregate(Sum('buyer_rating')))/buyer_count
+        elif buyer_count == 0:
+            rating = float(as_seller.aggregate(Sum('seller_rating')))/seller_count
+
+        return rating
+
+
+
 
 
     def __unicode__(self):

@@ -15,62 +15,40 @@
         {% endthumbnail %}
     {%endif%}
     </a>
-      <div class="caption">
-        <a href="{{book.get_absolute_url}}"><h3>{{book.title}}</h3></a>
-        <p>Author(s):
+        <div class="caption">
+            <div class="book-container-body">
+               <a href="{{book.get_absolute_url}}">{{book.title}}</a>
+            </div>
+            <div class="book-container-body authors">
+            {% trans "Author(s)" %}:
             {% for author in book.author.all %}
-                {% if forloop.last%}
-                    {% if query %}
-                        {% highlight author.name with query %}
-                    {% else %}
-                        {{ author.name}}
-                    {% endif%}
-                {%else%}
-                    {%if query%}
-                        {% highlight author.name with query %}
-                    {% else %}
-                        {{author.name}},
-                    {% endif %}
-                {%endif%}
-            {% empty %}
-                {% trans "No authors specified" %}
-            {% endfor%}
-        </p>
-        {% if book.is_sold %}
-            {% if request.user.id == book.user.id %}
-                    {% if book.is_finalised %}
-                        <div class="alert alert-success">
-                            {% blocktrans trimmed with price=book.accepted_offer.offered_price %}
-                            You have sold this book for &pound;{{price}}!
-                            {% endblocktrans %}
-                        </div>
-                    {% else %}
-                        <div class="alert alert-info">
-                            {% blocktrans trimmed with user=book.sold_to price=book.accepted_offer.offered_price %}
-                            You are currently selling this book to {{user}} for &pound;{{price}}.
-                            {% endblocktrans %}
-                        </div>
-                    {% endif %}
-            {% else %}
-                <div class="alert alert-danger">
-                    <b>{% trans "Aw snap!" %}</b>
-                    {% blocktrans %}This book has already been sold.{% endblocktrans %}<i class="fa fa-frown-o"></i>
-                </div>
-            {% endif %}
-        {% else %}
-            {% if book.highest_offer %}
-                <h4><span class="reverse">{% trans "Highest offer" %}: {{book.highest_offer}}<i class="fa fa-gbp"></i></span></h4>
-            {% elif book.get_highest_offer %}
-                <h4><span class="reverse">{% trans "Highest offer" %}: {{book.get_highest_offer.offered_price}}<i class="fa fa-gbp"></i></span></h4>
-            {% else %}
-                <h4>{% trans "Highest offer" %}: {% trans "No offers for this book, yet." %}</h4>
-            {% endif %}
-            <h4>{% trans "Goal price" %}: {{book.price}}<i class="fa fa-gbp"></i></h4>
+                    {% if forloop.last%}
+                        {% if query %}
+                            {% highlight author.name with query %}
+                        {% else %}
+                            {{ author.name}}
+                        {% endif%}
+                    {%else%}
+                        {%if query%}
+                            {% highlight author.name with query %}
+                        {% else %}
+                            {{author.name}},
+                        {% endif %}
+                    {%endif%}
+                {% empty %}
+                    {% trans "No authors specified" %}
+                {% endfor%}
+            </div>
+            <div class="book-container-body">
+                {% trans "Location" %}: {{ book.user.person.location }}
+            </div>
+            <div class="book-container-body">
+                {% trans "Goal price" %}: &pound;{{ book.price }}
+            </div>
+            <div class="book-container-body">
+                {% trans "Highest offer" %}: {% if book.get_highst_offer %}&pound;{{ book.get_highest_offer }}{% else %}No offers yet{% endif %}
+            </div>
 
-            {% if not request.user.id == book.user.id %}
-                <p>{% trans "Location" %}: {{book.get_location}}</p>
-            {% endif %}
-        {% endif %}
       </div>
     </div>
 </div>

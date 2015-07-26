@@ -1,10 +1,14 @@
-
+{% load i18n %}
 <div class="left-nav">
     <div class="left-nav-body">
         <div class="left-nav-body-title">
-            Showing {% if not list %} all {% else %} selected{% endif %}
+            {% if type == 'home' %}Showing {% if not list %} all {% else %} selected{% endif %}
+            {% elif type == 'book-page' %}
+                {{ book }}
+            {% endif %}
         </div>
         <div class="left-nav-body-content">
+        {% if type == 'home' %}
             <form class="form-horizontal" action="" method="get">
                 <ul>
                 {% for checkbox in form.genres %}
@@ -17,6 +21,27 @@
                 <button type="submit" class="btn btn-dark btn-block">Filter</button>
                 <a href="{% url 'index' %}" class="btn btn-dark btn-block">Clear</a>
             </form>
+        {% elif type == 'book-page' %}
+        <h4>
+            Genres
+        </h4>
+        <ul>
+            {% for genre in book.genre.all %}
+                <li>{{ genre }}</li>
+            {% endfor %}
+        </ul>
+            {% if request.user.id != book.user.id %}
+                <h4>User rating</h4>
+                {% if book.user.get_average_rating %}
+                    {{ book.user.get_average_rating }}
+                {% else %}
+                    {% trans "user hasn't been rated yet" %}{% endif %}
+                {% endif %}
+            <button class="watchlist btn btn-dark btn-block" value="{{book.id}}">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="watchlist-text">{% trans "Add to watchlist" %}</span>
+            </button>
+        {% endif %}
         </div>
     </div>
     <div class="left-nav-footer">

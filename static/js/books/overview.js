@@ -1,34 +1,9 @@
 $(document).ready(function(){
-
-
-	$('.book-image').imagesLoaded(function(){
-		var $image_height = $('.book-image').height();
-
-	    var $overview_initial = $('.book-overview-initial').css({'height':$image_height});
-
-	    var $offer_height = $image_height - $('.book-offer-form').outerHeight(true);
-
-	    var $offer_previous = $('.book-offer-previous').css({'height':$offer_height, 'overflow':'auto'});
-
-	})
-	
-
-    $('.book-overview-show-all button').click(function(){
-    	var $overview = $('.book-overview-initial');
-
-	    var	$height = $overview[0].scrollHeight;
-
-    	$overview.animate({
-    		height: $height
-    	}, 500);
-
-    });
-
     validators_feedback_icons = {
         valid: 'glyphicon glyphicon-ok',
         invalid: 'glyphicon glyphicon-remove',
         validating: 'glyphicon glyphicon-refresh'
-    }
+    };
 
     $('#book_offer_form').bootstrapValidator({
     	feedbackIcons : validators_feedback_icons,

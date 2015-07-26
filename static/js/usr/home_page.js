@@ -65,22 +65,22 @@ $(document).ready(function(){
         hash = History.getState().hash;
         len = hash.length;
         if(hash.indexOf("?")>-1){
-            index = hash.indexOf("load-until");
+            index = hash.indexOf("page-number");
             if(index > -1){
-                parts = hash.split("load-until=");
+                parts = hash.split("page-number=");
                 vars = parts[1].split("&");
                 next_page = vars[0]*1;
                 next_page = next_page + 1;
                 vars.splice(0, 1);
-                url = parts[0]+"load-until="+next_page+vars.join('');
+                url = parts[0]+"page-number="+next_page+vars.join('');
                 History.replaceState(null, null, url);
             }
             else{
-                History.replaceState(null, null, hash+"&load-until=2");
+                History.replaceState(null, null, hash+"&page-number=2");
             }
         }
         else{
-            History.replaceState(null, null, "?load-until=2");
+            History.replaceState(null, null, "?page-number=2");
         }
     }
 

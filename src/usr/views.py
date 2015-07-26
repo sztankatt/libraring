@@ -197,9 +197,12 @@ def home(
         home_books_template ='after_login/usr/load_books.html'
         ):
     list = request.GET.getlist('genres')
-    first_page = request.GET.get('load-until', 1)
+    first_page = request.GET.get('page-number', 1)
     first_page = int(first_page)*8
     books = Book.objects.all()
+    status = Q(status='normal') | Q(status='offered')
+    books = books.filter(status)
+    books = books.filter(~Q(user=request.user))
     if list:
         filter = Q()
         for genre in list:

@@ -2,12 +2,12 @@
 
 <div class="book-offer-previous-element row main-row" data-offered-price="{{offer.offered_price}}">
 	<div class="col-xs-2">
-		{{offer.offered_price}}&pound;
+		&pound;{{offer.offered_price}}
 	</div>
-	<div class="col-xs-6">
+	<div class="col-xs-7">
 		by <a href="{% url 'usr:profile' offer.made_by.id%}">{{offer.made_by}}</a>.
 	</div>
-	<div class="col-xs-4">
+	<div class="col-xs-3">
 	{% if form %}
 	<form action="{% url 'books:accept_the_offer' %}" method="post">
 		{% csrf_token %}
