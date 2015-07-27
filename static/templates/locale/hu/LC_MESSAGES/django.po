@@ -293,7 +293,7 @@ msgstr ""
 
 #: after_login/books/list_books_page.html:17
 msgid "view all"
-msgstr ""
+msgstr "összes"
 
 #: after_login/books/list_books_page.html:22
 msgid "This section is empty"
@@ -309,7 +309,7 @@ msgstr ""
 
 #: after_login/framework/menu.html:6
 msgid "Explore"
-msgstr ""
+msgstr "Felfedezés"
 
 #: after_login/framework/menu.html:21
 msgid "Offers"
@@ -317,7 +317,7 @@ msgstr ""
 
 #: after_login/framework/menu.html:22
 msgid "Books"
-msgstr ""
+msgstr "Könyvek"
 
 #: after_login/framework/menu.html:23
 msgid "Watchlist"
@@ -325,11 +325,11 @@ msgstr ""
 
 #: after_login/framework/menu.html:25
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #: after_login/framework/menu.html:27
 msgid "Log out"
-msgstr ""
+msgstr "Kijelentkezés"
 
 #: after_login/usr/home.html:23
 msgid "Filter books"
@@ -383,7 +383,7 @@ msgstr "Ötletbörze"
 
 #: before_login/framework/menu.html:9
 msgid "Register"
-msgstr "Regisztrálás"
+msgstr "Regisztráció"
 
 #: before_login/framework/menu.html:24
 msgid "Go"
