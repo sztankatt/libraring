@@ -67,7 +67,7 @@ msgstr ""
 
 #: after_login/books/book_offer.html:34
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 #: after_login/books/book_offer.html:35
 msgid "No"
@@ -90,7 +90,7 @@ msgstr ""
 
 #: after_login/books/book_page.html:32 after_login/books/book_page.html:112
 msgid "Next step:"
-msgstr ""
+msgstr "Következő"
 
 #: after_login/books/book_page.html:34
 #, python-format
@@ -235,15 +235,15 @@ msgstr ""
 
 #: after_login/books/book_page.html:278
 msgid "Offer new price"
-msgstr ""
+msgstr "Ajánlj egy új árat"
 
 #: after_login/books/book_page.html:291
 msgid "Make an offer!"
-msgstr ""
+msgstr "Tegyél ajánlatot!"
 
 #: after_login/books/book_page.html:300
 msgid "Previous offers"
-msgstr ""
+msgstr "Előző ajánlat"
 
 #: after_login/books/book_page.html:312
 msgid "No offers for this book, yet."
@@ -261,23 +261,23 @@ msgstr ""
 #, fuzzy
 #| msgid "Username"
 msgid "Publisher name"
-msgstr "Felhasználó név"
+msgstr "Felhasználónév"
 
 #: after_login/books/book_page.html:334
 msgid "Publication city"
-msgstr ""
+msgstr "Kiadás helye (város)"
 
 #: after_login/books/book_page.html:335
 msgid "Publication country"
-msgstr ""
+msgstr "Kiadás helye (ország)"
 
 #: after_login/books/book_page.html:336
 msgid "Publication year"
-msgstr ""
+msgstr "Kiadás éve"
 
 #: after_login/books/book_page.html:341
 msgid "Short description"
-msgstr ""
+msgstr "Rövid leírás"
 
 #: after_login/books/book_page.html:344
 msgid "No description specified"
@@ -301,11 +301,11 @@ msgstr ""
 
 #: after_login/books/list_books_page.html:34
 msgid "No books"
-msgstr ""
+msgstr "Nincsenek könyvek"
 
 #: after_login/framework/menu.html:5
 msgid "Home"
-msgstr ""
+msgstr "Főoldal"
 
 #: after_login/framework/menu.html:6
 msgid "Explore"
@@ -313,7 +313,7 @@ msgstr "Felfedezés"
 
 #: after_login/framework/menu.html:21
 msgid "Offers"
-msgstr ""
+msgstr "Ajánlatok"
 
 #: after_login/framework/menu.html:22
 msgid "Books"
@@ -321,7 +321,7 @@ msgstr "Könyvek"
 
 #: after_login/framework/menu.html:23
 msgid "Watchlist"
-msgstr ""
+msgstr "Figyelő"
 
 #: after_login/framework/menu.html:25
 msgid "Settings"
@@ -333,7 +333,7 @@ msgstr "Kijelentkezés"
 
 #: after_login/usr/home.html:23
 msgid "Filter books"
-msgstr ""
+msgstr "Szűrők"
 
 #: after_login/usr/left_nav_home.html:38
 msgid "user hasn't been rated yet"
@@ -367,15 +367,15 @@ msgstr ""
 
 #: before_login/framework/index.html:64
 msgid "Like us on facebook!"
-msgstr "Like-olj minket facebookon!"
+msgstr "Lájkolj minket facebookon!"
 
 #: before_login/framework/menu.html:4
 msgid "Our team"
-msgstr "A csapat"
+msgstr "Rólunk"
 
 #: before_login/framework/menu.html:5
 msgid "Tour"
-msgstr "Képsorozat"
+msgstr "Bemutató"
 
 #: before_login/framework/menu.html:6
 msgid "Brainstorm"
