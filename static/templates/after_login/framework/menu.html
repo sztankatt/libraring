@@ -1,32 +1,46 @@
-{% load i18n %}
-<div class="navbar-collapse collapse" id="main-menu">
-    <form  class="" role="search" method="get" action="{% url 'books:haystack_search' %}">
-    <ul class="nav navbar-nav">
-        <li><a href="{% url 'index' %}" class="home-button menu-item">{% trans "Home" %}</a></li>
-        <li><a href="#" class="explore-button menu-item">{% trans "Explore" %}</a></li>
+{% load i18n static %}
+<nav class="main-menu-navbar" role="navigation">
+    <!-- BRAND START-->
 
-        <li><input type="text" name="q" class="menu-search-input" placeholder="Search... type here!"></li>
+    <a class="main-menu-brand" href="/"><img src="{%static 'img/logo.png'%}"/>
+        <span class="main-menu-big">Libraring <span class="beta">(beta)</span></span>
+    </a>
+    <!--BRAND END -->
 
-        <li><input type="submit" class="menu-search-submit" value="GO!"></li>
-    </ul>
-    </form>
-    <div>
+    <!--main_menu start-->
+    <div id="main-menu">
+        <!-- LEFT SIDE START-->
+        <form  class="" role="search" method="get" action="{% url 'books:haystack_search' %}">
+            <ul class="main-menu-left">
+                <li><a href="{% url 'index' %}" class="home-button menu-item">
+                    <span class="main-menu-big">{% trans "Home" %}</span>
+                    <span class="main-menu-small">SS</span>
+                </a></li>
+                <li><a href="#" class="explore-button menu-item">{% trans "Explore" %}</a></li>
+                <li><input type="text" name="q" class="menu-search-input" placeholder="Search..."></li>
+                <li><input type="submit" class="menu-search-submit" value="GO!"></li>
+            </ul>
+        </form>
+        <!-- LEFT SIDE END -->
 
+        <!-- RIGHT SIDE START -->
+        <ul class="main-menu-right">
+            <li><a href="#"><i class="fa fa-bell"></i></a></li>
+           <li class="dropdown">
+               <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.username }}</a>
+               <ul class="dropdown-menu">
+                   <li><a href="#">{% trans "Offers" %}</a></li>
+                   <li><a href="#">{% trans "Books" %}</a></li>
+                   <li><a href="#">{% trans "Watchlist" %}</a></li>
+                   <li role="separator" class="divider"></li>
+                   <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a></li>
+                   <li role="separator" class="divider"></li>
+                   <li><a href="{% url 'usr:logout'%}"><i class="fa fa-power-off"></i> {% trans "Log out" %}</a></li>
+               </ul>
+           </li>
+
+        </ul>
+        <!-- RIGHT SIDE END -->
     </div>
-    <ul class="nav navbar-nav navbar-right">
-        <li><a href="#"><i class="fa fa-bell"></i></a></li>
-       <li class="dropdown">
-           <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.username }}</a>
-           <ul class="dropdown-menu">
-               <li><a href="#">{% trans "Offers" %}</a></li>
-               <li><a href="#">{% trans "Books" %}</a></li>
-               <li><a href="#">{% trans "Watchlist" %}</a></li>
-               <li role="separator" class="divider"></li>
-               <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a></li>
-               <li role="separator" class="divider"></li>
-               <li><a href="{% url 'usr:logout'%}"><i class="fa fa-power-off"></i> {% trans "Log out" %}</a></li>
-           </ul>
-       </li>
-
-    </ul>
-</div>
+    <!-- main_menu END -->
+</nav>

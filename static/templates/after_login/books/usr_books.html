@@ -1,0 +1,24 @@
+{% extends "after_login/framework/base.html"%}
+
+{%block title%}{{project.name}} profile{%endblock%}
+
+
+{% block content%}
+<div class="usr-book-main right-side">
+    <div class="usr-book-body">
+        {% for book in data.books %}
+            {% include 'after_login/books/usr_books_item.html' with book=book %}
+        {% endfor %}
+    </div>
+</div>
+{%endblock%}
+
+
+{% load staticfiles %}
+{% block js%}
+{{block.super}}
+<script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
+<script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
+<script src="{% static 'js/usr/validators.js' %}"></script>
+<script src="{% static 'js/books/main.js' %}"></script>
+{%endblock%}

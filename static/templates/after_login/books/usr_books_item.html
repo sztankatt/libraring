@@ -1,0 +1,49 @@
+{% load thumbnail i18n highlight %}
+
+{% if book %}
+    <div class="row usr-book-container">
+        <div class="col-xs-4 usr-book-image-container">
+        {%if book.image|is_portrait%}
+            {% thumbnail book.image "400" crop="center" as im%}
+                <img src="{{im.url}}" width="{{im.width}}" class="usr-book-image" />
+            {% endthumbnail %}
+        {% else%}
+            {% thumbnail book.image "400" crop="center" as im%}
+                <img src="{{im.url}}" width="{{im.width}}" class="usr-book-image" />
+            {% endthumbnail %}
+        {%endif%}
+
+        </div>
+        <div class="col-xs-4 book-overview">
+            <div class="book-overview-element big">
+                Title: {{ book.title }}
+            </div>
+            <div class="book-overview-element">
+            {% trans "Author(s)" %}:
+            {% for author in book.author.all %}
+                    {% if forloop.last%}
+                        {% if query %}
+                            {% highlight author.name with query %}
+                        {% else %}
+                            {{ author.name}}
+                        {% endif%}
+                    {%else%}
+                        {%if query%}
+                            {% highlight author.name with query %}
+                        {% else %}
+                            {{author.name}},
+                        {% endif %}
+                    {%endif%}
+                {% empty %}
+                    {% trans "No authors specified" %}
+                {% endfor%}
+            </div>
+            <div class="book-overview-element big">
+                {% trans "Goal price" %}: {{book.price}}
+            </div>
+        </div>
+        <div class="col-xs-4">
+
+        </div>
+    </div>
+{% endif %}

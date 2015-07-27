@@ -4,8 +4,9 @@ from haystack.query import SearchQuerySet
 from haystack.views import SearchView
 
 urlpatterns = patterns('',
-	url(r'^$', 'books.views.main_page', name='main_page'),
+	#url(r'^$', 'books.views.main_page', name='main_page'),
         #url(r'^search/', include('haystack.urls')),
+    url(r'^usr/(?P<type>[A-Za-z]+)/$', 'books.views.main_page', name='main_page'),
     url(r'^search/', SearchView(
         template='after_login/books/search_page.html',
         form_class=SearchForm

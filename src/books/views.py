@@ -18,10 +18,22 @@ from books.models import Book, Genre, Author, Publisher, Offer, Transaction, Tra
 @login_required
 @ensure_csrf_cookie
 @user_is_not_blocked
-def main_page(request):
-    form = BookForm()
+def main_page(request, type='books'):
+    out = {
+        'type': type,
+        'books': Book.objects.all()
+    }
 
-    return render(request, 'after_login/books/main_page.html', {'form': form})
+    if type == 'books':
+        pass
+    elif type == 'offers':
+        pass
+    elif type == 'watchlist':
+        pass
+    else:
+        raise Http404
+
+    return render(request, 'after_login/books/usr_books.html', {'data': out})
 
 
 @login_required

@@ -94,9 +94,10 @@ p {
 }
 .left-side .left-nav-body .left-nav-body-content ul {
   padding: 0px;
+  list-style-type: none;
 }
-.left-side .left-nav-body .left-nav-body-content ul li {
-  display: inline;
+.left-side .left-nav-body .left-nav-body-content ul li.checkbox {
+  padding-left: 25px;
 }
 .left-side .left-nav-body .left-nav-body-content .watchlist {
   margin-top: 30px;
@@ -127,36 +128,89 @@ a {
   background-color: #fff;
   box-shadow: 1px 0 3px rgba(0, 0, 0, 0.15);
 }
-.navbar {
+nav.main-menu-navbar {
   border: none!important;
   border-bottom: 1px solid #26747f !important;
+  background-color: #ffffff;
+  top: 0;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1030;
+  min-height: 50px;
+  margin-bottom: 50px;
+  display: block;
 }
-.navbar-brand {
-  padding-top: 0px;
-  padding: 0px;
-  padding-right: 15px;
+nav.main-menu-navbar .main-menu-brand {
+  line-height: 20px;
+  height: 50px;
   font-family: 'Raleway', serif;
   background-color: #26747f;
   color: #ffffff;
   font-weight: 900;
-  width: 200px;
+  content: " ";
+  display: table;
+  font-size: 18px;
+  float: left;
 }
-.navbar-brand:hover {
-  color: #ffffff;
+nav.main-menu-navbar .main-menu-brand :hover {
+  column: #ffffff;
+  text-decoration: none;
 }
-.navbar-brand img {
+nav.main-menu-navbar .main-menu-brand img {
   max-height: 50px;
+}
+nav.main-menu-navbar .main-menu-brand:hover {
+  text-decoration: none;
+}
+nav.main-menu-navbar ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+nav.main-menu-navbar ul .dropdown-menu {
+  margin-top: 0;
+  left: auto;
+  right: 0;
+}
+nav.main-menu-navbar ul .dropdown-menu li {
+  clear: both;
+  float: none;
+}
+nav.main-menu-navbar ul .dropdown-menu li a {
+  padding: 5px 15px;
+  color: #00b6d1;
+}
+nav.main-menu-navbar ul .dropdown-menu li a:hover {
+  color: #26747f;
+}
+nav.main-menu-navbar li {
+  float: left;
+  position: relative;
+  display: block;
+}
+nav.main-menu-navbar li a {
+  line-height: 20px;
+  position: relative;
+  display: block;
+  padding: 15px 15px;
+}
+nav.main-menu-navbar li a:hover {
+  text-decoration: none;
+}
+nav.main-menu-navbar li a:focus {
+  text-decoration: none;
+}
+nav.main-menu-navbar ul.main-menu-right {
+  float: right!important;
+  list-style: none;
+  padding-left: 0px;
+}
+nav.main-menu-navbar ul.main-menu-left {
+  float: left!important;
+  padding-left: 0;
 }
 .navbar-nav.navbar-right:last-child {
   margin: 0px;
-}
-.dropdown-menu > li > a {
-  color: #00b6d1;
-}
-.dropdown-menu > li > a:hover {
-  border-width: 0px;
-  padding-bottom: 3px;
-  color: #26747f;
 }
 .home-button,
 .username-button,
@@ -193,6 +247,37 @@ a {
   padding-left: 10px;
   height: 50px;
   border: 0px;
+}
+@media (max-width: 900px) {
+  .menu-item {
+    min-width: 60px;
+  }
+  .menu-search-input {
+    width: 80px;
+    min-width: 80px;
+  }
+}
+@media (min-width: 600px) {
+  .main-menu-small {
+    display: none;
+  }
+  .main-menu-brand {
+    width: 200px;
+  }
+}
+@media (max-width: 600px) {
+  .menu-item {
+    min-width: 50px;
+  }
+  .main-menu-big {
+    display: none;
+  }
+  .main-menu-small {
+    display: inline;
+  }
+  .main-menu-brand {
+    width: 100px;
+  }
 }
 .menu-search-submit {
   border: 0px;
@@ -587,6 +672,7 @@ input.form-control {
   padding: 10px 5px;
 }
 .book-field .book-field-val ul {
+  list-style-type: none;
   padding: 0px;
 }
 .book-field .book-field-val ul li {
@@ -794,4 +880,35 @@ input.form-control {
 }
 .book-main-page .row {
   margin: 0px;
+}
+.usr-book-main {
+  padding: 10px 20px;
+}
+.usr-book-main .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.usr-book-container {
+  margin-bottom: 20px;
+  border: 1px solid #26747f;
+}
+.usr-book-container img.usr-book-image {
+  width: 100%;
+  height: auto;
+}
+.usr-book-container {
+  margin-bottom: 20px;
+  background-color: rgba(27, 81, 89, 0.09);
+}
+.usr-book-container .usr-book-image-container {
+  padding: 0px;
+}
+.usr-book-container .book-overview .book-overview-element {
+  color: #26747f;
+  font-size: 14px;
+  display: block;
+  padding: 5px 10px;
+}
+.usr-book-container .book-overview .book-overview-element.big {
+  font-size: 20px;
 }
