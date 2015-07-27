@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-21 00:09+0100\n"
+"POT-Creation-Date: 2015-07-27 09:30+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: after_login/books/accepted_offer_email.html:3
@@ -73,237 +73,226 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: after_login/books/book_page.html:13
+#: after_login/books/book_page.html:18
 msgid ""
 "You have at least one offer for this book. If you are satisfied with any of "
 "them, go ahead and accept the one you are satisfied with!"
 msgstr ""
 
-#: after_login/books/book_page.html:20 after_login/books/book_page.html:101
+#: after_login/books/book_page.html:25 after_login/books/book_page.html:106
 msgid "Well done!"
 msgstr ""
 
-#: after_login/books/book_page.html:21
+#: after_login/books/book_page.html:26
 #, python-format
 msgid "You have accepted %(user)s's offer of %(offer)s&pound; for %(book)s."
 msgstr ""
 
-#: after_login/books/book_page.html:27 after_login/books/book_page.html:107
+#: after_login/books/book_page.html:32 after_login/books/book_page.html:112
 msgid "Next step:"
 msgstr ""
 
-#: after_login/books/book_page.html:29
+#: after_login/books/book_page.html:34
 #, python-format
 msgid ""
 "%(user)s will contact you shortly via your email address, %(email)s, and you "
 "will be able to discuss the further details."
 msgstr ""
 
-#: after_login/books/book_page.html:34
+#: after_login/books/book_page.html:39
 msgid ""
 "Once you are happy with this transaction, you can finalise it by clicking "
 "the 'Finalise' button below. Once both of you have clicked 'Finalised the "
 "transaction will be closed."
 msgstr ""
 
-#: after_login/books/book_page.html:41
+#: after_login/books/book_page.html:46
 #, python-format
 msgid ""
 "You have already finalised this transaction. Once %(user)s also finalises "
 "it, the transaction will be completed."
 msgstr ""
 
-#: after_login/books/book_page.html:50 after_login/books/book_page.html:130
+#: after_login/books/book_page.html:55 after_login/books/book_page.html:135
 msgid "Finalise"
 msgstr ""
 
-#: after_login/books/book_page.html:58
+#: after_login/books/book_page.html:63
 msgid ""
 "Transaction closed, you have successfully sold this book! Please rate the "
 "transaction below."
 msgstr ""
 
-#: after_login/books/book_page.html:65 after_login/books/book_page.html:152
+#: after_login/books/book_page.html:70 after_login/books/book_page.html:157
 msgid "You have already rated this transaction!"
 msgstr ""
 
-#: after_login/books/book_page.html:70
+#: after_login/books/book_page.html:75
 #, python-format
 msgid "Please rate %(user)s for this transaction."
 msgstr ""
 
-#: after_login/books/book_page.html:82 after_login/books/book_page.html:171
+#: after_login/books/book_page.html:87 after_login/books/book_page.html:176
 msgid "Rate!"
 msgstr ""
 
-#: after_login/books/book_page.html:94
+#: after_login/books/book_page.html:99
 msgid ""
 "You have made an offer for this book already. You can always make further "
 "offers."
 msgstr ""
 
-#: after_login/books/book_page.html:102
+#: after_login/books/book_page.html:107
 #, python-format
 msgid "Your offer of   &pound;%(price)s has been accepted!"
 msgstr ""
 
-#: after_login/books/book_page.html:108
+#: after_login/books/book_page.html:113
 #, python-format
 msgid ""
-"An email has been sent to you, please reply to that email to contact "
-"%(user)s in order to discuss further details"
+"An email has been sent to you, please reply to that email to contact %(user)"
+"s in order to discuss further details"
 msgstr ""
 
-#: after_login/books/book_page.html:113
+#: after_login/books/book_page.html:118
 msgid ""
 "Once you are happy with this transaction, you can finalise it by clicking "
 "the 'Finalise' button below. Once both of you have clicked 'Finalised' the "
 "transaction will be closed."
 msgstr ""
 
-#: after_login/books/book_page.html:121
+#: after_login/books/book_page.html:126
 #, python-format
 msgid ""
 "You have already finalised this transaction. Once %(book.sold_to)s also "
 "finalises it, the transaction will be completed."
 msgstr ""
 
-#: after_login/books/book_page.html:138
+#: after_login/books/book_page.html:143
 msgid ""
 "Transaction closed, you have successfully acquired this book! Please rate "
 "the transaction below."
 msgstr ""
 
-#: after_login/books/book_page.html:143
+#: after_login/books/book_page.html:148
 msgid "Summary:"
 msgstr ""
 
-#: after_login/books/book_page.html:145
+#: after_login/books/book_page.html:150
 #, python-format
 msgid "You have bought this book from %(user)s for &pound;%(price)s."
 msgstr ""
 
-#: after_login/books/book_page.html:159
+#: after_login/books/book_page.html:164
 #, python-format
 msgid "Please rate %(user)s for this transaction"
 msgstr ""
 
-#: after_login/books/book_page.html:184
-#: after_login/books/list_books_element_page.html:57
+#: after_login/books/book_page.html:189
 msgid "Aw snap!"
 msgstr ""
 
-#: after_login/books/book_page.html:186
+#: after_login/books/book_page.html:191
 msgid "This book has already been sold, you can't make an offer unfortunately."
-msgstr ""
-
-#: after_login/books/book_page.html:205
-msgid "Add to watchlist"
 msgstr ""
 
 #: after_login/books/book_page.html:214
 msgid "Title"
 msgstr ""
 
-#: after_login/books/book_page.html:220
+#: after_login/books/book_page.html:219
+#: after_login/books/list_books_element_page.html:24
 msgid "Author(s)"
 msgstr ""
 
-#: after_login/books/book_page.html:234
-msgid "Price"
+#: after_login/books/book_page.html:233
+msgid "Edition"
 msgstr ""
 
-#: after_login/books/book_page.html:240
-msgid "Genre(s)"
-msgstr ""
-
-#: after_login/books/book_page.html:251
-msgid "Edition no."
-msgstr ""
-
-#: after_login/books/book_page.html:259
-msgid "Publisher"
-msgstr ""
-
-#: after_login/books/book_page.html:264 after_login/books/book_page.html:276
-#: after_login/books/book_page.html:288 after_login/books/book_page.html:300
-#: after_login/books/book_page.html:312
+#: after_login/books/book_page.html:236 after_login/books/book_page.html:243
+#: after_login/books/book_page.html:333 after_login/books/book_page.html:334
+#: after_login/books/book_page.html:335 after_login/books/book_page.html:336
 msgid "Not specified"
 msgstr ""
 
-#: after_login/books/book_page.html:271
-msgid "Publication city"
+#: after_login/books/book_page.html:241
+msgid "ISBN number"
 msgstr ""
 
-#: after_login/books/book_page.html:283
-msgid "Publication country"
-msgstr ""
-
-#: after_login/books/book_page.html:295
-msgid "Publication year"
-msgstr ""
-
-#: after_login/books/book_page.html:323
-msgid "This book is yours"
-msgstr ""
-
-#: after_login/books/book_page.html:332
-#: after_login/books/list_books_element_page.html:72
+#: after_login/books/book_page.html:247
+#: after_login/books/list_books_element_page.html:44
 msgid "Location"
 msgstr ""
 
-#: after_login/books/book_page.html:338
-#: after_login/books/list_books_page.html:17
-msgid "view all"
+#: after_login/books/book_page.html:255 before_login/framework/index.html:23
+msgid "Username"
+msgstr "Felhasználó név"
+
+#: after_login/books/book_page.html:265
+#: after_login/books/list_books_element_page.html:47
+msgid "Goal price"
 msgstr ""
 
-#: after_login/books/book_page.html:354
+#: after_login/books/book_page.html:278
 msgid "Offer new price"
 msgstr ""
 
-#: after_login/books/book_page.html:367
+#: after_login/books/book_page.html:291
 msgid "Make an offer!"
 msgstr ""
 
-#: after_login/books/book_page.html:376
+#: after_login/books/book_page.html:300
 msgid "Previous offers"
 msgstr ""
 
-#: after_login/books/book_page.html:388
-#: after_login/books/list_books_element_page.html:67
+#: after_login/books/book_page.html:312
 msgid "No offers for this book, yet."
 msgstr ""
 
-#: after_login/books/book_page.html:396
+#: after_login/books/book_page.html:320
 msgid "This book has been sold. You can't make an offer. "
 msgstr ""
 
-#: after_login/books/list_books_element_page.html:37
+#: after_login/books/book_page.html:330
+msgid "Publisher information"
+msgstr ""
+
+#: after_login/books/book_page.html:333
+#, fuzzy
+#| msgid "Username"
+msgid "Publisher name"
+msgstr "Felhasználó név"
+
+#: after_login/books/book_page.html:334
+msgid "Publication city"
+msgstr ""
+
+#: after_login/books/book_page.html:335
+msgid "Publication country"
+msgstr ""
+
+#: after_login/books/book_page.html:336
+msgid "Publication year"
+msgstr ""
+
+#: after_login/books/book_page.html:341
+msgid "Short description"
+msgstr ""
+
+#: after_login/books/book_page.html:344
+msgid "No description specified"
+msgstr ""
+
+#: after_login/books/list_books_element_page.html:40
 msgid "No authors specified"
 msgstr ""
 
-#: after_login/books/list_books_element_page.html:44
-#, python-format
-msgid "You have sold this book for &pound;%(price)s!"
-msgstr ""
-
 #: after_login/books/list_books_element_page.html:50
-#, python-format
-msgid "You are currently selling this book to %(user)s for &pound;%(price)s."
-msgstr ""
-
-#: after_login/books/list_books_element_page.html:58
-msgid "This book has already been sold."
-msgstr ""
-
-#: after_login/books/list_books_element_page.html:63
-#: after_login/books/list_books_element_page.html:65
-#: after_login/books/list_books_element_page.html:67
 msgid "Highest offer"
 msgstr ""
 
-#: after_login/books/list_books_element_page.html:69
-msgid "Goal price"
+#: after_login/books/list_books_page.html:17
+msgid "view all"
 msgstr ""
 
 #: after_login/books/list_books_page.html:22
@@ -314,51 +303,45 @@ msgstr ""
 msgid "No books"
 msgstr ""
 
-#: after_login/framework/menu.html:4
+#: after_login/framework/menu.html:5
 msgid "Home"
 msgstr ""
 
-#: after_login/framework/menu.html:5
+#: after_login/framework/menu.html:6
 msgid "Explore"
 msgstr ""
 
-#: after_login/framework/menu.html:11
-#, fuzzy
-#| msgid "Go"
-msgid "Go!"
-msgstr "Mehet"
-
-#: after_login/framework/menu.html:18
+#: after_login/framework/menu.html:21
 msgid "Offers"
 msgstr ""
 
-#: after_login/framework/menu.html:19
+#: after_login/framework/menu.html:22
 msgid "Books"
 msgstr ""
 
-#: after_login/framework/menu.html:20
+#: after_login/framework/menu.html:23
 msgid "Watchlist"
 msgstr ""
 
-#: after_login/framework/menu.html:22
+#: after_login/framework/menu.html:25
 msgid "Settings"
 msgstr ""
 
-#: after_login/framework/menu.html:24
+#: after_login/framework/menu.html:27
 msgid "Log out"
 msgstr ""
 
-#: after_login/usr/home.html:11
-msgid "Add filters"
-msgstr ""
-
-#: after_login/usr/home.html:25
+#: after_login/usr/home.html:23
 msgid "Filter books"
 msgstr ""
 
-#: before_login/framework/index.html:23
-msgid "Username"
-msgstr "Felhasználó név"
+#: after_login/usr/left_nav_home.html:38
+msgid "user hasn't been rated yet"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:42
+msgid "Add to watchlist"
+msgstr ""
 
 #: before_login/framework/index.html:36
 msgid "Login"
@@ -413,3 +396,8 @@ msgid ""
 "                    %(header)s\n"
 "                    "
 msgstr ""
+
+#, fuzzy
+#~| msgid "Go"
+#~ msgid "Go!"
+#~ msgstr "Mehet"
