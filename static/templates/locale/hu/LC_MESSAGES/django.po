@@ -22,13 +22,13 @@ msgstr ""
 #: after_login/books/accepted_offer_email.txt:2
 #, python-format
 msgid "Dear <strong>%(username)s</strong>"
-msgstr ""
+msgstr "Kedves <strong>%(username)s</strong>"
 
 #: after_login/books/accepted_offer_email.html:9
 #: after_login/books/accepted_offer_email.txt:5
 #, python-format
 msgid "%(username)s has accepted your offer of &pound;%(price)s for %(book)s!"
-msgstr ""
+msgstr "%(username)s elfogadta az ajánlatodat &pound;%(price)s - %(book)s!"
 
 #: after_login/books/accepted_offer_email.html:15
 #: after_login/books/accepted_offer_email.txt:8
