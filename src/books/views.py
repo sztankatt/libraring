@@ -4,15 +4,17 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage
 from django.template.loader import get_template
 from django.template import Context
 from django.core import mail
 from django.utils.translation import ugettext as _
+from django.db.models import Q
+
 
 from usr.project import user_is_not_blocked
-from books.forms import BookForm, OfferForm
-from books.models import Book, Genre, Author, Publisher, Offer, Transaction, TransactionRating
+from books.forms import OfferForm
+from books.models import Book, Genre, Author, Publisher, Offer, Transaction,TransactionRating
 
 
 @login_required
@@ -21,15 +23,19 @@ from books.models import Book, Genre, Author, Publisher, Offer, Transaction, Tra
 def main_page(request, type='books'):
     out = {
         'type': type,
-        'books': Book.objects.all()
+        'books': None
     }
 
     if type == 'books':
-        pass
+        books = Book.objects.all()
+        books = books.filter(user=request.user).filter(~Q(status='finalised'))
+        out['books'] = books
     elif type == 'offers':
-        pass
+        books = set([x.book for x in request.user.offer_set.all()])
+        out['books'] = books
     elif type == 'watchlist':
-        pass
+        books = [x.book for x in request.user.watchlist_set.all()]
+        out['books'] = books
     else:
         raise Http404
 
@@ -47,7 +53,10 @@ def book_page(request, id=None):
         # if the book is not sold, proceed
         if book.is_sold() is False:
             if request.user != book.user:
-                offer_form = OfferForm({'book': book.id, 'made_by': request.user.id})
+                offer_form = OfferForm({
+                    'book': book.id,
+                    'made_by': request.user.id
+                })
 
         return render(request, 'after_login/books/book_page.html', {
             'book': book,

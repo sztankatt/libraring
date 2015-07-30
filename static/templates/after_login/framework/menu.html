@@ -14,11 +14,20 @@
             <ul class="main-menu-left">
                 <li><a href="{% url 'index' %}" class="home-button menu-item">
                     <span class="main-menu-big">{% trans "Home" %}</span>
-                    <span class="main-menu-small">SS</span>
+                    <span class="main-menu-small"><i class="fa fa-home"></i></span>
                 </a></li>
-                <li><a href="#" class="explore-button menu-item">{% trans "Explore" %}</a></li>
+                <li><a href="#" class="explore-button menu-item">
+                    <span class="main-menu-big">{% trans "Explore" %}</span>
+                    <span class="main-menu-small"><i class="fa fa-globe"></i></span>
+                </a></li>
+                <li><a href="#" class="menu-item menu-add-book-button">
+                    <span class="main-menu-big">{% trans "Add book" %}</span>
+                    <span class="main-menu-small"><i class="fa fa-plus"></i></span>
+                </a></li>
                 <li><input type="text" name="q" class="menu-search-input" placeholder="Search..."></li>
-                <li><input type="submit" class="menu-search-submit" value="GO!"></li>
+                <li>
+                    <button type="submit" class="menu-search-submit">GO!</button>
+                </li>
             </ul>
         </form>
         <!-- LEFT SIDE END -->
@@ -27,11 +36,14 @@
         <ul class="main-menu-right">
             <li><a href="#"><i class="fa fa-bell"></i></a></li>
            <li class="dropdown">
-               <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.username }}</a>
+               <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                   <span class="main-menu-big">{{ request.user.username }}</span>
+                   <span class="main-menu-small"><i class="fa fa-user"></i></span>
+               </a>
                <ul class="dropdown-menu">
-                   <li><a href="#">{% trans "Offers" %}</a></li>
-                   <li><a href="#">{% trans "Books" %}</a></li>
-                   <li><a href="#">{% trans "Watchlist" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'offers' %}">{% trans "Offers" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'books' %}">{% trans "Books" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'watchlist' %}">{% trans "Watchlist" %}</a></li>
                    <li role="separator" class="divider"></li>
                    <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a></li>
                    <li role="separator" class="divider"></li>

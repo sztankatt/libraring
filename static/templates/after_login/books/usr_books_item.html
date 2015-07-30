@@ -1,20 +1,20 @@
 {% load thumbnail i18n highlight %}
 
-{% if book %}
-    <div class="row usr-book-container">
-        <div class="col-xs-4 usr-book-image-container">
-        {%if book.image|is_portrait%}
-            {% thumbnail book.image "400" crop="center" as im%}
-                <img src="{{im.url}}" width="{{im.width}}" class="usr-book-image" />
-            {% endthumbnail %}
-        {% else%}
-            {% thumbnail book.image "400" crop="center" as im%}
-                <img src="{{im.url}}" width="{{im.width}}" class="usr-book-image" />
-            {% endthumbnail %}
-        {%endif%}
 
+
+{% if book %}
+
+{% with status=book.status %}
+    <div class="row usr-book-container">
+        <div class="col-xs-3 usr-book-image-container">
+        {% thumbnail book.image "220x320" crop="center" as im%}
+            <img src="{{im.url}}" width="{{im.width}}" class="usr-book-image" />
+        {% endthumbnail %}
+        <a href="{% url 'books:book_page' book.id %}">
+            <button class="btn btn-secondary">{% trans "To the book's page" %}</button>
+        </a>
         </div>
-        <div class="col-xs-4 book-overview">
+        <div class="col-xs-3 book-overview">
             <div class="book-overview-element big">
                 Title: {{ book.title }}
             </div>
@@ -39,11 +39,87 @@
                 {% endfor%}
             </div>
             <div class="book-overview-element big">
-                {% trans "Goal price" %}: {{book.price}}
+                {% trans "Goal price" %}: &pound;{{book.price}}
             </div>
+            {% if data.type == 'books' %}
+            <div class="book-overview-element big">
+                Upload date: {{book.upload_date}}
+            </div>
+            {% endif %}
         </div>
-        <div class="col-xs-4">
+            {% if data.type == 'books' %}
+            <div class="col-xs-4 alert {% if status == 'selling' %}alert-success{% else %}alert-info{% endif %} usr-book-status">
+                <div class="usr-book-status-title">
+                    {% if status == 'selling' %}
+                        {% trans "You have sold this book!" %}
+                    {% elif status == 'offered' %}
+                        {% trans "You have at least one offer for this book" %}
+                    {% elif status == 'normal' %}
+                        {% trans "You have no offers for this book yet" %}
+                    {% endif %}
+                </div>
+                <div class="usr-book-status-body">
+                    {% if status == 'selling' %}
+                        {% blocktrans trimmed %}
+                            You have accepted an offer made by {{book.accepted_offer.offered_by}} for this book. An email has been sent to you, please reply to that, in order to finalize transaction. Once you are happy with it, please click 'Finalise' below:
+                        {% endblocktrans %}
+                            <form id="finalised_form" method="post" action="{% url "books:finalise_transaction" %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="seller" value="true" />
+                                <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
+                                <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                            </form>
+                    {% elif status == 'offered ' %}
+                        {% blocktrans trimmed %}
+                            You have several offers for this book, the highest being &pound;{{book.get_highest_offer.offered_price}} made by {{book.get_highest_offer.made_by}}. If you want to accept this offer, click 'Accept' below.
+                            <button class="btn btn primary">Accept</button>
+                            If you are not yet satisfied, you can wait until someone makes an another offer.
+                        {% endblocktrans %}
+                    {%else %}
+                        {% blocktrans trimmed %}
+                            Sadly you have no offers for this book yet. Once someone makes an offer, we will notify you, so stay tuned!
+                        {%endblocktrans%}
 
-        </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% elif data.type == 'watchlist' %}
+                <div class="col-xs-4 alert alert-info usr-book-status">
+                <div class="usr-book-status-title">
+                    {% trans "Book status" %}
+                </div>
+                <div class="usr-book-status-body">
+                    {% if status == 'offered ' %}
+                        {% blocktrans trimmed %}
+                            This book have several offers, the highest being &pound;{{book.get_highest_offer.offered_price}}.
+                        {% endblocktrans %}
+                    {%else %}
+                        {% blocktrans trimmed %}
+                            There are no offers for this book yet. Do not hesitate and make one!
+                        {%endblocktrans%}
+
+                    {% endif %}
+                </div>
+            </div>
+            {% elif data.type == 'offered' %}
+            <div class="col-xs-4 alert alert-info usr-book-status">
+                <div class="usr-book-status-title">
+                    {% trans "Book status" %}
+                </div>
+                <div class="usr-book-status-body">
+                    {% if status == 'offered ' %}
+                        {% blocktrans trimmed %}
+                            This book have several offers, the highest being &pound;{{book.get_highest_offer.offered_price}}.
+                        {% endblocktrans %}
+                    {%else %}
+                        {% blocktrans trimmed %}
+                            There are no offers for this book yet. Do not hesitate and make one!
+                        {%endblocktrans%}
+
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
     </div>
+        {%endwith%}
 {% endif %}

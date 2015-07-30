@@ -1,6 +1,14 @@
 {% extends "after_login/framework/base.html"%}
 
-{%block title%}{{project.name}} profile{%endblock%}
+{%block title%}
+	{% if data.type == 'offers' %}
+		My offers
+	{% elif data.type == 'books' %}
+		My books
+	{%else %}
+		My watchlist
+	{%endif %}
+{%endblock%}
 
 
 {% block content%}
