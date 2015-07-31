@@ -2,9 +2,15 @@
 <nav class="main-menu-navbar" role="navigation">
     <!-- BRAND START-->
 
-    <a class="main-menu-brand" href="/"><img src="{%static 'img/logo.png'%}"/>
-        <span class="main-menu-big">Libraring <span class="beta">(beta)</span></span>
-    </a>
+    <div class="main-menu-brand">
+
+      <a class="main-menu-brand" href="/"><img src="{%static 'img/logo.png'%}"/>
+          <span class="main-menu-big">Libraring <span class="beta">(beta)</span></span>
+      </a>
+    </div>
+    <button class="toggle-collapse-menu">
+      <i class="fa fa-bars"></i>
+    </button>
     <!--BRAND END -->
 
     <!--main_menu start-->
@@ -24,10 +30,11 @@
                     <span class="main-menu-big">{% trans "Add book" %}</span>
                     <span class="main-menu-small"><i class="fa fa-plus"></i></span>
                 </a></li>
-                <li><input type="text" name="q" class="menu-search-input" placeholder="Search..."></li>
                 <li>
-                    <button type="submit" class="menu-search-submit">GO!</button>
+                  <input type="text" name="q" class="menu-search-input" placeholder="Search...">
+                  <button type="submit" class="menu-search-submit">GO!</button>
                 </li>
+                    
             </ul>
         </form>
         <!-- LEFT SIDE END -->

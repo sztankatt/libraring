@@ -97,6 +97,10 @@ $(document).ready(function(){
         }
     });
 
+    $('.main-menu-navbar .toggle-collapse-menu').click(function(){
+        $('ul.main-menu-left').slideToggle('fast');
+    });
+
 
 
 });
