@@ -101,6 +101,15 @@ $(document).ready(function(){
         $('ul.main-menu-left').slideToggle('fast');
     });
 
+    $(window).resize(function(){
+        if(window.innerWidth > 500){
+            $('ul.main-menu-left').show();
+        }
+        else{
+            $('ul.main-menu-left').hide();
+        }
+    });
+
 
 
 });
