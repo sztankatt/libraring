@@ -131,6 +131,15 @@ def make_an_offer(request):
             output = template.render(context)
 
             return HttpResponse(output)
+    elif request.method == 'POST':
+        form = OfferForm(request.POST)
+        if form.is_valid():
+            offer = form.save()
+            book = offer.book
+            book.status = 'offered'
+            book.save()
+
+            return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
     else:
         raise Http404
 

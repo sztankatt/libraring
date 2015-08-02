@@ -101,7 +101,7 @@
                     {% endif %}
                 </div>
             </div>
-            {% elif data.type == 'offered' %}
+            {% elif data.type == 'offers' %}
             <div class="col-xs-4 alert alert-info usr-book-status">
                 <div class="usr-book-status-title">
                     {% trans "Book status" %}
@@ -115,7 +115,6 @@
                         {% blocktrans trimmed %}
                             There are no offers for this book yet. Do not hesitate and make one!
                         {%endblocktrans%}
-
                     {% endif %}
                 </div>
             </div>
