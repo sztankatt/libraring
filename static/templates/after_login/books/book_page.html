@@ -260,10 +260,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3 book-offers">
+        <div class="col-md-4 book-offers">
         <div class="book-field">
             <h3>{% trans "Goal price" %}: &pound;{{ book.price }}</h3>
         </div>
+        {% if request.user in book.get_offer_users%}
+        <div class="book-field">
+            <h4>{% trans "You already have an offer for this book. You may change it by filling the form below" %}</h4>
+        </div> 
+        {%endif%}
         {% if not book.is_sold %}    
             <div class="book-offer-form book-field">
             {% if offer_form %}
@@ -275,7 +280,9 @@
                             {% else %}  
 
                             <div class="form-group">
-                                <label for="{{field.id_for_label}}" class="col-xs-6 control-label">{% trans "Offer new price" %}</label>
+                                <label for="{{field.id_for_label}}" class="col-xs-6 control-label">
+                                    {% trans "New price" %}
+                                </label>
                                 <div class="col-xs-6">
                                     <div class="input-group">
                                         {{field|add_class:'form-control'}}
@@ -288,7 +295,13 @@
                     {% endfor %}
                     <div class="form-group">
                         <div class="col-xs-12">
-                        <button class="btn btn-primary btn-block">{% trans "Make an offer!" %}</button>
+                        <button class="btn btn-primary btn-block">
+                        {% if request.user in book.get_offer_users%}
+                            {%trans "Change your offer" %}
+                        {%else%}        
+                            {% trans "Make an offer!" %}
+                        {%endif%}
+                        </button>
                         </div>
                     </div>
                 </form>
@@ -301,11 +314,7 @@
                 </div>
                 {% if offers %}
                     {% for offer in offers %}
-                        {% if not offer_form %}
-                            {% include 'after_login/books/book_offer.html' with offer=offer form=True %}
-                        {% else %}
-                            {% include 'after_login/books/book_offer.html' with offer=offer form=False %}
-                        {% endif %}
+                        {% include 'after_login/books/book_offer.html' with offer=offer %}
                     {% endfor %}
                 {% else %}
                     <div class="book-no-offer">
@@ -363,7 +372,6 @@ wrong page
 {%endif%}
 
     <script type="text/javascript" src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'js/books/overview.js' %}"></script>
 	<script src="{% static 'js/bootstrap-rating-input.min.js' %}" type="text/javascript"></script>
 
 {% endblock %}

@@ -1,18 +1,18 @@
 {% load i18n %}
 
-<div class="book-offer-previous-element row main-row" data-offered-price="{{offer.offered_price}}">
-	<div class="col-xs-2">
+<div class="book-offer-previous-element row main-row" data-offered-price="{{offer.offered_price}}" data-offer-made-by="{{offer.made_by.pk}}">
+	<div class="col-xs-3">
 		&pound;{{offer.offered_price}}
 	</div>
-	<div class="col-xs-7">
+	<div class="col-xs-6">
 		by <a href="{% url 'usr:profile' offer.made_by.id%}">{{offer.made_by}}</a>.
 	</div>
 	<div class="col-xs-3">
-	{% if form %}
+	{% if request.user == offer.book.user %}
 	<form action="{% url 'books:accept_the_offer' %}" method="post">
 		{% csrf_token %}
 		<input type="hidden" name="offer_id" value="{{offer.id}}" />
-		<button type="button" data-toggle="modal" data-target="#{{offer.id}}_offer_modal" class="btn btn-block btn-primary">{% trans "Accept" %}</button>
+		<button type="button" data-toggle="modal" data-target="#{{offer.id}}_offer_modal" class="btn btn-block btn-primary"><i class="fa fa-check"></i></button>
 		<div class="modal fade" role="dialog" aria-hidden="true" id="{{offer.id}}_offer_modal">
 			<div class="modal-dialog modal-sm">
 				<div class="modal-content">
@@ -28,6 +28,32 @@
                             {% blocktrans trimmed %}
                             If you accept, your book will be marked as 'sold', and you will be redirected to the next step, when you can discuss the details of the transaction
                         {% endblocktrans %}</p>
+
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-primary">{% trans "Yes" %}</button>
+						<button data-dismiss="modal" type="button" class="btn btn-default">{% trans "No" %}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	{%elif request.user == offer.made_by%}
+		<form action="{% url 'books:delete_the_offer' %}" method="post" id="delete_offer_form">
+		{% csrf_token %}
+		<input type="hidden" name="offer_id" value="{{offer.id}}" />
+		<button type="button" data-toggle="modal" data-target="#{{offer.id}}_delete_offer_modal" class="btn btn-block btn-primary"><i class="fa fa-times"></i></button>
+		<div class="modal fade" role="dialog" aria-hidden="true" id="{{offer.id}}_delete_offer_modal">
+			<div class="modal-dialog modal-sm">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3>{% trans "Are you sure?" %}</h3></div>
+					<div class="modal-body">
+						<p>
+                            {% blocktrans trimmed with price=offer.offered_price user=offer.made_by %}
+                            Are you sure to delete your offer of &pound;{{price}} for this book?
+                            {% endblocktrans %}
+                        </p>
 
 					</div>
 					<div class="modal-footer">

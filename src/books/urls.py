@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     url(r'^author/(?P<pk>[0-9]+)/$', 'books.views.author', name='author'),
     url(r'^publisher/(?P<pk>[0-9]+)/$', 'books.views.publisher', name='publisher'),
     url(r'^make/an/offer/$', 'books.views.make_an_offer', name='offer'),
+    url(r'^delete/the/offer/$', 'books.views.delete_the_offer', name='delete_the_offer'),
     url(r'^accept/the/offer/$', 'books.views.accept_the_offer', name='accept_the_offer'),
     url(r'^finalise/transaction/$', 'books.views.finalise_transaction', name='finalise_transaction'),
     url(r'^rate/transaction/$', 'books.views.rate_transaction', name='rate_transaction')

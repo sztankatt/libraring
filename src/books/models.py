@@ -91,15 +91,29 @@ class Book(models.Model, QueuedModel):
 
     def get_location(self):
         return self.user.person.location
-    
+
+
     def get_absolute_url(self):
         return '/'+get_language()+'/books/book/%s/' % (self.id)
 
+
+    def _get_all_offers(self):
+        return Offer.objects.filter(book=self).order_by('-offered_price')
+
+
     def get_highest_offer(self):
         try:
-            return Offer.objects.filter(book=self).order_by('-offered_price')[0]
+            return self._get_all_offers()[0]
         except IndexError:
             return None
+
+    def get_offer_users(self):
+        return [x.made_by for x in self._get_all_offers()]
+
+
+    def get_watchlist_users(self):
+        watchlist = WatchList.objects.filter(book=self)
+        return [x.usr for x in watchlist]
 
     class Meta:
         ordering = ['-upload_date']

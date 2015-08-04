@@ -106,7 +106,7 @@
         e.preventDefault();
 
         var $form = $(e.target);
-
+        var $made_by = $('#id_made_by').val();
 
         var offered_price = $('#id_offered_price').val();
 
@@ -116,6 +116,12 @@
             var element_num = 0;
 
             toastr.success('Offer made!');
+            $('.book-offer-previous .book-offer-previous-element').each(function(i){
+                if ($(this).attr('data-offer-made-by') == $made_by){
+                    $(this).remove();
+                }
+            });
+
             $('.book-offer-previous .book-offer-previous-element').each(function(i){
                 $this = $(this);
                 var val = $this.attr('data-offered-price');
@@ -139,5 +145,9 @@
 
         $form.data('bootstrapValidator').resetForm();
         $('#id_offered_price').val('');
+    });
+
+    $('#delete_offer_form').ajaxForm(function(data){
+        $('.modal').modal('hide');
     });
 });

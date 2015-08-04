@@ -5,6 +5,14 @@
             {% if type == 'home' %}Showing {% if not list %} all {% else %} selected{% endif %}
             {% elif type == 'book-page' %}
                 {{ book }}
+            {% elif type == 'usr-books'%}
+                {% if data.type == 'books' %}
+                    My books
+                {% elif data.type == 'offers' %}
+                    My offers
+                {% else %}
+                    My watchlist
+                {% endif %}
             {% endif %}
         </div>
         <div class="left-nav-body-content">
@@ -35,12 +43,13 @@
                 {% if book.user.get_average_rating %}
                     {{ book.user.get_average_rating }}
                 {% else %}
-                    {% trans "user hasn't been rated yet" %}{% endif %}
-                {% endif %}
+                    {% trans "user hasn't been rated yet" %}
+                {% endif %} 
             <button class="watchlist btn btn-dark btn-block" value="{{book.id}}">
                 <span class="glyphicon glyphicon-plus"></span>
                 <span class="watchlist-text">{% trans "Add to watchlist" %}</span>
             </button>
+            {%endif %}
         {% endif %}
         </div>
     </div>

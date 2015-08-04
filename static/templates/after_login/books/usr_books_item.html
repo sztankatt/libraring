@@ -1,16 +1,16 @@
-{% load thumbnail i18n highlight %}
+{% load thumbnail i18n highlight widget_tweaks %}
 
 
 
 {% if book %}
-
-{% with status=book.status %}
+{% with status=book.status book=book %}
     <div class="row usr-book-container">
         <div class="col-xs-3 usr-book-image-container">
+
+        <a href="{% url 'books:book_page' book.id %}">
         {% thumbnail book.image "220x320" crop="center" as im%}
             <img src="{{im.url}}" width="{{im.width}}" class="usr-book-image" />
         {% endthumbnail %}
-        <a href="{% url 'books:book_page' book.id %}">
             <button class="btn btn-secondary">{% trans "To the book's page" %}</button>
         </a>
         </div>
@@ -47,78 +47,188 @@
             </div>
             {% endif %}
         </div>
-            {% if data.type == 'books' %}
-            <div class="col-xs-4 alert {% if status == 'selling' %}alert-success{% else %}alert-info{% endif %} usr-book-status">
-                <div class="usr-book-status-title">
-                    {% if status == 'selling' %}
-                        {% trans "You have sold this book!" %}
-                    {% elif status == 'offered' %}
-                        {% trans "You have at least one offer for this book" %}
-                    {% elif status == 'normal' %}
-                        {% trans "You have no offers for this book yet" %}
-                    {% endif %}
-                </div>
-                <div class="usr-book-status-body">
-                    {% if status == 'selling' %}
-                        {% blocktrans trimmed %}
-                            You have accepted an offer made by {{book.accepted_offer.offered_by}} for this book. An email has been sent to you, please reply to that, in order to finalize transaction. Once you are happy with it, please click 'Finalise' below:
-                        {% endblocktrans %}
-                            <form id="finalised_form" method="post" action="{% url "books:finalise_transaction" %}">
-                                {% csrf_token %}
-                                <input type="hidden" name="seller" value="true" />
-                                <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
-                                <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
-                            </form>
-                    {% elif status == 'offered ' %}
-                        {% blocktrans trimmed %}
-                            You have several offers for this book, the highest being &pound;{{book.get_highest_offer.offered_price}} made by {{book.get_highest_offer.made_by}}. If you want to accept this offer, click 'Accept' below.
-                            <button class="btn btn primary">Accept</button>
-                            If you are not yet satisfied, you can wait until someone makes an another offer.
-                        {% endblocktrans %}
-                    {%else %}
-                        {% blocktrans trimmed %}
-                            Sadly you have no offers for this book yet. Once someone makes an offer, we will notify you, so stay tuned!
-                        {%endblocktrans%}
-
-                    {% endif %}
-                </div>
+        {% if data.type == 'books' %}
+        <div class="col-xs-4 alert {% if status == 'selling' %}alert-success{% else %}alert-info{% endif %} usr-book-status">
+            <div class="usr-book-status-title">
+                {% if status == 'selling' %}
+                    {% trans "You have sold this book!" %}
+                {% elif status == 'offered' %}
+                    {% trans "You have at least one offer for this book" %}
+                {% elif status == 'normal' %}
+                    {% trans "You have no offers for this book yet" %}
+                {% endif %}
             </div>
+            <div class="usr-book-status-body">
+                {% if status == 'selling' %}
+                    {% blocktrans trimmed %}
+                        You have accepted an offer made by {{book.accepted_offer.offered_by}} for this book. An email has been sent to you, please reply to that, in order to finalize transaction. Once you are happy with it, please click 'Finalise' below:
+                    {% endblocktrans %}
+                    {% if book.accepted_offer.transaction.finalised_by_seller %}
+                        <form id="finalised_form" method="post" action="{% url "books:finalise_transaction" %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="seller" value="true" />
+                            <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
+                            <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                        </form>
+                    {% else %}
+                        <p>You have already finalised this transaction.</p>
+                    {% endif %}
+                {% elif status == 'offered' %}
+                    {% blocktrans trimmed %}
+                        You have several offers for this book, the highest being &pound;{{book.get_highest_offer.offered_price}} made by {{book.get_highest_offer.made_by}}. If you want to accept this offer, click 'Accept' below.
+                        <button class="btn btn primary">Accept</button>
+                        If you are not yet satisfied, you can wait until someone makes an another offer.
+                    {% endblocktrans %}
+                {%else %}
+                    {% blocktrans trimmed %}
+                        Sadly you have no offers for this book yet. Once someone makes an offer, we will notify you, so stay tuned!
+                    {%endblocktrans%}
+
+                {% endif %}
+            </div>
+        </div>
             {% elif data.type == 'watchlist' %}
-                <div class="col-xs-4 alert alert-info usr-book-status">
-                <div class="usr-book-status-title">
-                    {% trans "Book status" %}
-                </div>
-                <div class="usr-book-status-body">
-                    {% if status == 'offered ' %}
-                        {% blocktrans trimmed %}
-                            This book have several offers, the highest being &pound;{{book.get_highest_offer.offered_price}}.
-                        {% endblocktrans %}
-                    {%else %}
-                        {% blocktrans trimmed %}
-                            There are no offers for this book yet. Do not hesitate and make one!
-                        {%endblocktrans%}
-
-                    {% endif %}
-                </div>
-            </div>
-            {% elif data.type == 'offers' %}
             <div class="col-xs-4 alert alert-info usr-book-status">
                 <div class="usr-book-status-title">
                     {% trans "Book status" %}
                 </div>
                 <div class="usr-book-status-body">
-                    {% if status == 'offered ' %}
-                        {% blocktrans trimmed %}
-                            This book have several offers, the highest being &pound;{{book.get_highest_offer.offered_price}}.
-                        {% endblocktrans %}
+                    {% if status == 'offered' %}
+                            This book have several offers, the highest being &pound; 
+                            {{book.get_highest_offer.offered_price}}
                     {%else %}
                         {% blocktrans trimmed %}
                             There are no offers for this book yet. Do not hesitate and make one!
                         {%endblocktrans%}
+
+                    {% endif %}
+                    {% if data.form %}
+                        {% with form=data.form %}
+                        <form class="form-horizontal" role="form" action="{% url 'books:offer' %}"
+                            method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                    {% if field.is_hidden %}
+                                        {% if field.html_name == 'book' %}
+                                            <input type="hidden" name="book" id="id_book" value="{{book.id}}"/>
+                                        {% else %}
+                                            {{field}}
+                                        {%endif%}
+                                    {% else %}  
+
+                                    <div class="form-group">
+                                        <label for="{{field.id_for_label}}" class="col-xs-6 control-label">{% trans "New price" %}</label>
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                {{field|add_class:'form-control'}}
+                                                <span class="input-group-addon"><i class="fa fa-gbp"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                <button class="btn btn-primary btn-block">
+                                    {% if book.get_highest_offer.made_by == request.user %}
+                                        {% trans "Change your offer" %}
+                                    {% elif request.user in book.get_offer_users %}
+                                        {% trans "Increase your offer" %}
+                                    {%else%}
+                                        {% trans "Make an offer" %}
+                                    {%endif%}
+                                </button>
+                                </div>
+                            </div>
+                        </form>
+                        {% endwith %}
                     {% endif %}
                 </div>
             </div>
-            {% endif %}
-    </div>
-        {%endwith%}
+            {% elif data.type == 'offers' %}
+            <div class="col-xs-4 alert 
+            {% if book.get_highest_offer.made_by == request.user %}
+            alert-success
+            {% elif request.user in book.get_offer_users %}
+            alert-warning
+            {%else%}
+            alert-info
+            {%endif%}
+             usr-book-status">
+                <div class="usr-book-status-title">
+                    {% trans "Book status" %}
+                </div>
+                <div class="usr-book-status-body">
+                {% if book.get_highest_offer.made_by == request.user %}
+                    <p>
+                    {% blocktrans trimmed with offer=book.get_highest_offer.offered_price%}
+                        Your offer of &pound;{{offer}} is the highest so far. Well done! 
+                    {%endblocktrans%}
+                    </p>
+                    <p>{% trans "Change offer below" %}</p>
+
+                {% elif request.user in book.get_offer_users %}
+                    <p>
+                    {% blocktrans trimmed with offer=book.get_highest_offer.offered_price%}
+                        Currently your offer of &pound;{{offer}} is the is not the highest. If you wan't to get this book, increase your offer! 
+                    {%endblocktrans%}
+                    </p>
+                    <p>{% trans "Increase offer below" %}</p>
+                {%else%}
+                    <p>{% blocktrans trimmed with offered_price=book.get_highest_offer.offered_price %}
+                            This book have several offers, the highest being &pound;{{offered_price}}.
+                    {%endblocktrans %}</p>
+                    <p>
+                        {%blocktrans trimmed %}
+                            You haven't made any offers for this book yet. Do not hesitate and make one!
+                        {%endblocktrans%}
+                    </p>
+                {%endif%}
+                    {% if data.form %}
+                        {% with form=data.form %}
+                        <form class="form-horizontal" role="form" action="{% url 'books:offer' %}"
+                            method="post">
+                            {% csrf_token %}
+                            {% for field in form %}
+                                    {% if field.is_hidden %}
+                                        {% if field.html_name == 'book' %}
+                                            <input type="hidden" name="book" id="id_book" value="{{book.id}}"/>
+                                        {% else %}
+                                            {{field}}
+                                        {%endif%}
+                                    {% else %}  
+
+                                    <div class="form-group">
+                                        <label for="{{field.id_for_label}}" class="col-xs-6 control-label">{% trans "New price" %}</label>
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                {{field|add_class:'form-control'}}
+                                                <span class="input-group-addon"><i class="fa fa-gbp"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    {% endif %}
+                            {% endfor %}
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                <button class="btn btn-primary btn-block">
+                                    {% if book.get_highest_offer.made_by == request.user %}
+                                        {% trans "Change your offer" %}
+                                    {% elif request.user in book.get_offer_users %}
+                                        {% trans "Increase your offer" %}
+                                    {%else%}
+                                        {% trans "Make an offer" %}
+                                    {%endif%}
+                                </button>
+                                </div>
+                            </div>
+                        </form>
+                        {% endwith %}
+                    {% endif %}
+                    </p>
+                {%endif%}        
+            </div>
+{%endwith%}
 {% endif %}

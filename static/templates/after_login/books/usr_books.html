@@ -12,12 +12,17 @@
 
 
 {% block content%}
+<div class="home-container">
+<div class="left-side">
+        {% include 'after_login/usr/left_nav_home.html' with type='usr-books' form=form%}
+    </div>
 <div class="usr-book-main right-side">
     <div class="usr-book-body">
         {% for book in data.books %}
             {% include 'after_login/books/usr_books_item.html' with book=book %}
         {% endfor %}
     </div>
+</div>
 </div>
 {%endblock%}
 

@@ -23,7 +23,10 @@ from books.models import Book, Genre, Author, Publisher, Offer, Transaction,Tran
 def main_page(request, type='books'):
     out = {
         'type': type,
-        'books': None
+        'books': None,
+        'form': OfferForm({
+            'made_by': request.user
+        })
     }
 
     if type == 'books':
@@ -35,6 +38,7 @@ def main_page(request, type='books'):
         out['books'] = books
     elif type == 'watchlist':
         books = [x.book for x in request.user.watchlist_set.all()]
+        books = filter(lambda x: x not in [y.book for y in request.user.offer_set.all()], books)
         out['books'] = books
     else:
         raise Http404
@@ -118,7 +122,12 @@ def make_an_offer(request):
         form = OfferForm(request.POST)
 
         if form.is_valid():
-            offer = form.save()
+            try:
+                offer = Offer.objects.get(made_by=request.user, book=form.cleaned_data['book'])
+                offer.offered_price = form.cleaned_data['offered_price']
+                offer.save()
+            except Offer.DoesNotExist: 
+                offer = form.save()
 
             book = offer.book
             book.status = 'offered'
@@ -126,26 +135,42 @@ def make_an_offer(request):
 
             template = get_template('after_login/books/book_offer.html')
 
-            context = Context({'offer': offer})
+            context = Context({'offer': offer, 'request': request})
 
             output = template.render(context)
 
             return HttpResponse(output)
-    elif request.method == 'POST':
+        else:
+            return Http404
+    else:
         form = OfferForm(request.POST)
         if form.is_valid():
-            offer = form.save()
+            try:
+                offer = Offer.objects.get(made_by=request.user, book=form.cleaned_data['book'])
+                offer.offered_price = form.cleaned_data['offered_price']
+                offer.save()
+            except Offer.DoesNotExist: 
+                offer = form.save()
+
             book = offer.book
             book.status = 'offered'
             book.save()
 
-            return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
-    else:
-        raise Http404
+            return HttpResponseRedirect(
+                reverse('books:book_page', args=(book.id,))
+                )
+        else:
+            return Http404
+
+
+def delete_the_offer(request):
+    if request.is_ajax:
+        return HttpResponse(request.POST['offer_id'])
 
 
 def send_accepted_offer_email(seller, buyer, book):
-    sender = "LIBRARING: %s accepted your offer <%s>" % (seller.username, seller.email)
+    sender = """LIBRARING: %s accepted your offer <%s>
+        """ % (seller.username, seller.email)
     to = buyer.email
     subject = "Your offer for %s has been accepted!" % book
 
