@@ -31,7 +31,7 @@ def main_page(request, type='books'):
 
     if type == 'books':
         books = Book.objects.all()
-        books = books.filter(user=request.user).filter(~Q(status='finalised'))
+        books = books.filter(user=request.user)
         out['books'] = books
     elif type == 'offers':
         books = set([x.book for x in request.user.offer_set.all()])
@@ -169,8 +169,7 @@ def delete_the_offer(request):
 
 
 def send_accepted_offer_email(seller, buyer, book):
-    sender = """LIBRARING: %s accepted your offer <%s>
-        """ % (seller.username, seller.email)
+    sender = "LIBRARING: %s accepted your offer <%s>" % (seller.username, seller.email)
     to = buyer.email
     subject = "Your offer for %s has been accepted!" % book
 

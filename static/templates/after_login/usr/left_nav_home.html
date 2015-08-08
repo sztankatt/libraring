@@ -31,7 +31,7 @@
             </form>
         {% elif type == 'book-page' %}
         <h4>
-            Genres
+            {% trans "Genres" %}
         </h4>
         <ul>
             {% for genre in book.genre.all %}
@@ -40,8 +40,8 @@
         </ul>
             {% if request.user.id != book.user.id %}
                 <h4>User rating</h4>
-                {% if book.user.get_average_rating %}
-                    {{ book.user.get_average_rating }}
+                {% if book.user.person.get_average_rating %}
+                    {{ book.user.person.get_average_rating }}
                 {% else %}
                     {% trans "user hasn't been rated yet" %}
                 {% endif %} 
