@@ -22,13 +22,13 @@ msgstr ""
 #: after_login/books/accepted_offer_email.txt:2
 #, python-format
 msgid "Dear <strong>%(username)s</strong>"
-msgstr ""
+msgstr "Kedves <strong>%(username)s</strong>"
 
 #: after_login/books/accepted_offer_email.html:9
 #: after_login/books/accepted_offer_email.txt:5
 #, python-format
 msgid "%(username)s has accepted your offer of &pound;%(price)s for %(book)s!"
-msgstr ""
+msgstr "%(username)s elfogadta az ajánlatodat &pound;%(price)s értékben a %(book)s című könyvre!"
 
 #: after_login/books/accepted_offer_email.html:15
 #: after_login/books/accepted_offer_email.txt:8
@@ -36,27 +36,31 @@ msgid ""
 "To discuss the details of the transaction please respond to this email. Once "
 "you are all set, please click on the 'Finalise' here:"
 msgstr ""
+"Az adás-vétel lebonyolítása érdekében kérlek, válaszolj erre az emailre! Ha "
+"minden kész, kattints a 'Lezárás' gombra:"
 
 #: after_login/books/accepted_offer_email.html:21
 #: after_login/books/accepted_offer_email.txt:11
 #, fuzzy
 #| msgid "the Libraring a"
 msgid "the Libraring team"
-msgstr "aaa"
+msgstr "the Libraring team"
 
 #: after_login/books/book_offer.html:15
 msgid "Accept"
-msgstr ""
+msgstr "Elfogad"
 
 #: after_login/books/book_offer.html:20
 msgid "Are you sure?"
-msgstr ""
+msgstr "Biztos vagy benne?"
 
+# typo az angol szövegben
 #: after_login/books/book_offer.html:23
 #, python-format
 msgid ""
 "Are you sure that you accept the &pound;%(price)s offer mady by %(user)s?"
 msgstr ""
+"Biztosan elfogadod a(z) &pound;%(price)s értékű ajánlatot a(z) %(user)s nevű felhasználótól?"
 
 #: after_login/books/book_offer.html:28
 msgid ""
@@ -64,33 +68,42 @@ msgid ""
 "redirected to the next step, when you can discuss the details of the "
 "transaction"
 msgstr ""
+"Ha elfogadod az ajánlatot a könyv státusza 'eladottra' változik. A "
+"következő lépés: az adásvétel részleteinek megbeszélése a vevővel."
+
+
+
 
 #: after_login/books/book_offer.html:34
 msgid "Yes"
-msgstr ""
+msgstr "Igen"
 
 #: after_login/books/book_offer.html:35
 msgid "No"
-msgstr ""
+msgstr "Nem"
 
 #: after_login/books/book_page.html:18
 msgid ""
 "You have at least one offer for this book. If you are satisfied with any of "
 "them, go ahead and accept the one you are satisfied with!"
 msgstr ""
+"Erre a könyvre már legalább egy ajánlat érkezett. Ha elégedett vagy bármelyikkel,"
+" fogadd el a neked tetsző ajánlatot!"
 
 #: after_login/books/book_page.html:25 after_login/books/book_page.html:106
 msgid "Well done!"
-msgstr ""
+msgstr "Szép munka!"
 
 #: after_login/books/book_page.html:26
 #, python-format
 msgid "You have accepted %(user)s's offer of %(offer)s&pound; for %(book)s."
 msgstr ""
+"Elfogadtad a(z) %(user)s nevű felhasználó ajánlatát, %(offer)s&pound; értékben a(z) "
+"%(book)s című könyvre."
 
 #: after_login/books/book_page.html:32 after_login/books/book_page.html:112
 msgid "Next step:"
-msgstr ""
+msgstr "Következő"
 
 #: after_login/books/book_page.html:34
 #, python-format
@@ -98,6 +111,8 @@ msgid ""
 "%(user)s will contact you shortly via your email address, %(email)s, and you "
 "will be able to discuss the further details."
 msgstr ""
+"%(user)s hamarosan kapcsolatba fog lépni veled az email címeden keresztül, %(email)s, "
+"így lehetőségetek lesz megbeszélni az adásvétel részleteit."
 
 #: after_login/books/book_page.html:39
 msgid ""
@@ -105,6 +120,9 @@ msgid ""
 "the 'Finalise' button below. Once both of you have clicked 'Finalised the "
 "transaction will be closed."
 msgstr ""
+"Ha elégedett vagy az adásvétellel, akkor le tudod zárni a 'Lezárás' gombra "
+"kattintva. Amennyiben mindketten megnyomjátok a gombot, az adásvétel véglegesen lezárásra kerül."
+
 
 #: after_login/books/book_page.html:46
 #, python-format
@@ -112,40 +130,44 @@ msgid ""
 "You have already finalised this transaction. Once %(user)s also finalises "
 "it, the transaction will be completed."
 msgstr ""
+"Te már lezártad ezt az adásvételt. Ha %(user)s is a 'Lezárás' gombra kattint, "
+"az adásvétel befejeződik."
 
 #: after_login/books/book_page.html:55 after_login/books/book_page.html:135
 msgid "Finalise"
-msgstr ""
+msgstr "Lezárás"
+
 
 #: after_login/books/book_page.html:63
 msgid ""
 "Transaction closed, you have successfully sold this book! Please rate the "
 "transaction below."
 msgstr ""
+"Sikeresen eladtad ezt a könyvet! Kérjük, értékeld az adásvételt!"
 
 #: after_login/books/book_page.html:70 after_login/books/book_page.html:157
 msgid "You have already rated this transaction!"
-msgstr ""
+msgstr "Ezt az adásvételt már értékelted!"
 
 #: after_login/books/book_page.html:75
 #, python-format
 msgid "Please rate %(user)s for this transaction."
-msgstr ""
+msgstr "Kérlek, értékeld %(user)s az adásvétel alapján."
 
 #: after_login/books/book_page.html:87 after_login/books/book_page.html:176
 msgid "Rate!"
-msgstr ""
+msgstr "Értékelés!"
 
 #: after_login/books/book_page.html:99
 msgid ""
 "You have made an offer for this book already. You can always make further "
 "offers."
-msgstr ""
+msgstr "Ajánlatot tettél erre a könyvre. Bármikor ajánlhatsz többet és kevesebbet is."
 
 #: after_login/books/book_page.html:107
 #, python-format
-msgid "Your offer of   &pound;%(price)s has been accepted!"
-msgstr ""
+msgid "Your offer of &pound;%(price)s has been accepted!"
+msgstr "Az ajánlatodat &pound;%(price)s értékben elfogadták!"
 
 #: after_login/books/book_page.html:113
 #, python-format
@@ -153,6 +175,8 @@ msgid ""
 "An email has been sent to you, please reply to that email to contact %(user)"
 "s in order to discuss further details"
 msgstr ""
+"Egy emailt küldtünk neked, kérlek, válaszolj rá és lépj kapcsolatba %(user) "
+"nevű felhasználóval, hogy megbeszélhessétek az adásvétel részleteit."
 
 #: after_login/books/book_page.html:118
 msgid ""
@@ -160,6 +184,10 @@ msgid ""
 "the 'Finalise' button below. Once both of you have clicked 'Finalised' the "
 "transaction will be closed."
 msgstr ""
+"Ha elégedett vagy az adásvétellel, akkor le tudod zárni a 'Lezárás' gombra "
+"kattintva. Amennyiben mindketten megnyomjátok a gombot, az adásvétel "
+"véglegesen lezárásra kerül."
+
 
 #: after_login/books/book_page.html:126
 #, python-format
@@ -167,181 +195,186 @@ msgid ""
 "You have already finalised this transaction. Once %(book.sold_to)s also "
 "finalises it, the transaction will be completed."
 msgstr ""
+"Te már lezártad ezt az adsávételt. Ha %(book.sold_to)s is a 'Lezárás' gombra "
+"kattint, az adásvétel végleg befejeződik."
+
 
 #: after_login/books/book_page.html:143
 msgid ""
 "Transaction closed, you have successfully acquired this book! Please rate "
 "the transaction below."
 msgstr ""
+"Az adásvétel lezárásra került, sikeresen megszerezted a könyvet. Kérlek, "
+"értékeld az adásvételt!"
 
 #: after_login/books/book_page.html:148
 msgid "Summary:"
-msgstr ""
+msgstr "Összegzés"
 
 #: after_login/books/book_page.html:150
 #, python-format
 msgid "You have bought this book from %(user)s for &pound;%(price)s."
-msgstr ""
+msgstr "Megvásároltad a(z) %(user)s című könyvet, &pound;%(price)s értékben."
 
 #: after_login/books/book_page.html:164
 #, python-format
 msgid "Please rate %(user)s for this transaction"
-msgstr ""
+msgstr "Kérlek értékeld %(user)s az adásvétel alapján"
 
 #: after_login/books/book_page.html:189
 msgid "Aw snap!"
-msgstr ""
+msgstr "Ej!"
 
 #: after_login/books/book_page.html:191
 msgid "This book has already been sold, you can't make an offer unfortunately."
-msgstr ""
+msgstr "Ez a könyv már elkelt, nem tudsz ajánlatot tenni rá."
 
 #: after_login/books/book_page.html:214
 msgid "Title"
-msgstr ""
+msgstr "Cím"
 
 #: after_login/books/book_page.html:219
 #: after_login/books/list_books_element_page.html:24
 msgid "Author(s)"
-msgstr ""
+msgstr "Szerző(k)"
 
 #: after_login/books/book_page.html:233
 msgid "Edition"
-msgstr ""
+msgstr "Kiadás száma"
 
 #: after_login/books/book_page.html:236 after_login/books/book_page.html:243
 #: after_login/books/book_page.html:333 after_login/books/book_page.html:334
 #: after_login/books/book_page.html:335 after_login/books/book_page.html:336
 msgid "Not specified"
-msgstr ""
+msgstr "Nem meghatározott"
 
 #: after_login/books/book_page.html:241
 msgid "ISBN number"
-msgstr ""
+msgstr "ISBN szám"
 
 #: after_login/books/book_page.html:247
 #: after_login/books/list_books_element_page.html:44
 msgid "Location"
-msgstr ""
+msgstr "Hely"
 
 #: after_login/books/book_page.html:255 before_login/framework/index.html:23
 msgid "Username"
-msgstr "Felhasználó név"
+msgstr "Felhasználónév"
 
 #: after_login/books/book_page.html:265
 #: after_login/books/list_books_element_page.html:47
 msgid "Goal price"
-msgstr ""
+msgstr "Ár"
 
 #: after_login/books/book_page.html:278
 msgid "Offer new price"
-msgstr ""
+msgstr "Ajánlj egy új árat"
 
 #: after_login/books/book_page.html:291
 msgid "Make an offer!"
-msgstr ""
+msgstr "Tegyél ajánlatot!"
 
 #: after_login/books/book_page.html:300
 msgid "Previous offers"
-msgstr ""
+msgstr "Előző ajánlat"
 
 #: after_login/books/book_page.html:312
 msgid "No offers for this book, yet."
-msgstr ""
+msgstr "Nem található ajánlat."
 
 #: after_login/books/book_page.html:320
 msgid "This book has been sold. You can't make an offer. "
-msgstr ""
+msgstr "Ezt a könyvet már eladták. Nem tudsz ajánlatot tenni."
 
 #: after_login/books/book_page.html:330
 msgid "Publisher information"
-msgstr ""
+msgstr "Információ a kiadóról"
 
 #: after_login/books/book_page.html:333
 #, fuzzy
 #| msgid "Username"
 msgid "Publisher name"
-msgstr "Felhasználó név"
+msgstr "Kiadó"
 
 #: after_login/books/book_page.html:334
 msgid "Publication city"
-msgstr ""
+msgstr "Kiadás helye (város)"
 
 #: after_login/books/book_page.html:335
 msgid "Publication country"
-msgstr ""
+msgstr "Kiadás helye (ország)"
 
 #: after_login/books/book_page.html:336
 msgid "Publication year"
-msgstr ""
+msgstr "Kiadás éve"
 
 #: after_login/books/book_page.html:341
 msgid "Short description"
-msgstr ""
+msgstr "Rövid leírás"
 
 #: after_login/books/book_page.html:344
 msgid "No description specified"
-msgstr ""
+msgstr "Nem adtál meg leírást"
 
 #: after_login/books/list_books_element_page.html:40
 msgid "No authors specified"
-msgstr ""
+msgstr "Nem adtál meg szerzőt"
 
 #: after_login/books/list_books_element_page.html:50
 msgid "Highest offer"
-msgstr ""
+msgstr "Legmagasabb ajánlat"
 
 #: after_login/books/list_books_page.html:17
 msgid "view all"
-msgstr ""
+msgstr "összes"
 
 #: after_login/books/list_books_page.html:22
 msgid "This section is empty"
-msgstr ""
+msgstr "Ez a szakasz üres"
 
 #: after_login/books/list_books_page.html:34
 msgid "No books"
-msgstr ""
+msgstr "Nincsenek könyvek"
 
 #: after_login/framework/menu.html:5
 msgid "Home"
-msgstr ""
+msgstr "Kezdőlap"
 
 #: after_login/framework/menu.html:6
 msgid "Explore"
-msgstr ""
+msgstr "Felfedezés"
 
 #: after_login/framework/menu.html:21
 msgid "Offers"
-msgstr ""
+msgstr "Ajánlatok"
 
 #: after_login/framework/menu.html:22
 msgid "Books"
-msgstr ""
+msgstr "Könyvek"
 
 #: after_login/framework/menu.html:23
 msgid "Watchlist"
-msgstr ""
+msgstr "Figyelés"
 
 #: after_login/framework/menu.html:25
 msgid "Settings"
-msgstr ""
+msgstr "Beállítások"
 
 #: after_login/framework/menu.html:27
 msgid "Log out"
-msgstr ""
+msgstr "Kijelentkezés"
 
 #: after_login/usr/home.html:23
 msgid "Filter books"
-msgstr ""
+msgstr "Szűrők"
 
 #: after_login/usr/left_nav_home.html:38
 msgid "user hasn't been rated yet"
-msgstr ""
+msgstr "ezt a felhasználót még nem értékelted"
 
 #: after_login/usr/left_nav_home.html:42
 msgid "Add to watchlist"
-msgstr ""
+msgstr "Figyelőhöz ad"
 
 #: before_login/framework/index.html:36
 msgid "Login"
@@ -354,7 +387,7 @@ msgstr "Még nem regisztráltál?"
 #: before_login/framework/index.html:50
 #, python-format
 msgid "You can register <a href=\"%(reg_url)s\">here</a>!"
-msgstr "<a href=\"%(reg_url)s\">Itt</a> tudsz registrálni!"
+msgstr "<a href=\"%(reg_url)s\">Itt</a> tudsz regisztrálni!"
 
 #: before_login/framework/index.html:58
 msgid ""
@@ -364,18 +397,27 @@ msgid ""
 "swiftly trade their unwanted books with other users regardless of university "
 "or course as it happens on a joint platform."
 msgstr ""
+"A Librarin egy ingyenes, online piactér, ahol a felhasználók tankönyveket vagy "
+"bármilyen felsőoktatáshoz kapcsolódó könyvet adhatnak el egymásnak és vehetnek meg "
+"egymástól. A weboldal egy egyetemspecifikus felülettel várja a hallgatókat. Célunk: "
+"egy egyetemeken és országokon átívelő piactér megteremtése, ahol a környezettudatosság"
+" mellett a tudáshoz való szabadságot is értékeink között tartjuk számon."
 
+
+
+
+# Facebook nagybetű
 #: before_login/framework/index.html:64
 msgid "Like us on facebook!"
-msgstr "Like-olj minket facebookon!"
+msgstr "Lájkolj minket Facebookon!"
 
 #: before_login/framework/menu.html:4
 msgid "Our team"
-msgstr "A csapat"
+msgstr "Rólunk"
 
 #: before_login/framework/menu.html:5
 msgid "Tour"
-msgstr "Képsorozat"
+msgstr "Hogy működik?"
 
 #: before_login/framework/menu.html:6
 msgid "Brainstorm"
@@ -383,7 +425,7 @@ msgstr "Ötletbörze"
 
 #: before_login/framework/menu.html:9
 msgid "Register"
-msgstr "Regisztrálás"
+msgstr "Regisztráció"
 
 #: before_login/framework/menu.html:24
 msgid "Go"
