@@ -97,7 +97,7 @@ class Person(models.Model):
     def previous_education(self):
         return self.education.filter(end_year__lt=self.education.order_by('-end_year')[0].end_year).order_by('-end_year')
 
-
+    """
     def get_average_rating(self):
         rating = None
 
@@ -126,7 +126,7 @@ class Person(models.Model):
             )
             rating /= seller_count
 
-        return rating
+        return rating"""
 
 
 

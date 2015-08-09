@@ -90,7 +90,7 @@
         validating: 'glyphicon glyphicon-refresh'
     };
 
-    $('.usr-book-status-body form').bootstrapValidator({
+    /*$('.usr-book-status-body form').bootstrapValidator({
         feedbackIcons : validators_feedback_icons,
         fields: {
             offered_price:{
@@ -101,7 +101,7 @@
                 }
             }
         }
-    });
+    });   */
 
     $('#book_offer_form').bootstrapValidator({
         feedbackIcons : validators_feedback_icons,

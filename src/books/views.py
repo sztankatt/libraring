@@ -31,7 +31,7 @@ def usr_book_page(request, type='books'):
 
     if type == 'books':
         out['book_status_form'] = BookStatusForm(request.GET)
-        statuses = request.GET.getlistd('book_status')
+        statuses = request.GET.getlist('book_status')
 
         books = Book.objects.all()
         books = books.filter(user=request.user)
@@ -48,7 +48,7 @@ def usr_book_page(request, type='books'):
 
     elif type == 'watchlist':
         books = [x.book for x in request.user.watchlist_set.all()]
-        books = filter(lambda x: x not in [y.book for y in request.user.offer_set.all()],books)
+        # books = filter(lambda x: x not in [y.book for y in request.user.offer_set.all()],books)
 
     out['books'] = books
 
@@ -115,10 +115,9 @@ def publisher(request, pk):
 
         book_list = publisher.book_set.all()
 
-        return render(request, 'after_login/books/show_books.html',
-                      {'books': book_list, 'publisher': publisher, 'type': 'publisher'})
-
-
+        return render(
+            request, 'after_login/books/show_books.html',
+            {'books': book_list, 'publisher': publisher, 'type': 'publisher'})
 
     except Publisher.DoesNotExist:
         raise Http404
@@ -127,15 +126,20 @@ def publisher(request, pk):
 @login_required
 @user_is_not_blocked
 def make_an_offer(request):
+    user_id = request.POST.get('made_by', None)
+    if user_id is None or (int(user_id) != int(request.user.pk)):
+        raise Http404
+
     if request.is_ajax() and request.method == 'POST':
         form = OfferForm(request.POST)
 
         if form.is_valid():
             try:
-                offer = Offer.objects.get(made_by=request.user, book=form.cleaned_data['book'])
+                offer = Offer.objects.get(
+                    made_by=request.user, book=form.cleaned_data['book'])
                 offer.offered_price = form.cleaned_data['offered_price']
                 offer.save()
-            except Offer.DoesNotExist: 
+            except Offer.DoesNotExist:
                 offer = form.save()
 
             book = offer.book
@@ -155,10 +159,11 @@ def make_an_offer(request):
         form = OfferForm(request.POST)
         if form.is_valid():
             try:
-                offer = Offer.objects.get(made_by=request.user, book=form.cleaned_data['book'])
+                offer = Offer.objects.get(
+                    made_by=request.user, book=form.cleaned_data['book'])
                 offer.offered_price = form.cleaned_data['offered_price']
                 offer.save()
-            except Offer.DoesNotExist: 
+            except Offer.DoesNotExist:
                 offer = form.save()
 
             book = offer.book
@@ -170,6 +175,7 @@ def make_an_offer(request):
                 )
         else:
             raise Http404
+
 
 
 def delete_the_offer(request):
@@ -204,11 +210,14 @@ def accept_the_offer(request):
         if offer_id == False:
             raise Http404
 
+        # geting the offer and marking as accepted
+        offer = get_object_or_404(Offer, pk=offer_id)
+
+        if request.user != offer.book.user:
+            raise Http404
+
         transaction = Transaction()
         transaction.save()
-
-        # geting the offer and marking as accepted
-        offer = Offer.objects.get(pk=offer_id)
         offer.accepted = True
         offer.transaction = transaction
         offer.save()
