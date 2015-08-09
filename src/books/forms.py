@@ -5,6 +5,7 @@ from django import forms
 from django.db.models import Count
 
 from books.models import Book, Author, Genre, Publisher, Offer
+from books.models import BOOK_STATUS_OPTIONS
 
 from django_select2.widgets import AutoHeavySelect2TagWidget, AutoHeavySelect2Widget
 from django_select2.fields import AutoModelSelect2TagField, AutoModelSelect2Field, AutoSelect2Field
@@ -93,19 +94,30 @@ class BookForm(ModelForm):
             'edition': 'Please type-in the edition of the book'
         }
 
+
 class OfferForm(forms.ModelForm):
     class Meta:
         model = Offer
         widgets = {
-            'book':forms.HiddenInput(),
+            'book': forms.HiddenInput(),
             'made_by': forms.HiddenInput()
         }
 
-        exclude =['transaction', 'accepted']
-    
-class GenreForm(forms.Form):
-    genre_query = Genre.objects.annotate(number_of_books=Count('book')).order_by('-number_of_books')[:10]
-    genre_query = sorted(genre_query, key=operator.attrgetter('name'))
-    GENRE_CHOICES = [(x,x) for x in genre_query]
+        exclude = ['transaction', 'accepted']
 
-    genres = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple, choices = GENRE_CHOICES)
+
+class GenreForm(forms.Form):
+    genre_query = Genre.objects.annotate(
+        number_of_books=Count('book')).order_by('-number_of_books')[:10]
+    genre_query = sorted(genre_query, key=operator.attrgetter('name'))
+    GENRE_CHOICES = [(x, x) for x in genre_query]
+
+    genres = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        choices=GENRE_CHOICES)
+
+
+class BookStatusForm(forms.Form):
+    book_status = forms.MultipleChoiceField(
+        widget=forms.CheckboxSelectMultiple,
+        choices=BOOK_STATUS_OPTIONS)

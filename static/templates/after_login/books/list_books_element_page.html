@@ -46,7 +46,7 @@
                 {% trans "Goal price" %}: &pound;{{ book.price }}
             </div>
             <div class="book-container-body">
-                {% trans "Highest offer" %}: {% if book.get_highst_offer %}&pound;{{ book.get_highest_offer }}{% else %}No offers yet{% endif %}
+                {% trans "Highest offer" %}: {% if book.get_highst_offer %}&pound;{{ book.get_highest_offer }}{% else %}{% trans "No offers for this book, yet"%}{% endif %}
             </div>
 
       </div>

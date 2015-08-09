@@ -2,33 +2,47 @@
 <div class="left-nav">
     <div class="left-nav-body">
         <div class="left-nav-body-title">
-            {% if type == 'home' %}Showing {% if not list %} all {% else %} selected{% endif %}
+            {% if type == 'home' %}{% trans "Home" %}
             {% elif type == 'book-page' %}
-                {{ book }}
+                {%blocktrans %}Viewing page of '{{ book }}'{%endblocktrans%}
             {% elif type == 'usr-books'%}
                 {% if data.type == 'books' %}
-                    My books
+                    {%trans "My books"%}
                 {% elif data.type == 'offers' %}
-                    My offers
+                    {% trans "My offers" %}
                 {% else %}
-                    My watchlist
+                    {% trans "My watchlist" %}
                 {% endif %}
             {% endif %}
         </div>
         <div class="left-nav-body-content">
         {% if type == 'home' %}
-            <form class="form-horizontal" action="" method="get">
-                <ul>
-                {% for checkbox in form.genres %}
-                    <li class="checkbox">
-                    {{ checkbox.tag}}
-                    <label for="id_genres_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
-                    </li>
-                {% endfor %}
-                </ul>
-                <button type="submit" class="btn btn-dark btn-block">Filter</button>
-                <a href="{% url 'index' %}" class="btn btn-dark btn-block">Clear</a>
-            </form>
+            <div class="left-nav-filter-form-header">
+            {% if not list %} 
+                {% trans "Showing all books" %}
+            {% else %}
+                {% trans "Showing filtered books" %}
+            {% endif %}
+            </div>
+            <div class="left-nav-filter-form-help">
+                {% blocktrans trimmed %}
+                    To filter, select one or more genre below and click 'Filter'
+                {%endblocktrans%}
+            </div>  
+            <div class="left-nav-filter-form-container">
+                <form class="form-horizontal" action="" method="get">
+                    <ul>
+                    {% for checkbox in form.genres %}
+                        <li class="checkbox">
+                        {{ checkbox.tag}}
+                        <label for="id_genres_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <button type="submit" class="btn btn-dark btn-block">{% trans "Filter" %}</button>
+                    <a href="{% url 'index' %}" class="btn btn-dark btn-block">{% trans "Clear"%}</a>
+                </form>
+            </div>
         {% elif type == 'book-page' %}
         <h4>
             {% trans "Genres" %}
@@ -50,10 +64,39 @@
                 <span class="watchlist-text">{% trans "Add to watchlist" %}</span>
             </button>
             {%endif %}
+        {% elif type == 'usr-books' %}
+            {% if data.book_status_form %}
+            <div class="left-nav-filter-form-header">
+            {% if not list %} 
+                {% trans "Showing all books" %}
+            {% else %}
+                {% trans "Showing filtered books" %}
+            {% endif %}
+            </div>
+            <div class="left-nav-filter-form-help">
+                {% blocktrans trimmed %}
+                    To filter, select one or more possibilities below and click 'Filter'
+                {%endblocktrans%}
+            </div>  
+            <div class="left-nav-filter-form-container">
+                <form class="form-horizontal" action="" method="get">
+                <ul>
+                {% for checkbox in data.book_status_form.book_status %}
+                    <li class="checkbox">
+                    {{ checkbox.tag}}
+                    <label for="id_book_status_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
+                    </li>
+                {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-dark btn-block">{% trans "Filter"%}</button>
+                <a href="{% url 'books:main_page' data.type %}" class="btn btn-dark btn-block">{% trans  "Clear" %}</a>
+            </form>
+            </div>
+            {% endif %}
         {% endif %}
         </div>
     </div>
     <div class="left-nav-footer">
-        <button class="btn btn-dark btn-block normal"><span class="text">Hide sidebar </span><i class="fa fa-minus"></i></button>
+        <button class="btn btn-dark btn-block normal"><span class="text">{% trans "Hide sidebar" %}</span><i class="fa fa-minus"></i></button>
     </div>
 </div>

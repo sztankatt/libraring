@@ -5,7 +5,11 @@
 		&pound;{{offer.offered_price}}
 	</div>
 	<div class="col-xs-6">
-		by <a href="{% url 'usr:profile' offer.made_by.id%}">{{offer.made_by}}</a>.
+		{% comment %}
+			display: Money by username.
+		{% endcomment %}
+		{% trans "by" %} 
+		<a href="{% url 'usr:profile' offer.made_by.id%}">{{offer.made_by}}</a>.
 	</div>
 	<div class="col-xs-3">
 	{% if request.user == offer.book.user %}

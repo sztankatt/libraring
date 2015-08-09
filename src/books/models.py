@@ -1,72 +1,98 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.sql.query import FieldError
 from django_countries.fields import CountryField
 from queued_search.models import QueuedModel
 from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
 import datetime
+
+BOOK_STATUS_OPTIONS = [
+        ('normal', _('Without offers')),
+        ('offered', _('With offers present')),
+        ('selling', _('Has an accepted offer')),
+        ('finalised', _('Finalised transaction'))
+    ]
+
 
 class Author(models.Model):
     name = models.CharField(max_length=250)
-    
-    def __unicode__(self):
-        return '%s' % (self.name)
-    
-class Genre(models.Model):
-    name = models.CharField(max_length=250)
-    
 
     def __unicode__(self):
         return '%s' % (self.name)
-    
-class Publisher(models.Model):
+
+
+class Genre(models.Model):
     name = models.CharField(max_length=250)
-    
+
     def __unicode__(self):
         return '%s' % (self.name)
-    
-    
+
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return '%s' % (self.name)
+
+
 class IntegerRangeField(models.IntegerField):
-    def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
+
+    def __init__(
+            self,
+            verbose_name=None,
+            name=None,
+            min_value=None,
+            max_value=None,
+            **kwargs):
         self.min_value, self.max_value = min_value, max_value
         models.IntegerField.__init__(self, verbose_name, name, **kwargs)
 
     def formfield(self, **kwargs):
-        defaults = {'min_value': self.min_value, 'max_value':self.max_value}
+        defaults = {'min_value': self.min_value, 'max_value': self.max_value}
         defaults.update(kwargs)
         return super(IntegerRangeField, self).formfield(**defaults)
+
 
 class Book(models.Model, QueuedModel):
     title = models.CharField(max_length=50)
     author = models.ManyToManyField(Author)
     genre = models.ManyToManyField(Genre)
-    edition = models.IntegerField(choices=[(x,x) for x in range(1,31)])
+    edition = models.IntegerField(choices=[(x, x) for x in range(1, 31)])
     publisher = models.ForeignKey(Publisher, blank=True, null=True)
-    publication_year = IntegerRangeField(help_text='YYYY', min_value=1000, max_value=datetime.date.today().year)
+    publication_year = IntegerRangeField(
+                            help_text='YYYY',
+                            min_value=1000,
+                            max_value=datetime.date.today().year)
     publication_city = models.CharField(max_length=100, blank=True, null=True)
     publication_country = CountryField(null=True, blank=True)
-    
+
     user = models.ForeignKey(User)
-    price = IntegerRangeField(min_value=1, max_value=200, verbose_name='Goal price')
+    price = IntegerRangeField(
+                min_value=1,
+                max_value=200,
+                verbose_name='Goal price')
     includes_delivery_charges = models.BooleanField(default=False)
     upload_date = models.DateField()
-    isbn = models.CharField(max_length=13, blank=True, null=True) #regexp here!!!
-    image = models.ImageField(upload_to='books', default='books/no_image.png', blank=True)
+    isbn = models.CharField(max_length=13, blank=True, null=True)
+    image = models.ImageField(
+                            upload_to='books',
+                            default='books/no_image.png',
+                            blank=True
+                        )
 
     short_description = models.TextField(blank=True, default="")
 
-    #is_sold = models.BooleanField(default=False)
+    # is_sold = models.BooleanField(default=False)
 
-    STATUS_OPTIONS = [
-        ('normal', 'normal'),
-        ('offered', 'offered'),
-        ('selling', 'selling'),
-        ('finalised', 'finalised')
-    ]
+    status = models.CharField(
+                            max_length=20,
+                            choices=BOOK_STATUS_OPTIONS,
+                            default='normal'
+                        )
 
-    status = models.CharField(max_length=20, choices=STATUS_OPTIONS, default ='normal')
-
-    sold_to = models.ForeignKey(User, related_name='bough_book', null=True, blank=True)
+    sold_to = models.ForeignKey(User,
+                                related_name='bough_book',
+                                null=True, blank=True)
 
     def __unicode__(self):
         return '%s' % (self.title)

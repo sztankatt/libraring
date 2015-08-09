@@ -13,14 +13,14 @@ from django.db.models import Q
 
 
 from usr.project import user_is_not_blocked
-from books.forms import OfferForm
+from books.forms import OfferForm, BookStatusForm
 from books.models import Book, Genre, Author, Publisher, Offer, Transaction,TransactionRating
 
 
 @login_required
 @ensure_csrf_cookie
 @user_is_not_blocked
-def main_page(request, type='books'):
+def usr_book_page(request, type='books'):
     out = {
         'type': type,
         'books': None,
@@ -30,18 +30,27 @@ def main_page(request, type='books'):
     }
 
     if type == 'books':
+        out['book_status_form'] = BookStatusForm(request.GET)
+        statuses = request.GET.getlistd('book_status')
+
         books = Book.objects.all()
         books = books.filter(user=request.user)
-        out['books'] = books
+
+        if statuses:
+            flt = Q()
+            for status in statuses:
+                flt = flt | Q(status=status)
+
+            books = books.filter(flt).distinct()
+
     elif type == 'offers':
         books = set([x.book for x in request.user.offer_set.all()])
-        out['books'] = books
+
     elif type == 'watchlist':
         books = [x.book for x in request.user.watchlist_set.all()]
-        books = filter(lambda x: x not in [y.book for y in request.user.offer_set.all()], books)
-        out['books'] = books
-    else:
-        raise Http404
+        books = filter(lambda x: x not in [y.book for y in request.user.offer_set.all()],books)
+
+    out['books'] = books
 
     return render(request, 'after_login/books/usr_books.html', {'data': out})
 
@@ -160,7 +169,7 @@ def make_an_offer(request):
                 reverse('books:book_page', args=(book.id,))
                 )
         else:
-            return Http404
+            raise Http404
 
 
 def delete_the_offer(request):
