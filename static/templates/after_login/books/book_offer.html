@@ -54,7 +54,10 @@
 						<h3>{% trans "Are you sure?" %}</h3></div>
 					<div class="modal-body">
 						<p>
-                            {% blocktrans trimmed with price=offer.offered_price user=offer.made_by %}
+							{% comment %}
+								Displayed when the user clicks 'x' at his offer
+							{% endcomment %}
+                            {% blocktrans trimmed with price=offer.offered_price %}
                             Are you sure to delete your offer of &pound;{{price}} for this book?
                             {% endblocktrans %}
                         </p>

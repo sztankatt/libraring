@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-27 09:30+0000\n"
+"POT-Creation-Date: 2015-08-09 16:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: after_login/books/accepted_offer_email.html:3
@@ -28,7 +28,9 @@ msgstr "Kedves <strong>%(username)s</strong>"
 #: after_login/books/accepted_offer_email.txt:5
 #, python-format
 msgid "%(username)s has accepted your offer of &pound;%(price)s for %(book)s!"
-msgstr "%(username)s elfogadta az ajánlatodat &pound;%(price)s értékben a %(book)s című könyvre!"
+msgstr ""
+"%(username)s elfogadta az ajánlatodat &pound;%(price)s értékben a %(book)s "
+"című könyvre!"
 
 #: after_login/books/accepted_offer_email.html:15
 #: after_login/books/accepted_offer_email.txt:8
@@ -46,49 +48,57 @@ msgstr ""
 msgid "the Libraring team"
 msgstr "the Libraring team"
 
-#: after_login/books/book_offer.html:15
-msgid "Accept"
-msgstr "Elfogad"
+#: after_login/books/book_offer.html:12
+msgid "by"
+msgstr ""
 
-#: after_login/books/book_offer.html:20
+#: after_login/books/book_offer.html:25 after_login/books/book_offer.html:55
+#: after_login/books/usr_books_item.html:117
 msgid "Are you sure?"
 msgstr "Biztos vagy benne?"
 
 # typo az angol szövegben
-#: after_login/books/book_offer.html:23
+#: after_login/books/book_offer.html:28
+#: after_login/books/usr_books_item.html:120
 #, python-format
 msgid ""
 "Are you sure that you accept the &pound;%(price)s offer mady by %(user)s?"
 msgstr ""
-"Biztosan elfogadod a(z) &pound;%(price)s értékű ajánlatot a(z) %(user)s nevű felhasználótól?"
+"Biztosan elfogadod a(z) &pound;%(price)s értékű ajánlatot a(z) %(user)s nevű "
+"felhasználótól?"
 
-#: after_login/books/book_offer.html:28
+#: after_login/books/book_offer.html:33
+#: after_login/books/usr_books_item.html:125
 msgid ""
 "If you accept, your book will be marked as 'sold', and you will be "
 "redirected to the next step, when you can discuss the details of the "
 "transaction"
 msgstr ""
-"Ha elfogadod az ajánlatot a könyv státusza 'eladottra' változik. A "
-"következő lépés: az adásvétel részleteinek megbeszélése a vevővel."
+"Ha elfogadod az ajánlatot a könyv státusza 'eladottra' változik. A következő "
+"lépés: az adásvétel részleteinek megbeszélése a vevővel."
 
-
-
-
-#: after_login/books/book_offer.html:34
+#: after_login/books/book_offer.html:39 after_login/books/book_offer.html:69
+#: after_login/books/usr_books_item.html:131
 msgid "Yes"
 msgstr "Igen"
 
-#: after_login/books/book_offer.html:35
+#: after_login/books/book_offer.html:40 after_login/books/book_offer.html:70
+#: after_login/books/usr_books_item.html:132
 msgid "No"
 msgstr "Nem"
+
+#: after_login/books/book_offer.html:62
+#, python-format
+msgid "Are you sure to delete your offer of &pound;%(price)s for this book?"
+msgstr ""
 
 #: after_login/books/book_page.html:18
 msgid ""
 "You have at least one offer for this book. If you are satisfied with any of "
 "them, go ahead and accept the one you are satisfied with!"
 msgstr ""
-"Erre a könyvre már legalább egy ajánlat érkezett. Ha elégedett vagy bármelyikkel,"
-" fogadd el a neked tetsző ajánlatot!"
+"Erre a könyvre már legalább egy ajánlat érkezett. Ha elégedett vagy "
+"bármelyikkel, fogadd el a neked tetsző ajánlatot!"
 
 #: after_login/books/book_page.html:25 after_login/books/book_page.html:106
 msgid "Well done!"
@@ -98,8 +108,8 @@ msgstr "Szép munka!"
 #, python-format
 msgid "You have accepted %(user)s's offer of %(offer)s&pound; for %(book)s."
 msgstr ""
-"Elfogadtad a(z) %(user)s nevű felhasználó ajánlatát, %(offer)s&pound; értékben a(z) "
-"%(book)s című könyvre."
+"Elfogadtad a(z) %(user)s nevű felhasználó ajánlatát, %(offer)s&pound; "
+"értékben a(z) %(book)s című könyvre."
 
 #: after_login/books/book_page.html:32 after_login/books/book_page.html:112
 msgid "Next step:"
@@ -111,8 +121,8 @@ msgid ""
 "%(user)s will contact you shortly via your email address, %(email)s, and you "
 "will be able to discuss the further details."
 msgstr ""
-"%(user)s hamarosan kapcsolatba fog lépni veled az email címeden keresztül, %(email)s, "
-"így lehetőségetek lesz megbeszélni az adásvétel részleteit."
+"%(user)s hamarosan kapcsolatba fog lépni veled az email címeden keresztül, "
+"%(email)s, így lehetőségetek lesz megbeszélni az adásvétel részleteit."
 
 #: after_login/books/book_page.html:39
 msgid ""
@@ -121,8 +131,8 @@ msgid ""
 "transaction will be closed."
 msgstr ""
 "Ha elégedett vagy az adásvétellel, akkor le tudod zárni a 'Lezárás' gombra "
-"kattintva. Amennyiben mindketten megnyomjátok a gombot, az adásvétel véglegesen lezárásra kerül."
-
+"kattintva. Amennyiben mindketten megnyomjátok a gombot, az adásvétel "
+"véglegesen lezárásra kerül."
 
 #: after_login/books/book_page.html:46
 #, python-format
@@ -130,31 +140,33 @@ msgid ""
 "You have already finalised this transaction. Once %(user)s also finalises "
 "it, the transaction will be completed."
 msgstr ""
-"Te már lezártad ezt az adásvételt. Ha %(user)s is a 'Lezárás' gombra kattint, "
-"az adásvétel befejeződik."
+"Te már lezártad ezt az adásvételt. Ha %(user)s is a 'Lezárás' gombra "
+"kattint, az adásvétel befejeződik."
 
 #: after_login/books/book_page.html:55 after_login/books/book_page.html:135
+#: after_login/books/usr_books_item.html:73
 msgid "Finalise"
 msgstr "Lezárás"
-
 
 #: after_login/books/book_page.html:63
 msgid ""
 "Transaction closed, you have successfully sold this book! Please rate the "
 "transaction below."
-msgstr ""
-"Sikeresen eladtad ezt a könyvet! Kérjük, értékeld az adásvételt!"
+msgstr "Sikeresen eladtad ezt a könyvet! Kérjük, értékeld az adásvételt!"
 
 #: after_login/books/book_page.html:70 after_login/books/book_page.html:157
+#: after_login/books/usr_books_item.html:81
 msgid "You have already rated this transaction!"
 msgstr "Ezt az adásvételt már értékelted!"
 
 #: after_login/books/book_page.html:75
+#: after_login/books/usr_books_item.html:85
 #, python-format
 msgid "Please rate %(user)s for this transaction."
 msgstr "Kérlek, értékeld %(user)s az adásvétel alapján."
 
 #: after_login/books/book_page.html:87 after_login/books/book_page.html:176
+#: after_login/books/usr_books_item.html:97
 msgid "Rate!"
 msgstr "Értékelés!"
 
@@ -162,18 +174,20 @@ msgstr "Értékelés!"
 msgid ""
 "You have made an offer for this book already. You can always make further "
 "offers."
-msgstr "Ajánlatot tettél erre a könyvre. Bármikor ajánlhatsz többet és kevesebbet is."
+msgstr ""
+"Ajánlatot tettél erre a könyvre. Bármikor ajánlhatsz többet és kevesebbet is."
 
 #: after_login/books/book_page.html:107
-#, python-format
-msgid "Your offer of &pound;%(price)s has been accepted!"
+#, fuzzy, python-format
+#| msgid "Your offer of &pound;%(price)s has been accepted!"
+msgid "Your offer of   &pound;%(price)s has been accepted!"
 msgstr "Az ajánlatodat &pound;%(price)s értékben elfogadták!"
 
 #: after_login/books/book_page.html:113
 #, python-format
 msgid ""
-"An email has been sent to you, please reply to that email to contact %(user)"
-"s in order to discuss further details"
+"An email has been sent to you, please reply to that email to contact "
+"%(user)s in order to discuss further details"
 msgstr ""
 "Egy emailt küldtünk neked, kérlek, válaszolj rá és lépj kapcsolatba %(user) "
 "nevű felhasználóval, hogy megbeszélhessétek az adásvétel részleteit."
@@ -188,7 +202,6 @@ msgstr ""
 "kattintva. Amennyiben mindketten megnyomjátok a gombot, az adásvétel "
 "véglegesen lezárásra kerül."
 
-
 #: after_login/books/book_page.html:126
 #, python-format
 msgid ""
@@ -197,7 +210,6 @@ msgid ""
 msgstr ""
 "Te már lezártad ezt az adsávételt. Ha %(book.sold_to)s is a 'Lezárás' gombra "
 "kattint, az adásvétel végleg befejeződik."
-
 
 #: after_login/books/book_page.html:143
 msgid ""
@@ -235,6 +247,7 @@ msgstr "Cím"
 
 #: after_login/books/book_page.html:219
 #: after_login/books/list_books_element_page.html:24
+#: after_login/books/usr_books_item.html:22
 msgid "Author(s)"
 msgstr "Szerző(k)"
 
@@ -243,8 +256,8 @@ msgid "Edition"
 msgstr "Kiadás száma"
 
 #: after_login/books/book_page.html:236 after_login/books/book_page.html:243
-#: after_login/books/book_page.html:333 after_login/books/book_page.html:334
-#: after_login/books/book_page.html:335 after_login/books/book_page.html:336
+#: after_login/books/book_page.html:342 after_login/books/book_page.html:343
+#: after_login/books/book_page.html:344 after_login/books/book_page.html:345
 msgid "Not specified"
 msgstr "Nem meghatározott"
 
@@ -263,66 +276,95 @@ msgstr "Felhasználónév"
 
 #: after_login/books/book_page.html:265
 #: after_login/books/list_books_element_page.html:47
+#: after_login/books/usr_books_item.html:42
 msgid "Goal price"
 msgstr "Ár"
 
-#: after_login/books/book_page.html:278
-msgid "Offer new price"
+#: after_login/books/book_page.html:269
+#, fuzzy
+#| msgid ""
+#| "You have made an offer for this book already. You can always make further "
+#| "offers."
+msgid ""
+"You already have an offer for this book. You may change it by filling the "
+"form below"
+msgstr ""
+"Ajánlatot tettél erre a könyvre. Bármikor ajánlhatsz többet és kevesebbet is."
+
+#: after_login/books/book_page.html:284
+#: after_login/books/usr_books_item.html:179
+#: after_login/books/usr_books_item.html:262
+#, fuzzy
+#| msgid "Offer new price"
+msgid "New price"
 msgstr "Ajánlj egy új árat"
 
-#: after_login/books/book_page.html:291
+#: after_login/books/book_page.html:300
+#: after_login/books/usr_books_item.html:194
+#: after_login/books/usr_books_item.html:277
+msgid "Change your offer"
+msgstr ""
+
+#: after_login/books/book_page.html:302
 msgid "Make an offer!"
 msgstr "Tegyél ajánlatot!"
 
-#: after_login/books/book_page.html:300
+#: after_login/books/book_page.html:313
 msgid "Previous offers"
 msgstr "Előző ajánlat"
 
-#: after_login/books/book_page.html:312
+#: after_login/books/book_page.html:321
 msgid "No offers for this book, yet."
 msgstr "Nem található ajánlat."
 
-#: after_login/books/book_page.html:320
+#: after_login/books/book_page.html:329
 msgid "This book has been sold. You can't make an offer. "
 msgstr "Ezt a könyvet már eladták. Nem tudsz ajánlatot tenni."
 
-#: after_login/books/book_page.html:330
+#: after_login/books/book_page.html:339
 msgid "Publisher information"
 msgstr "Információ a kiadóról"
 
-#: after_login/books/book_page.html:333
+#: after_login/books/book_page.html:342
 #, fuzzy
 #| msgid "Username"
 msgid "Publisher name"
 msgstr "Kiadó"
 
-#: after_login/books/book_page.html:334
+#: after_login/books/book_page.html:343
 msgid "Publication city"
 msgstr "Kiadás helye (város)"
 
-#: after_login/books/book_page.html:335
+#: after_login/books/book_page.html:344
 msgid "Publication country"
 msgstr "Kiadás helye (ország)"
 
-#: after_login/books/book_page.html:336
+#: after_login/books/book_page.html:345
 msgid "Publication year"
 msgstr "Kiadás éve"
 
-#: after_login/books/book_page.html:341
+#: after_login/books/book_page.html:350
 msgid "Short description"
 msgstr "Rövid leírás"
 
-#: after_login/books/book_page.html:344
+#: after_login/books/book_page.html:353
 msgid "No description specified"
 msgstr "Nem adtál meg leírást"
 
 #: after_login/books/list_books_element_page.html:40
+#: after_login/books/usr_books_item.html:38
 msgid "No authors specified"
 msgstr "Nem adtál meg szerzőt"
 
 #: after_login/books/list_books_element_page.html:50
 msgid "Highest offer"
 msgstr "Legmagasabb ajánlat"
+
+#: after_login/books/list_books_element_page.html:50
+#, fuzzy
+#| msgid "No offers for this book, yet."
+msgid "No offers for this book, yet"
+msgstr "Nem található ajánlat."
 
 #: after_login/books/list_books_page.html:17
 msgid "view all"
@@ -336,31 +378,166 @@ msgstr "Ez a szakasz üres"
 msgid "No books"
 msgstr "Nincsenek könyvek"
 
-#: after_login/framework/menu.html:5
+#: after_login/books/usr_books_item.html:14
+msgid "To the book's page"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:54
+msgid "You have sold this book!"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:56
+msgid "This transaction has been finalised"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:58
+#, fuzzy
+#| msgid "No offers for this book, yet."
+msgid "You have at least one offer for this book"
+msgstr "Nem található ajánlat."
+
+#: after_login/books/usr_books_item.html:60
+#, fuzzy
+#| msgid "No offers for this book, yet."
+msgid "You have no offers for this book yet"
+msgstr "Nem található ajánlat."
+
+#: after_login/books/usr_books_item.html:65
+#, python-format
+msgid ""
+"You have accepted an offer made by <b>%(user)s</b> for this book. An email "
+"has been sent to you, please reply to that, in order to finalize "
+"transaction. Once you are happy with it, please click <b>'Finalise'</b> "
+"below:"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:76
+#, fuzzy
+#| msgid "You have already rated this transaction!"
+msgid "You have already finalised this transaction."
+msgstr "Ezt az adásvételt már értékelted!"
+
+#: after_login/books/usr_books_item.html:106
+#, python-format
+msgid ""
+"You have several offers for this book, the highest being &pound;%(offer)s "
+"made by %(user)s. If you want to accept this offer, click 'Accept' below."
+msgstr ""
+
+#: after_login/books/usr_books_item.html:112
+msgid "Accept"
+msgstr "Elfogad"
+
+#: after_login/books/usr_books_item.html:138
+msgid ""
+"If you are not yet satisfied, you can wait until someone makes an another "
+"offer."
+msgstr ""
+
+#: after_login/books/usr_books_item.html:142
+msgid ""
+"Sadly you have no offers for this book yet. Once someone makes an offer, we "
+"will notify you, so stay tuned!"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:152
+#: after_login/books/usr_books_item.html:219
+#, fuzzy
+#| msgid "Books"
+msgid "Book status"
+msgstr "Könyvek"
+
+#: after_login/books/usr_books_item.html:159
+#, fuzzy
+#| msgid ""
+#| "You have made an offer for this book already. You can always make further "
+#| "offers."
+msgid "There are no offers for this book yet. Do not hesitate and make one!"
+msgstr ""
+"Ajánlatot tettél erre a könyvre. Bármikor ajánlhatsz többet és kevesebbet is."
+
+#: after_login/books/usr_books_item.html:196
+#: after_login/books/usr_books_item.html:279
+msgid "Increase your offer"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:198
+#: after_login/books/usr_books_item.html:281
+#, fuzzy
+#| msgid "Make an offer!"
+msgid "Make an offer"
+msgstr "Tegyél ajánlatot!"
+
+#: after_login/books/usr_books_item.html:224
+#, fuzzy, python-format
+#| msgid "Your offer of &pound;%(price)s has been accepted!"
+msgid "Your offer of &pound;%(offer)s is the highest so far. Well done!"
+msgstr "Az ajánlatodat &pound;%(price)s értékben elfogadták!"
+
+#: after_login/books/usr_books_item.html:228
+msgid "Change offer below"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:232
+#, python-format
+msgid ""
+"Currently your offer of &pound;%(offer)s is the is not the highest. If you "
+"wan't to get this book, increase your offer!"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:236
+msgid "Increase offer below"
+msgstr ""
+
+#: after_login/books/usr_books_item.html:238
+#, python-format
+msgid ""
+"This book have several offers, the highest being &pound;%(offered_price)s."
+msgstr ""
+
+#: after_login/books/usr_books_item.html:242
+#, fuzzy
+#| msgid ""
+#| "You have made an offer for this book already. You can always make further "
+#| "offers."
+msgid ""
+"You haven't made any offers for this book yet. Do not hesitate and make one!"
+msgstr ""
+"Ajánlatot tettél erre a könyvre. Bármikor ajánlhatsz többet és kevesebbet is."
+
+#: after_login/framework/menu.html:22 after_login/usr/left_nav_home.html:5
 msgid "Home"
 msgstr "Kezdőlap"
 
-#: after_login/framework/menu.html:6
+#: after_login/framework/menu.html:26
 msgid "Explore"
 msgstr "Felfedezés"
 
-#: after_login/framework/menu.html:21
+#: after_login/framework/menu.html:30
+#, fuzzy
+#| msgid "No books"
+msgid "Add book"
+msgstr "Nincsenek könyvek"
+
+#: after_login/framework/menu.html:51
+#, fuzzy
+#| msgid "Books"
+msgid "My Books"
+msgstr "Könyvek"
+
+#: after_login/framework/menu.html:53
 msgid "Offers"
 msgstr "Ajánlatok"
 
-#: after_login/framework/menu.html:22
-msgid "Books"
-msgstr "Könyvek"
-
-#: after_login/framework/menu.html:23
+#: after_login/framework/menu.html:54
 msgid "Watchlist"
 msgstr "Figyelés"
 
-#: after_login/framework/menu.html:25
+#: after_login/framework/menu.html:56
 msgid "Settings"
 msgstr "Beállítások"
 
-#: after_login/framework/menu.html:27
+#: after_login/framework/menu.html:58
 msgid "Log out"
 msgstr "Kijelentkezés"
 
@@ -368,13 +545,72 @@ msgstr "Kijelentkezés"
 msgid "Filter books"
 msgstr "Szűrők"
 
-#: after_login/usr/left_nav_home.html:38
+#: after_login/usr/left_nav_home.html:7
+#, python-format
+msgid "Viewing page of '%(book)s'"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:10
+#, fuzzy
+#| msgid "No books"
+msgid "My books"
+msgstr "Nincsenek könyvek"
+
+#: after_login/usr/left_nav_home.html:12
+#, fuzzy
+#| msgid "Offers"
+msgid "My offers"
+msgstr "Ajánlatok"
+
+#: after_login/usr/left_nav_home.html:14
+#, fuzzy
+#| msgid "Watchlist"
+msgid "My watchlist"
+msgstr "Figyelés"
+
+#: after_login/usr/left_nav_home.html:22 after_login/usr/left_nav_home.html:71
+msgid "Showing all books"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:24 after_login/usr/left_nav_home.html:73
+#, fuzzy
+#| msgid "Filter books"
+msgid "Showing filtered books"
+msgstr "Szűrők"
+
+#: after_login/usr/left_nav_home.html:28
+msgid "To filter, select one or more genre below and click 'Filter'"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:42 after_login/usr/left_nav_home.html:91
+#, fuzzy
+#| msgid "Filter books"
+msgid "Filter"
+msgstr "Szűrők"
+
+#: after_login/usr/left_nav_home.html:43 after_login/usr/left_nav_home.html:92
+msgid "Clear"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:48
+msgid "Genres"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:60
 msgid "user hasn't been rated yet"
 msgstr "ezt a felhasználót még nem értékelted"
 
-#: after_login/usr/left_nav_home.html:42
+#: after_login/usr/left_nav_home.html:64
 msgid "Add to watchlist"
 msgstr "Figyelőhöz ad"
+
+#: after_login/usr/left_nav_home.html:77
+msgid "To filter, select one or more possibilities below and click 'Filter'"
+msgstr ""
+
+#: after_login/usr/left_nav_home.html:100
+msgid "Hide sidebar"
+msgstr ""
 
 #: before_login/framework/index.html:36
 msgid "Login"
@@ -397,39 +633,33 @@ msgid ""
 "swiftly trade their unwanted books with other users regardless of university "
 "or course as it happens on a joint platform."
 msgstr ""
-"A Librarin egy ingyenes, online piactér, ahol a felhasználók tankönyveket vagy "
-"bármilyen felsőoktatáshoz kapcsolódó könyvet adhatnak el egymásnak és vehetnek meg "
-"egymástól. A weboldal egy egyetemspecifikus felülettel várja a hallgatókat. Célunk: "
-"egy egyetemeken és országokon átívelő piactér megteremtése, ahol a környezettudatosság"
-" mellett a tudáshoz való szabadságot is értékeink között tartjuk számon."
-
-
-
+"A Librarin egy ingyenes, online piactér, ahol a felhasználók tankönyveket "
+"vagy bármilyen felsőoktatáshoz kapcsolódó könyvet adhatnak el egymásnak és "
+"vehetnek meg egymástól. A weboldal egy egyetemspecifikus felülettel várja a "
+"hallgatókat. Célunk: egy egyetemeken és országokon átívelő piactér "
+"megteremtése, ahol a környezettudatosság mellett a tudáshoz való szabadságot "
+"is értékeink között tartjuk számon."
 
 # Facebook nagybetű
 #: before_login/framework/index.html:64
 msgid "Like us on facebook!"
 msgstr "Lájkolj minket Facebookon!"
 
-#: before_login/framework/menu.html:4
+#: before_login/framework/menu.html:13
 msgid "Our team"
 msgstr "Rólunk"
 
-#: before_login/framework/menu.html:5
+#: before_login/framework/menu.html:14
 msgid "Tour"
 msgstr "Hogy működik?"
 
-#: before_login/framework/menu.html:6
+#: before_login/framework/menu.html:15
 msgid "Brainstorm"
 msgstr "Ötletbörze"
 
-#: before_login/framework/menu.html:9
+#: before_login/framework/menu.html:18
 msgid "Register"
 msgstr "Regisztráció"
-
-#: before_login/framework/menu.html:24
-msgid "Go"
-msgstr "Mehet"
 
 #: before_login/messages.html:9
 #, python-format
@@ -438,6 +668,9 @@ msgid ""
 "                    %(header)s\n"
 "                    "
 msgstr ""
+
+#~ msgid "Go"
+#~ msgstr "Mehet"
 
 #, fuzzy
 #~| msgid "Go"
