@@ -1,80 +1,98 @@
 from django.db import models
-
 from django.contrib.auth.models import User
-
-from django.db.models.sql.query import FieldError
-
 from django_countries.fields import CountryField
+from queued_search.models import QueuedModel
+from django.utils.translation import get_language
+from django.utils.translation import ugettext_lazy as _
+import datetime
 
-from django.db.models import Max, Q, Count
-
-
-import datetime 
-
-#TODO:solve migrations problem
+BOOK_STATUS_OPTIONS = [
+        ('normal', _('Without offers')),
+        ('offered', _('With offers present')),
+        ('selling', _('Has an accepted offer')),
+        ('finalised', _('Finalised transaction'))
+    ]
 
 
 class Author(models.Model):
     name = models.CharField(max_length=250)
-    
-    def __unicode__(self):
-        return '%s' % (self.name)
-    
-class Genre(models.Model):
-    name = models.CharField(max_length=250)
-    
 
     def __unicode__(self):
         return '%s' % (self.name)
-    
-class Publisher(models.Model):
+
+
+class Genre(models.Model):
     name = models.CharField(max_length=250)
-    
+
     def __unicode__(self):
         return '%s' % (self.name)
-    
-    
+
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __unicode__(self):
+        return '%s' % (self.name)
+
+
 class IntegerRangeField(models.IntegerField):
-    def __init__(self, verbose_name=None, name=None, min_value=None, max_value=None, **kwargs):
+
+    def __init__(
+            self,
+            verbose_name=None,
+            name=None,
+            min_value=None,
+            max_value=None,
+            **kwargs):
         self.min_value, self.max_value = min_value, max_value
         models.IntegerField.__init__(self, verbose_name, name, **kwargs)
 
     def formfield(self, **kwargs):
-        defaults = {'min_value': self.min_value, 'max_value':self.max_value}
+        defaults = {'min_value': self.min_value, 'max_value': self.max_value}
         defaults.update(kwargs)
         return super(IntegerRangeField, self).formfield(**defaults)
 
-class Book(models.Model):
+
+class Book(models.Model, QueuedModel):
     title = models.CharField(max_length=50)
     author = models.ManyToManyField(Author)
     genre = models.ManyToManyField(Genre)
-    edition = models.IntegerField(choices=[(x,x) for x in range(1,31)])
+    edition = models.IntegerField(choices=[(x, x) for x in range(1, 31)])
     publisher = models.ForeignKey(Publisher, blank=True, null=True)
-    publication_year = IntegerRangeField(help_text='YYYY', min_value=1000, max_value=datetime.date.today().year)
+    publication_year = IntegerRangeField(
+                            help_text='YYYY',
+                            min_value=1000,
+                            max_value=datetime.date.today().year)
     publication_city = models.CharField(max_length=100, blank=True, null=True)
     publication_country = CountryField(null=True, blank=True)
-    
+
     user = models.ForeignKey(User)
-    price = IntegerRangeField(min_value=1, max_value=200, verbose_name='Goal price')
+    price = IntegerRangeField(
+                min_value=1,
+                max_value=200,
+                verbose_name='Goal price')
     includes_delivery_charges = models.BooleanField(default=False)
     upload_date = models.DateField()
-    isbn = models.CharField(max_length=13, blank=True, null=True) #regexp here!!!
-    image = models.ImageField(upload_to='books', default='books/no_image.png', blank=True)
+    isbn = models.CharField(max_length=13, blank=True, null=True)
+    image = models.ImageField(
+                            upload_to='books',
+                            default='books/no_image.png',
+                            blank=True
+                        )
 
     short_description = models.TextField(blank=True, default="")
 
-    #is_sold = models.BooleanField(default=False)
+    # is_sold = models.BooleanField(default=False)
 
-    STATUS_OPTIONS = [
-        ('normal', 'normal'),
-        ('offered', 'offered'),
-        ('selling', 'selling'),
-        ('finalised', 'finalised')
-    ]
+    status = models.CharField(
+                            max_length=20,
+                            choices=BOOK_STATUS_OPTIONS,
+                            default='normal'
+                        )
 
-    status = models.CharField(max_length=20, choices=STATUS_OPTIONS, default ='normal')
-
-    sold_to = models.ForeignKey(User, related_name='bough_book', null=True, blank=True)
+    sold_to = models.ForeignKey(User,
+                                related_name='bough_book',
+                                null=True, blank=True)
 
     def __unicode__(self):
         return '%s' % (self.title)
@@ -86,16 +104,10 @@ class Book(models.Model):
             return False
 
     def is_finalised(self):
-        accepted_offer = self.is_sold()
-        if accepted_offer is None:
-            return False
+        if self.status == 'finalised':
+            return True
         else:
-            t = Transaction.objects.get(offer=accepted_offer)
-            try:
-                tr = TransactionRating.objects.get(transaction=t)
-                return True
-            except TransactionRating.DoesNotExist:
-                return False
+            return False
 
     def accepted_offer(self):
         try:
@@ -105,15 +117,29 @@ class Book(models.Model):
 
     def get_location(self):
         return self.user.person.location
-    
+
+
     def get_absolute_url(self):
-        return '/books/book/%s/' % (self.id)
+        return '/'+get_language()+'/books/book/%s/' % (self.id)
+
+
+    def _get_all_offers(self):
+        return Offer.objects.filter(book=self).order_by('-offered_price')
+
 
     def get_highest_offer(self):
         try:
-            return Offer.objects.filter(book=self).order_by('-offered_price')[0]
+            return self._get_all_offers()[0]
         except IndexError:
             return None
+
+    def get_offer_users(self):
+        return [x.made_by for x in self._get_all_offers()]
+
+
+    def get_watchlist_users(self):
+        watchlist = WatchList.objects.filter(book=self)
+        return [x.usr for x in watchlist]
 
     class Meta:
         ordering = ['-upload_date']
@@ -136,16 +162,6 @@ class Transaction(models.Model):
     finalised_by_seller = models.BooleanField(default=False)
 
     rating = models.OneToOneField(TransactionRating, null=True)
-
-    # def new_selling_messages(self):
-    #     from user_messages.models import Message
-    #     return Message.objects.filter(transaction=self,
-    #         seen=False).exclude(sender=self.book.user).count() > 0
-    #
-    # def new_buying_messages(self):
-    #     from user_messages.models import Message
-    #     return Message.objects.filter(transaction=self,
-    #         seen=False).exclude(sender=self.book.sold_to).count() > 0
 
     def is_finalised(self):
         return (self.finalised_by_seller and self.finalised_by_buyer)

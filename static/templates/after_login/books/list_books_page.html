@@ -1,3 +1,4 @@
+{% load i18n %}
 {% if sections %}
 
 	{% for section in sections %}
@@ -13,12 +14,12 @@
 		{% if section.load_more %}
 			<div class="book-container book-container-footer">
 			<a href="#load_all_{{section.section_id}}" class="load-more-books" data-section="{{section.section_id}}">
-				<h4>load all</h4>
+				<h4>{% trans "view all" %}</h4>
 			</a>
 			</div>
 		{% endif %}
 	{% empty %}
-		This section is empty
+		{% trans "This section is empty" %}
 	{% endfor %}
 {% else %}
 	{% if books %}
@@ -27,9 +28,9 @@
 	    	{% include  'after_login/books/list_books_element_page.html' with book=book%}
 
 	    {% empty %}
-	    	No books
+
 	    {%endfor%}
 	{%else%}
-	    No books
+	    {% trans "No books" %}
 	{%endif%}
 {% endif %}

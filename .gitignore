@@ -1,8 +1,8 @@
 *~
 *pyc
-/src/mysite/settings.py*
-/.idea
-/static-only
+src/mysite/settings.py*
+.idea/
+static-only/
 *mydatabase*
 *migrations/
 .gitignore
@@ -12,3 +12,6 @@ lib/
 bin/
 .pydevproject
 whoosh/
+*.mo
+media/
+htpasswd

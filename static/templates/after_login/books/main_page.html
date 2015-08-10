@@ -94,32 +94,10 @@
 
 {% load staticfiles %}
 {% block js%}
-
 {{block.super}}
-
-    
-<script type="text/javascript" src="{% static 'js/select2.js'%}"></script>
 <script src="{% static 'js/masonry.pkgd.min.js' %}"></script>
 <script src="{% static 'js/imagesloaded.pkgd.min.js' %}"></script>
 <script src="{% static 'js/usr/validators.js' %}"></script>
-<script src="{% static 'js/toastr.min.js' %}"></script>
-<script type="text/javascript">
-toastr.options = {
-    "closeButton": false,
-    "debug": false,
-    "positionClass": "toast-top-right",
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "1000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "linear",
-    "showMethod": "fadeIn",
-    "hideMethod": "fadeOut"
-}
-</script>
-
-<script type="text/javascript" src="{%static 'js/books/main.js' %}"></script>
+<script src="{%static 'js/books/main.js' %}"></script>
 
 {%endblock%}

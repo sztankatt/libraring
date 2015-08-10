@@ -21,9 +21,8 @@ function add_to_watchlist(book_id, change) {
 }
 
 $(document).ready(function(){
-
-	 add_to_watchlist($('.watchlist').val(), "false");
-    
-    $('.watchlist').click(function(){ add_to_watchlist($(this).val(), "true"); });
-   
+    add_to_watchlist($('.watchlist').attr('value'), false);
+    $('.watchlist').click(function(){
+        add_to_watchlist($(this).attr('value'), true);
+    })
 });

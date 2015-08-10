@@ -9,6 +9,7 @@ from django.contrib.auth import logout
 from django.template import Context
 from django.core import mail
 from django.template.loader import get_template
+from django.utils.translation import ugettext as _
 
 from usr.models import Class, Institution, Course, PageMessages, EmailChange, Person
 
@@ -110,7 +111,7 @@ def generate_email_change_code():
 def send_new_email_code(email_change):
     sender = 'LIBRARING <no-reply@libraring.co.uk>'
     to = email_change.email_to
-    subject = 'Email change code'
+    subject = _('Email change code')
     
     text_content = get_template('before_login/registration/change_code_email.txt')
     html_content = get_template('before_login/registration/change_code_email.html')

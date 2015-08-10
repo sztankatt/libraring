@@ -1,5 +1,5 @@
 /*BOOKS */
-function load_all_books(section, output){
+/*function load_all_books(section, output){
     $.ajax({
         type:'POST',
         dataType: 'html',
@@ -17,24 +17,24 @@ function load_books(load_type){
 
         var active_tab = $('a[data-load="'+type+'"]').attr('href');
 
-        
+
         $(active_tab+' .book-list').load('/ajax/list/books/', {'type':type, 'csrfmiddlewaretoken': $.cookie('csrftoken')}, function(){
             var $container = $('.book-page-row .book-list');
             $container.masonry();
             $container.masonry('destroy');
-            
+
             $container.masonry({
                 gutter: '.book-gutter-sizer',
 
                 columnWidth: '.book-grid-sizer',
                 itemSelector: '.book-container',
             });
-            
-            
+
+
             $container.imagesLoaded(function(){
                 $container.masonry();
             });
-            
+
            $('a.load-more-books').click(function(event){
                 event.preventDefault();
                 $this = $(this);
@@ -49,11 +49,11 @@ function load_books(load_type){
                     $this.parent().remove();
                 });
             });
-            
+
         });
 }
 
-$(document).ready(function(){    
+$(document).ready(function(){
     $('#book_list_nav li a').click(function(){
        // var href = $(this).attr('href');
         //var html = $(href+' .book-list').html() ;
@@ -65,23 +65,23 @@ $(document).ready(function(){
             load_books(type);
     //    }
     });
-    
+
     load_books();
-    
+
 
 
 
     //search results
     (function(){
         var $container = $('#search_results .book-list');
-        
+
         $container.masonry({
             gutter: '.book-gutter-sizer',
             columnWidth: '.book-grid-sizer',
             itemSelector: '.book-container',
         });
-    
-        
+
+
         $container.imagesLoaded(function(){
             $container.masonry();
         });
@@ -97,6 +97,26 @@ $(document).ready(function(){
             $('#id_new_publisher').attr({'disabled':'false'})
         }
     });
-    
 
+
+
+
+});*/
+
+$(document).ready(function(){
+   var $container = $('.usr-book-masonry');
+
+    $container.masonry();
+    $container.masonry('destroy');
+
+    $container.masonry({
+        gutter: '.usr-book-gutter-sizer',
+
+        columnWidth: '.usr-book-grid-sizer',
+        itemSelector: '.usr-book-container'
+    });
+
+    $container.imagesLoaded(function(){
+        $container.masonry();
+    });
 });

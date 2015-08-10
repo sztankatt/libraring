@@ -2,7 +2,7 @@
 # Created by: Tamas Sztanka-Toth
 
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -10,15 +10,16 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.core import mail
 from django.template.loader import get_template
-from django.template import Context
-from django.db.models import Count
+from django.template import Context, RequestContext
+from django.db.models import Q
+from django.utils.translation import ugettext as _
 
 from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
 from usr.models import Class, Person, PageMessages, Location
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
-from books.models import Genre
-
+from books.models import Genre, Book
+from books.forms import GenreForm
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -48,7 +49,7 @@ def is_not_student(wizard):
 def send_confirmation_email(user):
     sender = 'LIBRARING <no-reply@libraring.co.uk>'
     to = user.email
-    subject = 'Registration confirmation'
+    subject = _('Registration confirmation')
 
     text_content = get_template('before_login/registration/email.txt')
     html_content = get_template('before_login/registration/email.html')
@@ -147,7 +148,7 @@ def login_view(request):
         if form.is_valid():
             user = authenticate(username=request.POST['username'], \
                                 password=request.POST['password'])
-            error = 'Your username/password is incorrect. Are you registered?'
+            error = _('Your username/password is incorrect. Are you registered?')
 
     else:
         form = LoginForm()
@@ -190,10 +191,39 @@ def logout_view(request):
 
 #view which handles the loading of main page for logged in users. Only called within 'index' view
 @user_is_not_blocked
-def home(request):
-    g = Genre.objects.annotate(book_num=Count('book')).order_by('-book_num').exclude(book_num=0)
+def home(
+        request,
+        template='after_login/usr/home.html',
+        home_books_template ='after_login/usr/load_books.html'
+        ):
+    list = request.GET.getlist('genres')
+    first_page = request.GET.get('page-number', 1)
+    first_page = int(first_page)*8
+    books = Book.objects.all()
+    status = Q(status='normal') | Q(status='offered')
+    books = books.filter(status)
+    books = books.filter(~Q(user=request.user))
+    if list:
+        filter = Q()
+        for genre in list:
+            filter = filter | Q(genre__name=genre)
 
-    return render(request, 'after_login/usr/home.html', {'genres': g})
+        books = books.filter(filter).distinct()
+
+    context = {
+        'books': books,
+        'home_books_template': home_books_template,
+        'form':GenreForm(request.GET),
+        'list':list,
+        'first_page':first_page
+    }
+    if request.is_ajax():
+        template = home_books_template
+
+    return render_to_response(template, context, context_instance=RequestContext(request))
+    #g = Genre.objects.annotate(book_num=Count('book')).order_by('-book_num').exclude(book_num=0)
+
+    #return render(request, 'after_login/usr/home.html', {'books': books})
 
 
 #view which handles the access to the '/'
@@ -322,8 +352,6 @@ def blocked_profile(request):
 @last_logged_user_exists
 def deactivated_profile(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
-
-    #todo: add user to the render
     return render(request, 'before_login/messages.html',
                   {'user': user, 'message': PageMessages.objects.get(name='deactivated_profile')})
 

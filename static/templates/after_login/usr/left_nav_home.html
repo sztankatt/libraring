@@ -1,0 +1,102 @@
+{% load i18n %}
+<div class="left-nav">
+    <div class="left-nav-body">
+        <div class="left-nav-body-title">
+            {% if type == 'home' %}{% trans "Home" %}
+            {% elif type == 'book-page' %}
+                {%blocktrans %}Viewing page of '{{ book }}'{%endblocktrans%}
+            {% elif type == 'usr-books'%}
+                {% if data.type == 'books' %}
+                    {%trans "My books"%}
+                {% elif data.type == 'offers' %}
+                    {% trans "My offers" %}
+                {% else %}
+                    {% trans "My watchlist" %}
+                {% endif %}
+            {% endif %}
+        </div>
+        <div class="left-nav-body-content">
+        {% if type == 'home' %}
+            <div class="left-nav-filter-form-header">
+            {% if not list %} 
+                {% trans "Showing all books" %}
+            {% else %}
+                {% trans "Showing filtered books" %}
+            {% endif %}
+            </div>
+            <div class="left-nav-filter-form-help">
+                {% blocktrans trimmed %}
+                    To filter, select one or more genre below and click 'Filter'
+                {%endblocktrans%}
+            </div>  
+            <div class="left-nav-filter-form-container">
+                <form class="form-horizontal" action="" method="get">
+                    <ul>
+                    {% for checkbox in form.genres %}
+                        <li class="checkbox">
+                        {{ checkbox.tag}}
+                        <label for="id_genres_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <button type="submit" class="btn btn-dark btn-block">{% trans "Filter" %}</button>
+                    <a href="{% url 'index' %}" class="btn btn-dark btn-block">{% trans "Clear"%}</a>
+                </form>
+            </div>
+        {% elif type == 'book-page' %}
+        <h4>
+            {% trans "Genres" %}
+        </h4>
+        <ul>
+            {% for genre in book.genre.all %}
+                <li>{{ genre }}</li>
+            {% endfor %}
+        </ul>
+            {% if request.user.id != book.user.id %}
+                <h4>User rating</h4>
+                {% if book.user.person.get_average_rating %}
+                    {{ book.user.person.get_average_rating }}
+                {% else %}
+                    {% trans "user hasn't been rated yet" %}
+                {% endif %} 
+            <button class="watchlist btn btn-dark btn-block" value="{{book.id}}">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="watchlist-text">{% trans "Add to watchlist" %}</span>
+            </button>
+            {%endif %}
+        {% elif type == 'usr-books' %}
+            {% if data.book_status_form %}
+            <div class="left-nav-filter-form-header">
+            {% if not list %} 
+                {% trans "Showing all books" %}
+            {% else %}
+                {% trans "Showing filtered books" %}
+            {% endif %}
+            </div>
+            <div class="left-nav-filter-form-help">
+                {% blocktrans trimmed %}
+                    To filter, select one or more possibilities below and click 'Filter'
+                {%endblocktrans%}
+            </div>  
+            <div class="left-nav-filter-form-container">
+                <form class="form-horizontal" action="" method="get">
+                <ul>
+                {% for checkbox in data.book_status_form.book_status %}
+                    <li class="checkbox">
+                    {{ checkbox.tag}}
+                    <label for="id_book_status_{{ forloop.counter0 }}">{{ checkbox.choice_label }}</label>
+                    </li>
+                {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-dark btn-block">{% trans "Filter"%}</button>
+                <a href="{% url 'books:main_page' data.type %}" class="btn btn-dark btn-block">{% trans  "Clear" %}</a>
+            </form>
+            </div>
+            {% endif %}
+        {% endif %}
+        </div>
+    </div>
+    <div class="left-nav-footer">
+        <button class="btn btn-dark btn-block normal"><span class="text">{% trans "Hide sidebar" %}</span><i class="fa fa-minus"></i></button>
+    </div>
+</div>

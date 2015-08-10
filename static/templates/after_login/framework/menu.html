@@ -1,17 +1,66 @@
-<div class="navbar-collapse collapse">
-    <ul class="nav navbar-nav">
-        <li><a href="{% url 'index' %}"><i class="fa fa-home"></i> Home</a></li>
-        <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-user"></i> Profile</a></li>
-        <li><a href="{% url 'books:main_page' %}"><i class="fa fa-book"></i> Books</a></li>
-    </ul>
-    <form class="navbar-form navbar-left navbar-input-group search-form" role="search" method="get" action="/books/search/">
-        <div class="form-group">
-            <input type="text" name="q" class="form-control" placeholder="Search">
-        </div>
-        <button type="submit" class="btn btn-default">Go!</button>
-    </form>
-    <ul class="nav navbar-nav navbar-right">
-       
-        <li><a href="{% url 'usr:logout'%}"><i class="fa fa-power-off"></i> Logout</a></li>
-    </ul>
-</div>
+{% load i18n static %}
+<nav class="main-menu-navbar" role="navigation">
+    <!-- BRAND START-->
+
+    <div class="main-menu-brand">
+
+      <a class="main-menu-brand" href="/"><img src="{%static 'img/logo.png'%}"/>
+          <span class="main-menu-big">Libraring <span class="beta">(beta)</span></span>
+      </a>
+    </div>
+    <button class="toggle-collapse-menu">
+      <i class="fa fa-bars"></i>
+    </button>
+    <!--BRAND END -->
+
+    <!--main_menu start-->
+    <div id="main-menu">
+        <!-- LEFT SIDE START-->
+        <form  class="" role="search" method="get" action="{% url 'books:haystack_search' %}">
+            <ul class="main-menu-left">
+                <li><a href="{% url 'index' %}" class="home-button menu-item">
+                    <span class="main-menu-big">{% trans "Home" %}</span>
+                    <span class="main-menu-small"><i class="fa fa-home"></i></span>
+                </a></li>
+                <li><a href="#" class="explore-button menu-item">
+                    <span class="main-menu-big">{% trans "Explore" %}</span>
+                    <span class="main-menu-small"><i class="fa fa-globe"></i></span>
+                </a></li>
+                <li><a href="#" class="menu-item menu-add-book-button">
+                    <span class="main-menu-big">{% trans "Add book" %}</span>
+                    <span class="main-menu-small"><i class="fa fa-plus"></i></span>
+                </a></li>
+                <li>
+                  <input type="text" name="q" class="menu-search-input" placeholder="Search...">
+                  <button type="submit" class="menu-search-submit">GO!</button>
+                </li>
+                    
+            </ul>
+        </form>
+        <!-- LEFT SIDE END -->
+
+        <!-- RIGHT SIDE START -->
+        <ul class="main-menu-right">
+            <li><a href="#"><i class="fa fa-bell"></i></a></li>
+           <li class="dropdown">
+               <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                   <span class="main-menu-big">{{ request.user.username }}</span>
+                   <span class="main-menu-small"><i class="fa fa-user"></i></span>
+               </a>
+               <ul class="dropdown-menu">
+                   <li><a href="{% url 'books:main_page' 'books' %}">{% trans "My Books" %}</a></li>
+                   <li role="separator" class="divider"></li>
+                   <li><a href="{% url 'books:main_page' 'offers' %}">{% trans "Offers" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'watchlist' %}">{% trans "Watchlist" %}</a></li>
+                   <li role="separator" class="divider"></li>
+                   <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a></li>
+                   <li role="separator" class="divider"></li>
+                   <li><a href="{% url 'usr:logout'%}"><i class="fa fa-power-off"></i> {% trans "Log out" %}</a></li>
+               </ul>
+           </li>
+
+        </ul>
+        <!-- RIGHT SIDE END -->
+    </div>
+    <!-- main_menu END -->
+</nav>
