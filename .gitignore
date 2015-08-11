@@ -4,7 +4,6 @@ src/mysite/settings.py*
 .idea/
 static-only/
 *mydatabase*
-*migrations/
 .gitignore
 .project
 apache2/
