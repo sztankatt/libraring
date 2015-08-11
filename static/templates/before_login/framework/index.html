@@ -13,7 +13,7 @@
 
     <!-- INDEX DIV START -->
     <div id="index-page" class="row main-row">
-        <div class="col-md-4 col-md-offset-2">
+        <div class="col-md-4 col-md-offset-1">
             <div class="index-page-content">
                 <h3>Login</h3>
                 <div class="index-page-content-body">
@@ -52,19 +52,28 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
             <div class="index-page-content">
                 <h3>About</h3>
                 <div class="index-page-content-body">
-                   <p>{% blocktrans %}Libraing is a free and online market where users can buy and resell their textbooks and/or any course related material. The website is designed to provide a university specific, dynamic and online service for students to swiftly trade their unwanted books with other users regardless of university or course as it happens on a joint platform.{% endblocktrans %}</p>
+                   <p>{% blocktrans trimmed %}Libraing is a free and online market where users can buy and resell their textbooks and/or any course related material. The website is designed to provide a university specific, dynamic and online service for students to swiftly trade their unwanted books with other users regardless of university or course as it happens on a joint platform.{% endblocktrans %}</p>
                 </div>
             </div>
-        </div>
-        <div class="col-md-3 col-md-offset-1">
-            <div class="index-page-content">
-                <h3>{% trans "Like us on facebook!" %}</h3>
-                <div class="index-page-content-body">
-                    <div class="fb-like-box" data-href="https://www.facebook.com/Libraring" data-height="513" data-colorscheme="light" data-show-faces="true" data-header="true" data-stream="true" data-show-border="false"></div>   
-                </div>
+            <script type="text/javascript">
+// Popup window code
+function newPopup(url) {
+    popupWindow = window.open(
+        url,'popUpWindow','height=300,width=400,left=10,top=10,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+}
+</script>
+            <div class="index-page-content index-page-share">
+                <h3>{% trans "Share our project!" %}</h3>
+                
+                <a href="mailto:" title="Share via Email" target="_blank" class="btn btn-email btn-social-share"><i class="fa fa-envelope"></i></a>
+                <a href="JavaScript:newPopup('https://twitter.com/home?status=check%20out%20Libraring%20%40%20http://www.libraring.co.uk');" title="Share on Twitter" class="btn btn-twitter btn-social-share" target="_blank"><i class="fa fa-twitter"></i></a>
+                <a href='JavaScript:newPopup("https://www.facebook.com/sharer/sharer.php?u=http://www.libraring.co.uk");' title="Share on Facebook" target="_blank" class="btn btn-facebook btn-social-share"><i class="fa fa-facebook"></i></a>'
+                <a href='JavaScript:newPopup("https://plus.google.com/share?url=http://www.libraring.co.uk");' title="Share on Google+" target="_blank" class="btn btn-googleplus btn-social-share"><i class="fa fa-google-plus"></i></a>
             </div>
         </div>
     </div>

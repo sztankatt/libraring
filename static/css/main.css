@@ -90,11 +90,10 @@ input.form-control{padding:0 !important}
 .form-horizontal .has-feedback .form-control-feedback{right:-30px !important}
 .highlighted{background-color:#ffc300}
 .fb_iframe_widget,.fb_iframe_widget span,.fb_iframe_widget span iframe[style]{width:100% !important}
-#index-page .panel-body{text-align:justify !important}
-#index-page .index-page-content{background-color:rgba(255,255,255,0.85);padding:20px;border-radius:10px}
 .panel{border-radius:0 !important}
 #clock span{padding:0 5px}
 #clock .col-md-4{padding:0 !important}
+.btn-social-share{width:40px}
 .btn-twitter{background:#00acee;color:#fff}
 .btn-twitter:link,.btn-twitter:visited{color:#fff}
 .btn-twitter:active,.btn-twitter:hover{background:#0087bd;color:#fff}
@@ -111,9 +110,6 @@ input.form-control{padding:0 !important}
 #share .col-sm-1{padding-left:5px !important;padding-right:5px !important;paddig-top:5px !important;padding-bottom:5px !important}
 #share a{color:#fff !important}
 #creators_body{height:193px !important}
-#index-page .panel-heading{font-color:#60686f}
-.index-page-content{margin-bottom:35px}
-.index-page-content-body{padding-left:10px}
 .messages-field{max-width:400px}
 .messages-field-header{font-family:'ABeeZee',sans-serif;padding-top:15px;padding-bottom:15px;font-size:25px}
 #new-email-success{display:none}
@@ -182,3 +178,7 @@ input.form-control{padding:0 !important}
 .usr-book-container .book-overview{padding:15px}.usr-book-container .book-overview .book-overview-element{color:#26747f;font-size:14px;display:block;padding:5px 10px}
 .usr-book-container .book-overview .book-overview-element.big{font-size:18px}
 .usr-book-container .usr-book-status .usr-book-status-title{font-size:18px;font-weigt:900;padding:5px}
+#index-page{padding:20px}#index-page .panel-body{text-align:justify !important}
+#index-page .panel-heading{font-color:#60686f}
+#index-page .index-page-content{background-color:rgba(255,255,255,0.85);padding:20px;border-radius:10px;margin-bottom:35px}#index-page .index-page-content .index-page-content-body{padding-left:10px}
+#index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{float:left;margin-top:4px;margin-bottom:4px;padding-right:20px}
