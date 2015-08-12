@@ -10,7 +10,7 @@ from django.template import Context
 from django.core import mail
 from django.template.loader import get_template
 from django.utils.translation import ugettext as _
-
+from books.forms import BookForm
 from usr.models import Class, Institution, Course, PageMessages, EmailChange, Person
 
 #from user_messages.models import Conversation
@@ -49,6 +49,7 @@ def project_info(request):
 		'project':{
 		    'name': PROJECT_NAME,
 		    'debug':DEBUG,
+		    'book_form':BookForm()
 		},
 	#'msg':{
 	    #'new_number':num

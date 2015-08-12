@@ -289,7 +289,16 @@ var validator_handle = function(validator){
                         message: 'This username already exists. Please choose another one',
                         url: '/ajax/check/username/available/',
                         type: 'GET'
+                    },
+                    stringLength:{
+                        max: 30,
+                        min: 1,
+                        message: 'Please enter a value between %s and %s characters long'
+                    },
+                    regexp:{
+                        regexp: /^[\w.-]+$/
                     }
+
                 }
             },
             'user-password1':{
@@ -297,9 +306,9 @@ var validator_handle = function(validator){
                     notEmpty:{
                         message: 'This field is required'
                     },
-                    identical:{
-                        field:'user-password2',
-                        message: 'The two passwords did not match'
+                    stringLength:{
+                        min: 6,
+                        max: 20
                     }
                 }
             },
@@ -311,23 +320,22 @@ var validator_handle = function(validator){
                     identical:{
                         field:'user-password1',
                         message: 'The two passwords did not match'
+                    },
+                    stringLength:{
+                        min: 6,
+                        max: 20
                     }
                 }
             }
         }
     });
+
+    
     
     $('#registration_person_form').bootstrapValidator({
         feedbackIcons: validators_feedback_icons,
         excluded: ':disabled',
         fields:{
-            'person-title':{
-                validators:{
-                    notEmpty:{
-                        message: 'This field is required.'
-                    }
-                }
-            },
             'person-email':{
                 validators:{
                     notEmpty:{
@@ -379,6 +387,14 @@ var validator_handle = function(validator){
                 }
             },
             'person-country':{
+                validators:{
+                    notEmpty:{
+                        message:'This field is required.'
+
+                    }
+                }
+            },
+            'person-terms_conditions':{
                 validators:{
                     notEmpty:{
                         message:'This field is required.'

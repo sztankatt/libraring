@@ -3,24 +3,39 @@
 {% block content%}
     <div class="row main-row">
         <div class="col-md-9 col-md-offset-2">
-            {% if message%}
             <div id="messages" class="messages-field alert alert-{{message.type}}">
                 <div class="messages-field-header">
-                    {% blocktrans with header=message.header %}
-                    {{header}}
-                    {% endblocktrans %}
+                    {% if type == 'deactivated_profiel' %}
+                        {% trans "Deactivated profiel" %}
+                    {% elif type == 'registry_confirmation' %}
+                        {% trans "Thank you for your registration" %}
+                    {% elif type == 'registry_confirmation_code' %}
+                        {% trans "Registry confirmation" %}
+                    {% endif %}
                 </div>
                 <div class="messages-field-body">
                  <p>Dear {{user.first_name}}!</p>
-                    <p>{{message.message}}</p>
+                    {% if type == 'deactivated_profiel' %}
+                        {% blocktrans trimmed %}
+                            Unfortunately, your profile has been deactivated. For further information about resolving this please contact <a href="mailto:deactivated-profile@libraring.co.uk">deactivated-profile@libraring.co.uk</a>.
+                        {% endblocktrans %}
+                    {% elif type == 'registry_confirmation' %}
+                        {% blocktrans trimmed %}
+                            Thank you for your registration! An email has been sent to you to your address: {{user.email}}. Please click on the link in the email in order to confirm your registration.
+                        {% endblocktrans %}
+                    {% elif type == 'registry_confirmation_code' %}
+                        {% blocktrans trimmed %}    
+                            You have successfully confirmed your registration! You can now login.
+                        {% endblocktrans %}
+                    {% endif %}
                 </div>
                 <div class="messages-footer">
-                    the LIBRARING team
+                    the <span class="brand">Libraring</span> team
                 </div>
             </div>
         {%endif%}
         {% if registration_complete%}
-            <a href="{% url 'usr:login'%}">To the login page</a>
+            <a href="{% url 'usr:login'%}">{% trans "To the login page" %}</a>
         {%endif%}
         </div>
     </div>

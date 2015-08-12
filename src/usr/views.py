@@ -15,11 +15,11 @@ from django.db.models import Q
 from django.utils.translation import ugettext as _
 
 from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
-from usr.models import Class, Person, PageMessages, Location
+from usr.models import Class, Person, PageMessages
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
 from books.models import Genre, Book
-from books.forms import GenreForm
+from books.forms import GenreForm, BookForm
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -108,10 +108,6 @@ class RegisterWizard(SessionWizardView):
         #saving user.email, according to which institution was selected
         user.email = email
         user.save()
-
-        obj, created = Location.objects.get_or_create(country=person_data['country'], postcode=person_data['postcode'], city=person_data['city'])
-
-        person.location = obj
 
         person.user = user
         #person.institution = institution
@@ -353,7 +349,7 @@ def blocked_profile(request):
 def deactivated_profile(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
     return render(request, 'before_login/messages.html',
-                  {'user': user, 'message': PageMessages.objects.get(name='deactivated_profile')})
+                  {'user': user, 'type':'deactivated_profile'})
 
 
 @user_not_authenticated
@@ -369,7 +365,7 @@ def new_email_confirmation(request):
 def register_confirmation(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
     return render(request, 'before_login/messages.html',
-                  {'user': user, 'message': PageMessages.objects.get(name='registry_confirmation')})
+                  {'user': user, 'type': 'registry_confirmation'})
 
 
 @user_not_authenticated
@@ -383,7 +379,9 @@ def register_confirmation_code(request, confirmation_code=None):
     user.is_active = True
     user.save()
 
-    return render(request, 'before_login/messages.html', {'user': user, 'registration_complete': True,
-                                                          'message': PageMessages.objects.get(
-                                                              name='registry_confirmation_email')})
+    return render(
+        request,
+        'before_login/messages.html',
+        {'user': user, 'registration_complete': True,
+        'type': 'registry_confirmation_email'})
 

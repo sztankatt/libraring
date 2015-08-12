@@ -116,7 +116,7 @@ class Book(models.Model, QueuedModel):
             return None
 
     def get_location(self):
-        return self.user.person.location
+        return self.user.person.city
 
 
     def get_absolute_url(self):

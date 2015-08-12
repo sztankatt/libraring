@@ -1,8 +1,8 @@
 from django.test import TestCase, Client
 from books.forms import BookForm
-from books.models import Author, Genre, Publisher, Book, Offer, Transaction
+from books.models import Author, Genre, Publisher, Book, Offer
 from django.contrib.auth.models import User
-from usr.models import Person, Location
+from usr.models import Person
 from usr.project import confirmation_code_generator
 
 import datetime
@@ -30,10 +30,7 @@ class BookTestCase(TestCase):
             a = Author.objects.create(name=author)
             self.author_objects.append(a)
 
-        # creating locations
-        l = Location.objects.create(
-            country='UK', postcode='CB28PH', city='Cambridge')
-
+        # creating location
         # setting up users and persons
         self.foo = User.objects.create_user(
             username='foo', password='foo', email='foo@foo.com')
@@ -50,29 +47,25 @@ class BookTestCase(TestCase):
             user=self.foo,
             title='MR',
             confirmation_code=confirmation_code_generator(),
-            block_code=0,
-            location=l)
+            block_code=0)
 
         Person.objects.create(
             user=self.bar,
             title='MS',
             confirmation_code=confirmation_code_generator(),
-            block_code=0,
-            location=l)
+            block_code=0)
 
         Person.objects.create(
             user=u1,
             title='MRS',
             confirmation_code=confirmation_code_generator(),
-            block_code=0,
-            location=l)
+            block_code=0)
 
         Person.objects.create(
             user=u2,
             title='MR',
             confirmation_code=confirmation_code_generator(),
-            block_code=0,
-            location=l)
+            block_code=0)
 
         # Creating Books
         b1 = Book.objects.create(

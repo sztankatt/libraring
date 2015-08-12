@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db.models import Sum
+from location_field.models.plain import PlainLocationField
 
 from books.models import TransactionRating
 
@@ -11,23 +12,15 @@ COUNTRIES = [
     ('HU', 'Hungary'),
 ]
 
-alphanumeric_regex = RegexValidator(r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
+alphanumeric_regex = RegexValidator(
+    r'^[0-9a-zA-Z]*$', 'Only alphanumeric characters are allowed.')
 
-#location model for Institution
-class Location(models.Model):
 
-    country 			= models.CharField(choices=COUNTRIES, max_length=2)
-    postcode			= models.CharField(max_length=10, null=True, validators=[alphanumeric_regex])
-    city				= models.CharField(max_length=50)
-
-    def __unicode__(self):
-        return self.city+", "+self.country
-
-#Institution for Person, Classes
 class Institution(models.Model):
-    name 				= models.CharField(max_length=200, unique=True)
-    location 			= models.ForeignKey(Location)
-    email_ending		= models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=200, unique=True)
+    city = models.CharField(max_length=255)
+    location = PlainLocationField(based_fields=[city], zoom=7)
+    email_ending = models.CharField(max_length=100, unique=True)
 
     def __unicode__(self):
         return self.name
@@ -39,10 +32,14 @@ class Course(models.Model):
         return self.name
 
 class Class(models.Model):
-    institution	 		= models.ForeignKey(Institution)
-    course 				= models.ForeignKey(Course)
-    start_year 			= models.IntegerField(max_length=4, choices=[(x, x) for x in range (1950, datetime.datetime.now().year+1)])
-    end_year			= models.IntegerField(max_length=4, choices=[(x, x) for x in range (1950, datetime.datetime.now().year+10)])
+    institution = models.ForeignKey(Institution)
+    course = models.ForeignKey(Course)
+    start_year = models.IntegerField(
+        max_length=4,
+        choices=[(x, x) for x in range(1950, datetime.datetime.now().year+1)])
+    end_year = models.IntegerField(
+        max_length=4,
+        choices=[(x, x) for x in range(1950, datetime.datetime.now().year+10)])
 
     def __unicode__(self):
         return '%s-%s, %s, %s' % (self.start_year, self.end_year, self.course.name, self.institution.name)
@@ -60,25 +57,19 @@ class Person(models.Model):
         (LECTURER, 'University Lecturer'),
     )
 
-    PERSON_TITLE_CHOICES = (
-        ('MR', 'Mr.'),
-        ('MRS', 'Mrs.'),
-        ('MS', 'Ms.'),
-        ('MSS', 'Miss.'),
-        ('DR', 'Dr.'),
-        ('PRF', 'Prof.'),
-    )
+    user = models.OneToOneField(User, primary_key=True)
+    date_born = models.DateField('date born', blank=True, null=True)
+    education = models.ManyToManyField(
+        Class, blank=True, related_name='students')
+    person_type = models.CharField(
+        max_length=1, choices=PERSON_TYPE_CHOICES, default=STUDENT)
+    institution	= models.ForeignKey(Institution, blank=True, null=True)
+    confirmation_code = models.CharField(max_length=50, unique=True)
+    block_code = models.IntegerField(default=1, blank=True)
 
-    user        		= models.OneToOneField(User, primary_key=True)
-    title			    = models.CharField(max_length=3, choices=PERSON_TITLE_CHOICES)
-    date_born   		= models.DateField('date born', blank=True, null=True)
-    about       		= models.TextField(blank=True)
-    education   		= models.ManyToManyField(Class, blank=True, related_name='students')
-    person_type 		= models.CharField(max_length=1, choices=PERSON_TYPE_CHOICES, default=STUDENT)
-    institution		    = models.ForeignKey(Institution, blank=True, null=True)
-    confirmation_code	= models.CharField(max_length=50, unique=True)
-    block_code		    = models.IntegerField(default=1, blank=True)
-    location            = models.ForeignKey(Location)
+    city = models.CharField(max_length=255)
+    location = PlainLocationField(based_fields=[city], zoom=7)
+
 
     def is_student(self):
         if self.person_type == 'S':

@@ -16,6 +16,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^ajax/', include('ajax.urls', namespace='ajax')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
+    url(r'^select2/', include('django_select2.urls'))
 ]
 
 urlpatterns += i18n_patterns('',
@@ -27,7 +28,6 @@ urlpatterns += i18n_patterns('',
     url(r'^messages/', include('user_messages.urls', namespace='user_messages')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/', 'usr.views.test'),
-    url(r'^select2/', include('django_select2.urls')),
     url(r'^', include('manager.urls', namespace='manager')),
 )
 if settings.DEBUG:

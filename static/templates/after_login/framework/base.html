@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    {% load staticfiles %}
+    {% load staticfiles widget_tweaks django_select2_tags%}
     <head>
 
        <!-- META TAGS -->
@@ -34,6 +34,7 @@
          <!-- FONTS -->
         <link href='http://fonts.googleapis.com/css?family=ABeeZee|Raleway' rel='stylesheet' type='text/css'>
         <!-- MAIN LESS -->
+        {% import_django_select2_css %}
         <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}" />
 
 
@@ -52,11 +53,7 @@
             <div id="content">
                 <section id="main-content">
                     <section class="wrapper">
-                        {% comment %}<div id="body" class="row main-row">
-                            <div class="col-md-10 col-md-offset-1" >{% endcomment %}
                          {%block content%}{%endblock%}
-            {% comment %}</div>
-                        </div>{% endcomment %}
                     </section>
                 </section>
             </div>
@@ -101,7 +98,10 @@
         
 
         <script src="{% static 'js/jquery.cookie.js' %}"></script>
+        {% import_django_select2_js %}
         <script src="{% static 'js/framework/framework.js' %}"></script>
+        <script src="{% static 'js/books/main.js' %}"></script>
+        <script src="{% static 'js/usr/validators.js' %}"></script>
         <script>
             $(document).ready(function(){
                 $('.btn').mouseup(function(){
@@ -115,27 +115,46 @@
                 });
             });
         </script>
-
-
-
-
         {%endblock%}
-
-        <div class="modal fade" id="error">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                        <h4 class="modal-title" id="error_title"></h4>
-                    </div>
-                    <div class="modal-body"></div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
+    <div id="book_upload_form" class="modal fade" role="dialog" aria-hidden="true" aria-labelledby="book_upload">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="book_upload">Upload a new book</h4>
                 </div>
-            </div>
+                <div class="modal-body">
+                    <form action="/ajax/upload/new/book/" method="post" enctype="multipart/form-data" role="form" class="form-horizontal" id="book_upload">
+                        {% csrf_token %}
+                        {% for field in project.book_form %}
+                        <div class="form-group">
+                            <label for="{{field.id_for_label}}" class="col-xs-4 control-label">{{field.label}}{%if field.field.required%}*{%endif%}</label>
+                            {% if field.html_name == 'author' or field.html_name == 'genre' or field.html_name == 'publisher' or field.html_name == 'short_description' or field.html_name == 'new_publisher' %}
+                             <div class="col-xs-7">
+                            {%else%}
+                            <div class="col-xs-4">
+                            {% endif%}
+                                {% if field.html_name == 'includes_delivery_charges' %}
+                                {{field}}
+                                    {%else%}
+                                    {{field|add_class:'form-control'}}
+                                {% endif %}
+                            
+                            <p class="help-block">{{field.help_text}}</p>
+                            </div>{{field.error}}
+                        </div>
+                 
+                            {% endfor %}
+                        <div class="form-group">
+                            <div class="col-xs-offset-4 col-xs-8">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Upload</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>    
         </div>
-        <div class="loading-modal"><!-- Place at bottom of page --></div>
-       
+    </div>
     </body>
 </html>

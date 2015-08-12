@@ -11,7 +11,7 @@ urlpatterns = patterns('',
         url(r'^blocked-profile/$', 'usr.views.blocked_profile', name='blocked_profile'),
         url(r'^register/confirmation/(?P<confirmation_code>[a-zA-Z0-9]{50})/$', 'usr.views.register_confirmation_code',\
             name='register_confirmation_code'),
-        
+
         url(r'^register/confirmation/$', 'usr.views.register_confirmation', name='register_confirmation'),
         url(r'^new/email/confirmation/$', 'usr.views.new_email_confirmation', name='new_email_confirmation'),
         url(r'^deactivated/profile/$', 'usr.views.deactivated_profile', name='deactivated_profile'),
