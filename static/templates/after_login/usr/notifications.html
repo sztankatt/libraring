@@ -1,0 +1,11 @@
+{% extends "after_login/framework/base.html"%}
+{%block title%}{{project.name}} profile{%endblock%}
+{% load widget_tweaks %}
+{% block content %}
+<div class="profile-main">
+{% for notification in notifications.unread %}
+	{% include 'after_login/usr/notifications_item.html' with notification=notification %}
+{% endfor %}
+</div>
+
+{% endblock %}
