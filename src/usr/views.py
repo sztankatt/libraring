@@ -2,7 +2,7 @@
 # Created by: Tamas Sztanka-Toth
 
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -14,12 +14,13 @@ from django.template import Context, RequestContext
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 
-from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
+from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm, NotificationsForm
 from usr.models import Class, Person, PageMessages
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
 from books.models import Genre, Book
 from books.forms import GenreForm, BookForm
+from notifications.models import Notification
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -231,75 +232,69 @@ def index(request):
     return render(request, 'before_login/framework/index.html', {'form': LoginForm()})
 
 
-#view which loads the profile
+# view which loads the profile
 @login_required
 @user_is_not_blocked
-def load_profile(request, id=""):
-    #becomes true if the user is viewing his own profile
+def load_profile(request):
+    # becomes true if the user is viewing his own profile
     account_settings = False
 
-    #checking whether the id in the request was specified
-    if id == "":
-        id = request.user.id
-        account_settings = True
-    else:
-        id = int(id)
+    # checking whether the id in the request was specified
+    id = request.user.id
+    account_settings = True
 
-    #return  HttpResponse(id)
+    # return  HttpResponse(id)
 
-    #fetching the user object
+    # fetching the user object
     user = get_object_or_404(User, pk=id)
 
-    #checking if the usser is viewging his/her own profile
+    # checking if the usser is viewging his/her own profile
     if id == request.user.id:
         account_settings = True
 
-    #will be true if the user is a student
+    # will be true if the user is a student
     student = False
 
-    #checking if the user is a student
+    # checking if the user is a student
     if user.person.person_type == 'S':
         student = True
 
-    #passing fields for the profile
+    # passing fields for the profile
     fields = [
-        {  #username
-           'label': 'Username',
-           'data': user.username,
-           'update': False,
+        {
+            'label': 'Username',
+            'data': user.username,
+            'update': False,
         },
-        {  #first-name
-           'label': 'First Name',
-           'data': user.first_name,
-           'update' : True,
-		    'update_id' : 'first_name',
-		    'form_id'	: 'first_name_form',
-		},
-		{
-		    #last-name
-		    'label'	: 'Last Name',
-		    'data'	: user.last_name,
-		    'update'	: True,
-		    'update_id' : 'last_name',
-		    'form_id'	: 'last_name_form',
-		},
-		{
-		    #email
-		    'label'	: 'e-mail',
-		    'data'	: user.email,
-		    'update'	: False,
-		},
-	]
-	
-	
+        {
+            'label': 'First Name',
+            'data': user.first_name,
+            'update': True,
+            'update_id': 'first_name',
+            'form_id': 'first_name_form',
+        },
+        {
+            'label': 'Last Name',
+            'data': user.last_name,
+            'update': True,
+            'update_id': 'last_name',
+            'form_id': 'last_name_form',
+        },
+        {
+            'label'	: 'e-mail',
+            'data'	: user.email,
+            'update'	: False,
+        }]
+
     return render(request, 'after_login/usr/profile.html', {
-	    'user' : user,
-	    'fields':fields,
+        'user': user,
+        'fields': fields,
         'settings': account_settings,
         'student': student,
-        #'new_current_education_form': ClassForm(auto_id='new_current_education_%s'),
-        'new_previous_education_form': NClassForm(auto_id='new_previous_education_%s')
-    })
+        'notifications_form': NotificationsForm(),
+        'new_previous_education_form': NClassForm(
+            auto_id='new_previous_education_%s')
+        })
 
 
 #not used anymore
@@ -349,7 +344,7 @@ def blocked_profile(request):
 def deactivated_profile(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
     return render(request, 'before_login/messages.html',
-                  {'user': user, 'type':'deactivated_profile'})
+                  {'user': user, 'type': 'deactivated_profile'})
 
 
 @user_not_authenticated
@@ -385,3 +380,28 @@ def register_confirmation_code(request, confirmation_code=None):
         {'user': user, 'registration_complete': True,
         'type': 'registry_confirmation_email'})
 
+
+@login_required
+def notifications(request):
+    notifications = {
+        'unread': request.user.notifications.unread(),
+        'read': request.user.notifications.read().order_by('-timestamp')[:10],
+    }
+
+    request.user.notifications.mark_all_as_read()
+
+    return render(
+        request,
+        'after_login/usr/notifications.html',
+        {'notifications': notifications})
+
+@login_required
+@user_is_not_blocked
+def notifications_read(request, id=None):
+    if id is None:
+        raise Http404
+    else:
+        obj = get_object_or_404(Notification, pk=id, recipient=request.user)
+        obj.mark_as_read()
+
+        return HttpResponseRedirect(obj.target.get_absolute_url())

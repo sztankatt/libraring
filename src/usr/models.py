@@ -3,8 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db.models import Sum
+from django.utils.translation import ugettext_lazy as _
 from location_field.models.plain import PlainLocationField
-
 from books.models import TransactionRating
 
 COUNTRIES = [
@@ -25,11 +25,13 @@ class Institution(models.Model):
     def __unicode__(self):
         return self.name
 
+
 class Course(models.Model):
-    name 	= models.CharField(max_length=200, unique=True)
+    name = models.CharField(max_length=200, unique=True)
 
     def __unicode__(self):
         return self.name
+
 
 class Class(models.Model):
     institution = models.ForeignKey(Institution)
@@ -42,10 +44,13 @@ class Class(models.Model):
         choices=[(x, x) for x in range(1950, datetime.datetime.now().year+10)])
 
     def __unicode__(self):
-        return '%s-%s, %s, %s' % (self.start_year, self.end_year, self.course.name, self.institution.name)
+        return '%s-%s, %s, %s' % (
+            self.start_year,
+            self.end_year,
+            self.course.name,
+            self.institution.name)
 
 
-#the model of Person
 class Person(models.Model):
     STUDENT = 'S'
     TEACHER = 'T'
@@ -63,13 +68,12 @@ class Person(models.Model):
         Class, blank=True, related_name='students')
     person_type = models.CharField(
         max_length=1, choices=PERSON_TYPE_CHOICES, default=STUDENT)
-    institution	= models.ForeignKey(Institution, blank=True, null=True)
+    institution = models.ForeignKey(Institution, blank=True, null=True)
     confirmation_code = models.CharField(max_length=50, unique=True)
     block_code = models.IntegerField(default=1, blank=True)
 
     city = models.CharField(max_length=255)
     location = PlainLocationField(based_fields=[city], zoom=7)
-
 
     def is_student(self):
         if self.person_type == 'S':
@@ -83,12 +87,11 @@ class Person(models.Model):
         else:
             return None
 
-
-
     def previous_education(self):
-        return self.education.filter(end_year__lt=self.education.order_by('-end_year')[0].end_year).order_by('-end_year')
+        return self.education.filter(
+            end_year__lt=self.education.order_by('-end_year')[0]
+            .end_year).order_by('-end_year')
 
-    """
     def get_average_rating(self):
         rating = None
 
@@ -117,14 +120,50 @@ class Person(models.Model):
             )
             rating /= seller_count
 
-        return rating"""
-
-
-
-
+        return rating
 
     def __unicode__(self):
         return "%s %s" % (self.user.first_name, self.user.last_name)
+
+
+class NotificationMixin(models.Model):
+    my_book_new_offer = models.BooleanField(
+        default=True,
+        verbose_name=_('One of my books has a new offer')
+        )
+
+    other_user_highest_offer = models.BooleanField(
+        default=True,
+        verbose_name=_('Someone offered a higher price for a book than me')
+        )
+
+    interesting_book_uploaded = models.BooleanField(
+        default=True,
+        verbose_name=_('A book that might be of my interest has been uploaded')
+        )
+
+    book_finalised_by_other_user = models.BooleanField(
+        default=True,
+        verbose_name=_(
+            'A book that I have sold has been finalised by the buyer'
+            )
+        )
+
+    class Meta:
+        abstract = True
+
+
+class AppNotifications(NotificationMixin):
+    user = models.OneToOneField(User, related_name='app_notifications')
+
+
+class EmailNotifications(NotificationMixin):
+    user = models.OneToOneField(User, related_name='email_notifications')
+    new_message = models.BooleanField(
+        default=True,
+        verbose_name=_('I received a new message')
+        )
+
 
 class PageMessages(models.Model):
     ERROR_TYPES = (
@@ -140,6 +179,7 @@ class PageMessages(models.Model):
 
     def __unicode__(self):
         return "%s" % (self.header)
+
 
 class EmailChange(models.Model):
     user = models.ForeignKey(User)

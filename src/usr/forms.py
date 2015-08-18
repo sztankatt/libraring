@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from usr.models import Person, Class, Institution, COUNTRIES, alphanumeric_regex
+from usr.models import Person, Class, Institution, COUNTRIES, alphanumeric_regex, Notifications
 from django import forms
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
@@ -99,3 +99,8 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         max_length=50,
         widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+
+
+class NotificationsForm(forms.ModelForm):
+    class Meta:
+        model = Notifications

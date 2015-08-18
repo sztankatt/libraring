@@ -129,6 +129,7 @@ input.form-control{padding:0 !important}
 .profile-update label{padding:6px 12px;margin:0 !important}
 .profile-field ul li{border:none;border-radius:0 !important}
 .profile-field .list-group-item{padding-bottom:0 !important}
+.profile-main{padding-top:20px;padding-bottom:20px;padding-left:50px;padding-right:50px}
 #error .modal-header{color:#fff;background-color:#bd362f}
 .book-field .book-field-header{font-weight:700;border-bottom:2px solid #00b6d1 !important}
 .book-field .book-field-val{padding:10px 5px}.book-field .book-field-val ul{list-style-type:none;padding:0}.book-field .book-field-val ul li{display:block;padding:5px 0}
@@ -183,3 +184,13 @@ input.form-control{padding:0 !important}
 #index-page .index-page-content{background-color:rgba(255,255,255,0.85);padding:20px;border-radius:10px;margin-bottom:35px}#index-page .index-page-content .index-page-content-body{padding-left:10px}
 #index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{float:left;margin-top:4px;margin-bottom:4px;padding-right:20px}
 #index-page .index-page-login{height:350px}
+.notifications-main .notifications-mark-all-as-read{float:right}
+.notifications-main .row{margin:0}
+.notifications-main .nav-tabs{margin-bottom:0}
+.notifications-main h4{color:#26747f}
+.notifications-main .notifications-item{padding:0}.notifications-main .notifications-item .notification-item-header{font-size:20px;margin-bottom:10px}
+.notifications-main .notifications-item a{display:block;border-bottom:1px solid #26747f;padding:10px;color:#26747f;background-color:rgba(27,81,89,0.09);min-height:100px}
+.notifications-main .notifications-item a:hover{text-decoration:none;background-color:rgba(27,81,89,0.04)}
+.notifications-main .notifications-item-read{padding:0}.notifications-main .notifications-item-read button{background-color:rgba(27,81,89,0.09);color:#26747f;margin:0;height:50px}
+.notifications-main .notifications-item-read button:hover{background-color:rgba(27,81,89,0.01)}
+.notifications-main .notifications-item-read .notifications-item-mark-read{border-bottom:1px solid #26747f}

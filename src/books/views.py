@@ -15,6 +15,7 @@ from django.db.models import Q
 from usr.project import user_is_not_blocked
 from books.forms import OfferForm, BookStatusForm
 from books.models import Book, Genre, Author, Publisher, Offer, Transaction,TransactionRating
+from usr.signals import *
 
 
 @login_required
@@ -130,22 +131,61 @@ def make_an_offer(request):
     if user_id is None or (int(user_id) != int(request.user.pk)):
         raise Http404
 
-    if request.is_ajax() and request.method == 'POST':
+    if request.method == 'POST':
         form = OfferForm(request.POST)
-
         if form.is_valid():
+            if form.cleaned_data['book'].get_highest_offer() is not None:
+                previous_highest = {
+                    'price': form.cleaned_data['book'].get_highest_offer(
+                    ).offered_price,
+                    'user': form.cleaned_data['book'].get_highest_offer(
+                        ).made_by
+                }
+            else:
+                previous_highest = None
+
             try:
                 offer = Offer.objects.get(
                     made_by=request.user, book=form.cleaned_data['book'])
                 offer.offered_price = form.cleaned_data['offered_price']
                 offer.save()
+                changed_offer = True
             except Offer.DoesNotExist:
                 offer = form.save()
+                changed_offer = False
+
+            # signals
+            # if same offer
+            if previous_highest is not None:
+                if changed_offer:
+                    if (offer.offered_price >= previous_highest['price'] and
+                            offer.made_by.pk != previous_highest['user'].pk):
+                        new_highest_offer(
+                            sender=offer.user.__class__,
+                            offer=offer,
+                            user=request.user,
+                            previous_highest=previous_highest['price'],
+                            previous_user=previous_highest['user'],
+                            book=offer.book)
+                else:
+                    if offer.offered_price >= previous_highest['price']:
+                        new_highest_offer(
+                            sender=offer.user.__class__,
+                            offer=offer,
+                            user=request.user,
+                            previous_highest=previous_highest['price'],
+                            previous_user=previous_highest['user'],
+                            book=offer.book)
+
+            book_new_offer.send(sender=Offer, offer=offer)
 
             book = offer.book
             book.status = 'offered'
             book.save()
+    else:
+        raise Http404
 
+    if request.method == 'POST' and request.is_ajax():
             template = get_template('after_login/books/book_offer.html')
 
             context = Context({'offer': offer, 'request': request})
@@ -153,29 +193,10 @@ def make_an_offer(request):
             output = template.render(context)
 
             return HttpResponse(output)
-        else:
-            return Http404
     else:
-        form = OfferForm(request.POST)
-        if form.is_valid():
-            try:
-                offer = Offer.objects.get(
-                    made_by=request.user, book=form.cleaned_data['book'])
-                offer.offered_price = form.cleaned_data['offered_price']
-                offer.save()
-            except Offer.DoesNotExist:
-                offer = form.save()
-
-            book = offer.book
-            book.status = 'offered'
-            book.save()
-
             return HttpResponseRedirect(
                 reverse('books:book_page', args=(book.id,))
                 )
-        else:
-            raise Http404
-
 
 
 def delete_the_offer(request):
