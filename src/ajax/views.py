@@ -20,6 +20,8 @@ from books.forms import BookForm
 
 from user_messages.models import Message
 
+from notifications.models import Notification
+
 def get_email_ending(request):
     if request.is_ajax():
         id = request.GET['id']
@@ -444,29 +446,58 @@ def rate_transaction(request):
         rating = request.POST.get('rating', None)
         user = request.user
 
-        if tr_id == None or rating == None:
+        if tr_id is None or rating is None:
             raise Http404
 
         try:
             tr = TransactionRating.objects.get(pk=tr_id)
 
             if user.id == tr.seller.id:
-                #rate the buyer
+                # rate the buyer
                 tr.buyer_rating = rating
                 tr.save()
             elif user.id == tr.buyer.id:
-                #rate the seller
+                # rate the seller
                 tr.seller_rating = rating
                 tr.save()
             else:
-                #not in the tr
+                # not in the tr
                 raise Http404
 
-            return HttpResponse(json.dumps({'success':True}))
-
+            return HttpResponse(json.dumps({'success': True}))
 
         except TransactionRating.DoesNotExist:
             raise Http404
 
     else:
         raise Http404
+
+
+@login_required
+def delete_notification(request):
+    if request.POST['pk'] is None:
+        raise Http404
+    else:
+        notification = get_object_or_404(Notification, pk=request.POST['pk'])
+        if notification.recipient.pk == request.user.pk:
+            notification.deleted = True
+            notification.save()
+
+            return HttpResponse(json.dumps({'success': True}))
+        else:
+            raise Http404
+
+
+@login_required
+def mark_notification_read(request):
+    if request.POST['pk'] is None:
+        raise Http404
+    else:
+        notification = get_object_or_404(Notification, pk=request.POST['pk'])
+        if notification.recipient.pk == request.user.pk:
+            notification.mark_as_read()
+            notification.save()
+
+            return HttpResponse(json.dumps({'success': True}))
+        else:
+            raise Http404

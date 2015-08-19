@@ -1,3 +1,44 @@
+ function notification_delete($button){
+    $id = $button.attr('data-notification-id');
+    $.ajax({
+        method: 'POST',
+        url: '/ajax/delete/notification/',
+        dataType: 'json',
+        data: {'pk':$id, 'csrfmiddlewaretoken': $.cookie('csrftoken')},
+        success: function(data){
+            if(data.success){
+                $item = $button.parent().parent();
+                $item.slideUp(400, function(){
+                    $item.remove();
+                });
+            }
+        }
+
+    });
+ }
+
+ function mark_notification_read($button){
+    $id = $button.attr('data-notification-id');
+    $.ajax({
+        method: 'POST',
+        url: '/ajax/mark/notification/read/',
+        dataType: 'json',
+        data: {'pk':$id, 'csrfmiddlewaretoken': $.cookie('csrftoken')},
+        success: function(data){
+            if(data.success){
+                $item = $button.parent().parent();
+                $item = $item.slideUp(400, function(){
+                        $('#read-notifications .row').after($item);
+                        $item.show();
+                        $('#read-notifications h4').remove();
+                        $button.remove();
+                        $item.children('.notifications-item-read').append('<div class="notifications-button-replace"></div>');
+                    });
+            }
+        }
+    })
+ }
+
  $(document).ready(function(){
     var $container = $('#genre_books_all');
 
@@ -163,4 +204,13 @@
     $('#delete_offer_form').ajaxForm(function(data){
         $('.modal').modal('hide');
     });
-});
+
+    $('.notifications-item-delete').click(function(){
+        notification_delete($(this));
+    });
+
+     $('.notifications-item-mark-read').click(function(){
+        mark_notification_read($(this));
+    });
+
+ });

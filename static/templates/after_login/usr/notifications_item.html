@@ -9,11 +9,11 @@
 </div>
 <div class="col-xs-1 notifications-item-read">
 
-	<button class="btn notifications-item-delete btn-block">
+	<button class="btn notifications-item-delete btn-block" data-notification-id="{{notification.pk}}">
 	<i class="fa fa-times"></i>
 	</button>
 	{% if not unread %}
-	<button class="btn notifications-item-mark-read btn-block">
+	<button class="btn notifications-item-mark-read btn-block" data-notification-id="{{notification.pk}}">
 	<i class="fa fa-check"></i>
 	</button>
 	{% else %}
