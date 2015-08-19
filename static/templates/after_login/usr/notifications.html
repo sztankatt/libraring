@@ -14,7 +14,7 @@
 			  <div id="unread-notifications" class="tab-pane active">
 			    {% if notifications.unread %}	
 					{% for notification in notifications.unread %}
-						{% include 'after_login/usr/notifications_item.html' with notification=notification %}
+						{% include 'after_login/usr/notifications_item.html' with notification=notification%}
 					{% endfor %}
 				{% else %}
 			<h4>{% trans "no unread notifications" %}</h4>
@@ -23,7 +23,7 @@
 			  <div id="read-notifications" class="tab-pane fade">
 			    {% if notifications.read %}	
 					{% for notification in notifications.read %}
-						{% include 'after_login/usr/notifications_item.html' with notification=notification %}
+						{% include 'after_login/usr/notifications_item.html' with notification=notification unread=True %}
 					{% endfor %}
 				{% else %}
 				<h4>{% trans "no read notifications" %}</h4>

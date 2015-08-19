@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from usr.models import Person, Class, Institution, COUNTRIES, alphanumeric_regex, Notifications
+from usr.models import Person, Class, Institution, AppNotifications, EmailNotifications
 from django import forms
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
@@ -101,6 +101,13 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
 
 
-class NotificationsForm(forms.ModelForm):
+class AppNotificationsForm(forms.ModelForm):
     class Meta:
-        model = Notifications
+        exclude = ('user',)
+        model = AppNotifications
+
+
+class EmailNotificationsForm(forms.ModelForm):
+    class Meta:
+        exclude = ('user',)
+        model = EmailNotifications

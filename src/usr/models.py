@@ -154,11 +154,11 @@ class NotificationMixin(models.Model):
 
 
 class AppNotifications(NotificationMixin):
-    user = models.OneToOneField(User, related_name='app_notifications')
+    user = models.OneToOneField(User, related_name='app_notifications', unique=True)
 
 
 class EmailNotifications(NotificationMixin):
-    user = models.OneToOneField(User, related_name='email_notifications')
+    user = models.OneToOneField(User, related_name='email_notifications', unique=True)
     new_message = models.BooleanField(
         default=True,
         verbose_name=_('I received a new message')

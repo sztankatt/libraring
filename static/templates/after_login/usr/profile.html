@@ -131,13 +131,52 @@
     {% endif %}
         </div>
     </div>
-        <div class="col-md-6">
+    <div class="col-md-6">
         {% if settings %}
             <h2 class="profile-user-name">notification settings</h2>
         {% else %}
             
         {% endif %}
-        {{notifications_form.as_p}}
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#app-notifications">website notifications</a></li>
+          <li><a data-toggle="tab" href="#email-notifications">e-mail notifications</a></li>
+        </ul>
+            <div class="tab-content">
+                <div id="app-notifications" class="tab-pane active">
+                    <div class="usr-settings-notification">Notify me whenever:</div>
+                    <form method="post" action="{% url 'usr:app_notifications_save' %}"> 
+                        {% csrf_token %}
+                        {% for field in app_notifications_form %}
+                        <div class="profile-field">
+                            <div class="profile-field-header row">
+                                <div class="profile-field-header-title col-xs-9">{{field.label}}</div>
+                                <div class="profile-field-header-body col-xs-3"><span class="field-data">{{field}}</span></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="profile-field-header row">
+                            <button class="btn btn-primary col-md-3">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="email-notifications" class="tab-pane fade">
+                    <div class="usr-settings-notification">Notify me whenever:</div>
+                    <form method="post" action="{% url 'usr:email_notifications_save' %}"> 
+                        {% csrf_token %}
+                        {% for field in email_notifications_form %}
+                        <div class="profile-field">
+                            <div class="profile-field-header row">
+                                <div class="profile-field-header-title col-xs-9">{{field.label}}</div>
+                                <div class="profile-field-header-body col-xs-3"><span class="field-data">{{field}}</span></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="profile-field-header row">
+                            <button class="btn btn-primary col-md-3">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

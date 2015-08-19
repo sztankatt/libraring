@@ -12,9 +12,13 @@
 	<button class="btn notifications-item-delete btn-block">
 	<i class="fa fa-times"></i>
 	</button>
+	{% if not unread %}
 	<button class="btn notifications-item-mark-read btn-block">
 	<i class="fa fa-check"></i>
 	</button>
+	{% else %}
+	<div class="notifications-button-replace"></div>
+	{% endif %}
 
 </div>
 </div>

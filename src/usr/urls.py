@@ -40,5 +40,13 @@ urlpatterns = patterns(
     url(
         r'add/notifications/read/(?P<id>[0-9]+)/$',
         'usr.views.notifications_read',
-        name='notifications_read')
+        name='notifications_read'),
+    url(
+        r'app/notifications/save/$',
+        'usr.views.app_notifications_save',
+        name='app_notifications_save'),
+    url(
+        r'email/notifications/save/$',
+        'usr.views.email_notifications_save',
+        name='email_notifications_save')
 )

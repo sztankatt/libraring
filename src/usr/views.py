@@ -14,8 +14,8 @@ from django.template import Context, RequestContext
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 
-from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm, NotificationsForm
-from usr.models import Class, Person, PageMessages
+from usr.forms import RegisterPersonForm, ClassForm,NClassForm, UserCreationForm, LoginForm,AppNotificationsForm,EmailNotificationsForm
+from usr.models import Class, Person, PageMessages, AppNotifications, EmailNotifications
 from usr.project import user_is_not_blocked, ProfileUpdate, \
     confirmation_code_generator, last_logged_user_exists, user_not_authenticated
 from books.models import Genre, Book
@@ -286,12 +286,16 @@ def load_profile(request):
             'update'	: False,
         }]
 
+    app_notifications, created = AppNotifications.objects.get_or_create(user=request.user)
+    email_notifications, created = EmailNotifications.objects.get_or_create(user=request.user)
+
     return render(request, 'after_login/usr/profile.html', {
         'user': user,
         'fields': fields,
         'settings': account_settings,
         'student': student,
-        'notifications_form': NotificationsForm(),
+        'app_notifications_form': AppNotificationsForm(instance=app_notifications),
+        'email_notifications_form': EmailNotificationsForm(instance=email_notifications),
         'new_previous_education_form': NClassForm(
             auto_id='new_previous_education_%s')
         })
@@ -388,8 +392,6 @@ def notifications(request):
         'read': request.user.notifications.read().order_by('-timestamp')[:10],
     }
 
-    request.user.notifications.mark_all_as_read()
-
     return render(
         request,
         'after_login/usr/notifications.html',
@@ -405,3 +407,29 @@ def notifications_read(request, id=None):
         obj.mark_as_read()
 
         return HttpResponseRedirect(obj.target.get_absolute_url())
+
+
+@login_required
+@user_is_not_blocked
+def app_notifications_save(request):
+    if request.POST:
+        app_notifications = AppNotifications.objects.get(user=request.user)
+        form = AppNotificationsForm(request.POST, instance=app_notifications)
+        form.save()
+
+        return HttpResponseRedirect(reverse('usr:own_profile'))
+    else:
+        raise Http404
+
+
+@login_required
+@user_is_not_blocked
+def email_notifications_save(request):
+    if request.POST:
+        email_notifications = EmailNotifications.objects.get(user=request.user)
+        form = EmailNotificationsForm(request.POST, instance=email_notifications)
+        form.save()
+
+        return HttpResponseRedirect(reverse('usr:own_profile'))
+    else:
+        raise Http404
