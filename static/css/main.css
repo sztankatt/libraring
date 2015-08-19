@@ -185,12 +185,14 @@ input.form-control{padding:0 !important}
 #index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{float:left;margin-top:4px;margin-bottom:4px;padding-right:20px}
 #index-page .index-page-login{height:350px}
 .notifications-main .notifications-mark-all-as-read{float:right}
+.notifications-main .notifications-all-action-btn{height:50px}
 .notifications-main .row{margin:0}
 .notifications-main .nav-tabs{margin-bottom:0}
 .notifications-main h4{color:#26747f}
 .notifications-main .notifications-item{padding:0}.notifications-main .notifications-item .notification-item-header{font-size:20px;margin-bottom:10px}
 .notifications-main .notifications-item a{display:block;border-bottom:1px solid #26747f;padding:10px;color:#26747f;background-color:rgba(27,81,89,0.09);min-height:100px;border-right:1px dotted #26747f}
 .notifications-main .notifications-item a:hover{text-decoration:none;background-color:rgba(27,81,89,0.04)}
+.notifications-main .notifications-item-first{padding:15px;background-color:#26747f;color:#fff;font-weight:700}
 .notifications-main .notifications-item-read{padding:0}.notifications-main .notifications-item-read button{background-color:rgba(27,81,89,0.09);color:#26747f;margin:0;height:50px}
 .notifications-main .notifications-item-read button:hover{background-color:rgba(27,81,89,0.01)}
 .notifications-main .notifications-item-read .notifications-item-mark-read{border-bottom:1px solid #26747f}

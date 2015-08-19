@@ -12,7 +12,18 @@
 
 			<div class="tab-content">
 			  <div id="unread-notifications" class="tab-pane active">
-			    {% if notifications.unread %}	
+			    {% if notifications.unread %}
+			    <div class="row">
+				  <div class="notifications-item-first col-xs-10">
+				  {% trans "all" %}
+					  </div>
+					  	<button class="btn btn-secondary notifications-all-action-btn col-xs-1">
+						<i class="fa fa-check"></i>
+						</button>
+						<button class="btn btn-secondary notifications-all-action-btn col-xs-1">
+						<i class="fa fa-times"></i>
+						</button>
+				  </div>
 					{% for notification in notifications.unread %}
 						{% include 'after_login/usr/notifications_item.html' with notification=notification%}
 					{% endfor %}
@@ -22,6 +33,14 @@
 			  </div>
 			  <div id="read-notifications" class="tab-pane fade">
 			    {% if notifications.read %}	
+				<div class="row">
+					<div class="notifications-item-first col-xs-11">
+						{% trans "all" %}
+					</div>
+					<button class="btn btn-secondary notifications-all-action-btn col-xs-1">
+						<i class="fa fa-times"></i>
+					</button>
+				</div>
 					{% for notification in notifications.read %}
 						{% include 'after_login/usr/notifications_item.html' with notification=notification unread=True %}
 					{% endfor %}
