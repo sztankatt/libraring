@@ -14,13 +14,16 @@ from django.template import Context, RequestContext
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 
-from usr.forms import RegisterPersonForm, ClassForm,NClassForm, UserCreationForm, LoginForm,AppNotificationsForm,EmailNotificationsForm
-from usr.models import Class, Person, PageMessages, AppNotifications, EmailNotifications
+from usr.forms import RegisterPersonForm, UserCreationForm, LoginForm, \
+    AppNotificationsForm, EmailNotificationsForm
+from usr.models import Person, AppNotifications, EmailNotifications
 from usr.project import user_is_not_blocked, ProfileUpdate, \
-    confirmation_code_generator, last_logged_user_exists, user_not_authenticated
-from books.models import Genre, Book
-from books.forms import GenreForm, BookForm
+    confirmation_code_generator, last_logged_user_exists, \
+    user_not_authenticated
+from books.models import Book
+from books.forms import GenreForm
 from notifications.models import Notification
+from usr.models import AppNotifications, EmailNotifications
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
@@ -73,53 +76,43 @@ class RegisterWizard(SessionWizardView):
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
 
-    #after the last form has been submitted, ie everything is correct
+    # after the last form has been submitted, ie everything is correct
     def done(self, form_list, **kwargs):
-        #fetching and saving the user from the data of the first form
+        # fetching and saving the user from the data of the first form
         user = form_list[0].save(commit=False)
 
-
-        #fetching the details of user from the second form
-        #user.email = form_list[2].cleaned_data['email']
+        # fetching the details of user from the second form
+        # user.email = form_list[2].cleaned_data['email']
         user.first_name = form_list[1].cleaned_data['first_name']
         user.last_name = form_list[1].cleaned_data['last_name']
         user.is_active = False
 
-
-        #fetching the user's person object
+        # fetching the user's person object
         person = form_list[1].save(commit=False)
 
         person_data = form_list[1].cleaned_data
 
-        #managing the user's person object
-        person.person_type = 'S'  #education_data = form_list[2].cleaned_data
-        #obj, created = Class.objects.get_or_create(
-        #	institution=education_data['institution'],
-        #	course=education_data['course'],
-        #	start_year=education_data['start_year'],
-        #	end_year=education_data['end_year'])
-
-        #institution = None
-
+        # managing the user's person object
+        person.person_type = 'S'
         email = person_data['email']
 
-        #if not email.endswith(education_data['institution'].email_ending):
-        #	pass #return error
-
-        #saving user.email, according to which institution was selected
+        # saving user.email, according to which institution was selected
         user.email = email
         user.save()
 
+        # adding notification objects
+        app_not = AppNotifications(user=user)
+        app_not.save()
+
+        email_not = EmailNotifications(user=user)
+        email_not.save()
+
         person.user = user
-        #person.institution = institution
+        # person.institution = institution
         person.date_born = form_list[1].cleaned_data['date_born']
         person.confirmation_code = confirmation_code_generator()
         person.block_code = 3
         person.save()
-
-        #if obj is not None:
-        #    person.education.add(obj)
-        #person.save()
 
         send_confirmation_email(user)
 
