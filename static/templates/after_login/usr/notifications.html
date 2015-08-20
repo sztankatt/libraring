@@ -12,14 +12,14 @@
 
 			<div class="tab-content">
 				<div id="unread-notifications" class="tab-pane active">
-					<div class="row">
+					<div class="row first-row">
 						<div class="notifications-item-first col-xs-10">
 							{% trans "all" %}
 						</div>
-						<button class="btn btn-secondary notifications-all-action-btn col-xs-1">
+						<button class="btn btn-secondary notifications-all-action-btn notifications-mark-read-all col-xs-1">
 							<i class="fa fa-check"></i>
 						</button>
-						<button class="btn btn-secondary notifications-all-action-btn col-xs-1">
+						<button class="btn btn-secondary notifications-all-action-btn notifications-delete-all col-xs-1">
 							<i class="fa fa-times"></i>
 						</button>
 					</div>
@@ -32,11 +32,11 @@
 				{% endif %}
 			  </div>
 			  <div id="read-notifications" class="tab-pane fade">
-			  <div class="row">
+			  <div class="row first-row">
 					<div class="notifications-item-first col-xs-11">
 						{% trans "all" %}
 					</div>
-					<button class="btn btn-secondary notifications-all-action-btn col-xs-1">
+					<button class="btn btn-secondary notifications-all-action-btn notifications-delete-all col-xs-1">
 						<i class="fa fa-times"></i>
 					</button>
 				</div>
