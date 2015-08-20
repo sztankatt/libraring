@@ -1,0 +1,9 @@
+Dear {{user}}!
+
+{{sent_from}} {{verb}} {{target}}
+
+{{body|safe}}
+
+<a href="http://www.libraring.co.uk{{target.get_absolute_url}}">To the book</a>
+
+the Libraring team

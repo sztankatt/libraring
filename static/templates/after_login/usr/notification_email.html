@@ -1,0 +1,17 @@
+{% load inlinecss %}
+{% inlinecss 'css/notification.css' %}
+<div class="email">
+	<div class="email-header">Dear {{user}}!</div>
+	<div class="email-body">
+		<div class="email-body-element">
+			{{sent_from}} {{verb}} {{target}}
+		</div>
+		<div class="email-body-element">
+			{{body|safe}}
+		</div>
+	<div class="email-link">
+		<a href="http://www.libraring.co.uk{{target.get_absolute_url}}">To the book</a>
+	</div>
+	<div class="email-footer">the Libraring team</div>
+</div>
+{% endinlinecss %}

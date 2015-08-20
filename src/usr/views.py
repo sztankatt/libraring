@@ -24,6 +24,7 @@ from books.models import Book
 from books.forms import GenreForm
 from notifications.models import Notification
 from usr.models import AppNotifications, EmailNotifications
+from usr.forms import NClassForm, ClassForm
 
 def test(request):
     return render_to_response('ajaxSubmit.html');
