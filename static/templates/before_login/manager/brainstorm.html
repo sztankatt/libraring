@@ -7,22 +7,32 @@
 <div class="row main-row">
 	<div class="col-xs-6 col-xs-offset-3">
 		<h3>Brainstorm</h3>
-
-			<form action="mailto:brainstorm@libraring.co.uk" enctype="text/plain" method="post">
-				
-				<p>Your name:<input name="Name" type="text" id="Name" size="42">
-				</p>
-					<p>E-mail address:<input name="E-mail" type="text" id="E-mail" size="39">
-					</p>
-						<p>Comment:</p>
-							<p><textarea name="Comment" cols="55" rows="5" id="Comment"></textarea>
-							</p>
-									<p><input type="submit" name="Submit" value="Submit">
-									</p>
-			</form>
-<br>
+		<form action="mailto:brainstorm@libraring.co.uk" class="form-horizontal" enctype="text/plain" method="post" id="brainstorm_form">
+			<div class="form-group">
+				<label for="input_name" class="col-sm-3">Your name</label>
+				<div class="col-sm-6">
+					<input name="name" id="input_name" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input_email" class="col-sm-3">Your e-mail</label>
+				<div class="col-sm-6">
+					<input class="form-control" name="email" type="email" id="input_email">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="input_comment" class="col-sm-3">Comment</label>
+				<div class="col-sm-6">
+					<textarea name="comment" class="form-control" rows="5" id="input_comment"></textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-9">
+					<button class="btn btn-primary">Submit</button>
+				</div>
+			</div>
+		</form>
 		<h4>Your opinion is important to Us!</h4>
-		
 		<h5>The <span class="brand">Libraring</span> team</h5>
 	</div>
 </div>

@@ -1303,7 +1303,6 @@ input.form-control{
 
   .index-page-share{
     h3{
-      float: left;
       margin-top: 4px;
       margin-bottom: 4px;
       padding-right: 20px;
@@ -1394,5 +1393,50 @@ input.form-control{
         height:50px;
         border-bottom: 1px solid @dark-color;
       }
+  }
+}
+
+.index-page-content{
+  position:relative;
+  .slider-navigation{
+        color: @dark-color;
+    padding-bottom: 20px;
+
+    position:absolute;
+
+  }
+  .fa-arrow-right{
+      float: right;
+      top: 50%;
+      right: 5px;
+    }
+
+    .fa-arrow-left{
+      float: left;
+      top: 50%;
+      left: 5px;
+    }
+
+    .fa{
+      cursor: pointer;
+    }
+
+
+  .before-login-book-container{
+    clear: both;
+
+    .thumbnail{
+      border: 0px;
+      margin-left: 5px;
+      margin-right: 5px;
+
+      .caption{
+        inline-height: 100px;
+        height: 100px;
+        background-color: @dark-color;
+        color: white;
+        font-size: 18px;
+      }
+    }
   }
 }

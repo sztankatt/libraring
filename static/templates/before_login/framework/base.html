@@ -16,6 +16,9 @@
             <!-- bootstrap validator -->
             <link href="{%static 'css/bootstrapValidator.min.css'%}" rel="stylesheet" type="text/css" />
             <link href="{%static 'css/select2-bootstrap.css'%}" rel="stylesheet" type="text/css" />
+            <link href="{%static 'css/bootstrapValidator.min.css'%}" rel="stylesheet" type="text/css" />
+            <link href="{%static 'css/slick.css'%}" rel="stylesheet" type="text/css" />
+    
             {% import_django_select2_css %}
 
             <!-- FONTS -->
@@ -96,9 +99,9 @@
         <!-- CONTENT END -->
 
         {% block js %}
-            <!-- JQUERY 2.0.2 -->
-
-            <!-- BASIC JS -->
+            <script src="{% static 'js/bootstrapValidator.min.js'%}"></script>
+            <script src="{% static 'js/slick.min.js'%}"></script>
+            <script type="text/javascript" src="{% static 'js/framework/before_login.js' %}"></script>
         {% endblock %}
         
        <div class="modal fade" id="error">

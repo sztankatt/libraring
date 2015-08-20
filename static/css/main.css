@@ -182,7 +182,7 @@ input.form-control{padding:0 !important}
 #index-page{padding:20px}#index-page .panel-body{text-align:justify !important}
 #index-page .panel-heading{font-color:#60686f}
 #index-page .index-page-content{background-color:rgba(255,255,255,0.85);padding:20px;border-radius:10px;margin-bottom:35px}#index-page .index-page-content .index-page-content-body{padding-left:10px}
-#index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{float:left;margin-top:4px;margin-bottom:4px;padding-right:20px}
+#index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{margin-top:4px;margin-bottom:4px;padding-right:20px}
 #index-page .index-page-login{height:350px}
 .notifications-main .notifications-mark-all-as-read{float:right}
 .notifications-main .notifications-all-action-btn{height:50px}
@@ -197,3 +197,8 @@ input.form-control{padding:0 !important}
 .notifications-main .notifications-item-read button:hover{background-color:rgba(27,81,89,0.01)}
 .notifications-main .notifications-item-read .notifications-item-mark-read{border-bottom:1px solid #26747f}
 .notifications-main .notifications-item-read .notifications-button-replace{background-color:rgba(27,81,89,0.09);display:block;height:50px;border-bottom:1px solid #26747f}
+.index-page-content{position:relative}.index-page-content .slider-navigation{color:#26747f;padding-bottom:20px;position:absolute}
+.index-page-content .fa-arrow-right{float:right;top:50%;right:5px}
+.index-page-content .fa-arrow-left{float:left;top:50%;left:5px}
+.index-page-content .fa{cursor:pointer}
+.index-page-content .before-login-book-container{clear:both}.index-page-content .before-login-book-container .thumbnail{border:0;margin-left:5px;margin-right:5px}.index-page-content .before-login-book-container .thumbnail .caption{inline-height:100px;height:100px;background-color:#26747f;color:#fff;font-size:18px}

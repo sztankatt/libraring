@@ -1,7 +1,7 @@
 {% extends "before_login/framework/base.html"%}
 {%block title%}Libraring{%endblock%}
 {%block content%}
-{% load i18n %}
+{% load i18n thumbnail highlight%}
 
 <style>
     body{
@@ -52,14 +52,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-5 col-md-offset-1">
-            <div class="index-page-content">
-                <h3>About</h3>
-                <div class="index-page-content-body">
-                   <p>{% blocktrans trimmed %}Libraing is a free and online market where users can buy and resell their textbooks and/or any course related material. The website is designed to provide a university specific, dynamic and online service for students to swiftly trade their unwanted books with other users regardless of university or course as it happens on a joint platform.{% endblocktrans %}</p>
-                </div>
-            </div>
             <script type="text/javascript">
 // Popup window code
 function newPopup(url) {
@@ -74,6 +66,26 @@ function newPopup(url) {
                 <a href="JavaScript:newPopup('https://twitter.com/home?status=check%20out%20Libraring%20%40%20http://www.libraring.co.uk');" title="Share on Twitter" class="btn btn-twitter btn-social-share" target="_blank"><i class="fa fa-twitter"></i></a>
                 <a href='JavaScript:newPopup("https://www.facebook.com/sharer/sharer.php?u=http://www.libraring.co.uk");' title="Share on Facebook" target="_blank" class="btn btn-facebook btn-social-share"><i class="fa fa-facebook"></i></a>'
                 <a href='JavaScript:newPopup("https://plus.google.com/share?url=http://www.libraring.co.uk");' title="Share on Google+" target="_blank" class="btn btn-googleplus btn-social-share"><i class="fa fa-google-plus"></i></a>
+            </div>
+        </div>
+        <div class="col-md-5 col-md-offset-1">
+            <div class="index-page-content">
+                <h3>{% trans "Latest uploads" %}</h3>
+                    <i class="fa fa-arrow-right slider-navigation"></i>
+                <div class="before-login-book-container">
+                    {% for book in books %}
+                            <div class="thumbnail">
+                            {% thumbnail book.image "180x270" crop="center" as im%}
+                                <img src="{{im.url}}" width="{{im.width}}" class="img-responsive" />
+                            {% endthumbnail %}
+                            <div class="caption">
+                                {{book.title}}
+                          </div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+                    <i class="fa fa-arrow-left slider-navigation"></i>
             </div>
         </div>
     </div>
