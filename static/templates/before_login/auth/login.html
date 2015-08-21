@@ -15,7 +15,9 @@
                 <div class="col-md-9">
                      {% render_field field placeholder=field.label class='form-control' autocomplete='off'%}
                      {% for error in field.errors %}
-                         <span class="help-block">{{error}}</span>
+                         <span class="help-block">
+                            {{error}}
+                         </span>
                     {% endfor %}
                 </div>
             </div>

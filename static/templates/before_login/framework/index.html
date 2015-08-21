@@ -71,21 +71,22 @@ function newPopup(url) {
         <div class="col-md-5 col-md-offset-1">
             <div class="index-page-content">
                 <h3>{% trans "Latest uploads" %}</h3>
-                    <i class="fa fa-arrow-right slider-navigation"></i>
+                    {% comment %}<i class="fa fa-arrow-right slider-navigation"></i>{% endcomment %}
                 <div class="before-login-book-container">
                     {% for book in books %}
                             <div class="thumbnail">
                             {% thumbnail book.image "180x270" crop="center" as im%}
-                                <img src="{{im.url}}" width="{{im.width}}" class="img-responsive" />
+                                <img src="{{im.url}}"/>
                             {% endthumbnail %}
                             <div class="caption">
-                                {{book.title}}
+                                <p>{{book.title}}</p>
+                                {% trans "Goal price:" %} &pound;{{book.price}}
                           </div>
-                        </div>
+                          </div>
                     {% endfor %}
                 </div>
 
-                    <i class="fa fa-arrow-left slider-navigation"></i>
+                    {% comment %}<i class="fa fa-arrow-left slider-navigation"></i>{%endcomment %}
             </div>
         </div>
     </div>

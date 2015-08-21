@@ -36,6 +36,10 @@ body {
     color: @font-color;
 }
 
+input, textarea{
+  border-radius: @border-radius!important;
+}
+
 p{
     text-align: justify;
 }
@@ -691,7 +695,7 @@ body.loading .loading-modal {
 }
 
 input.form-control{
-    padding:0px!important;
+    padding:5px!important;
 }
 
 .input-group-addon{
@@ -854,6 +858,8 @@ input.form-control{
 
 .main-row{
     margin:0px!important;
+    padding-top: 50px;
+    padding-bottom:50px;
 }
 
 .previous-education-delete-confirm{
@@ -1429,6 +1435,11 @@ input.form-control{
       border: 0px;
       margin-left: 5px;
       margin-right: 5px;
+      background-colo: transparent;
+      img{
+        width: 100%;
+        height: auto;
+      }
 
       .caption{
         inline-height: 100px;

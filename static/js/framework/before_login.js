@@ -33,12 +33,31 @@ $(document).ready(function(){
     });
 
     $('.before-login-book-container').slick({
-        prevArrow: $('.index-page-content .slider-navigation.fa-arrow-left'),
-        nextArrow: $('.index-page-content .slider-navigation.fa-arrow-right'),
+        //prevArrow: $('.index-page-content .slider-navigation.fa-arrow-left'),
+        //nextArrow: $('.index-page-content .slider-navigation.fa-arrow-right'),
+        arrows: false,
         infinite: true,
-        slidesToShow: 2,
-        slidesToScroll: 2,
         autoplay: true,
-        autoplaySpeed: 2500
+        autoplaySpeed: 2000,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        responsive:[
+            {
+                breakpoint: 1400, 
+                settings:{       
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true
+                }
+            },
+            {
+                breakpoint: 768,
+                settings:{
+                    slidesToScroll: 1,
+                    slidesToShow: 1,
+                    infinite: true
+                }
+            }
+        ]
     });
 });

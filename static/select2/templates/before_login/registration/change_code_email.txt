@@ -1,7 +1,0 @@
-Dear {{email_change.user}}!
-
-You have recently changed your email from {{email_change.email_from}} to {{email_change.email_to}}.
-
-To activate your new email, key in the following activation code: {{email_change.change_code}}
-
-the LIBRARING team
