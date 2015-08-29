@@ -99,7 +99,7 @@
         <div class="form-group {%if form.terms_conditions.errors %}has-feedback has-error{%endif%}">
         	 	<div class="col-sm-9 col-sm-offset-3">
 				<span class="help-block">
-				{% trans "I accept the" %} <a href="{% url 'manager:privacy' %}">{% trans "Terms and Conditions" %}</a>
+				{% trans "I accept the" %} <a href="#" data-toggle="modal" data-target="#terms-conditions-modal">{% trans "Terms and Conditions" %}</a>
 				</span>
 				{% render_field form.terms_conditions %}
 				{% for error in form.terms_conditions.errors %}
@@ -112,7 +112,7 @@
         <div class="form-group {%if form.privacy_policy.errors %}has-feedback has-error{%endif%}">
         	 	<div class="col-sm-9 col-sm-offset-3">
 				<span class="help-block">
-				{% trans "I accept the" %} <a href="">{% trans "Privacy Policy" %}</a>
+				{% trans "I accept the" %} <a href="#" data-toggle="modal" data-target="#privacy-modal">{% trans "Privacy Policy" %}</a>
 				</span>
 				{% render_field form.privacy_policy %}
 				{% for error in form.privacy_policy.errors %}
@@ -130,4 +130,31 @@
 		</div>
 	{%endwith%}
 	</form>
+
+	<div class="modal fade" id="terms-conditions-modal" tabindex="-1" role="dialog" aria-labelledby="terms-conditions-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="terms-conditions-modal-label">{% trans "Terms and Conditions" %}</h4>
+				</div>
+				<div class="modal-body">
+					{% include 'before_login/manager/terms_conditions_content.html' %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="privacy-modal" tabindex="-1" role="dialog" aria-labelledby="privacy-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="privacy-modal-label">{% trans "Privacy Policy" %}</h4>
+				</div>
+				<div class="modal-body">
+					{% include 'before_login/manager/privacy_content.html' %}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
