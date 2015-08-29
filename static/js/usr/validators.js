@@ -401,6 +401,14 @@ var validator_handle = function(validator){
 
                     }
                 }
+            },
+            'person-privacy_policy':{
+                validators:{
+                    notEmpty:{
+                        message:'This field is required.'
+
+                    }
+                }
             }
         }
     });

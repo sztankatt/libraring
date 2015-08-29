@@ -1,5 +1,5 @@
 {% extends 'before_login/framework/base.html' %}
-
+{% load widget_tweaks %}
 {% block title %}Brainstorm{% endblock%}
 
 {% block content %}
@@ -7,25 +7,24 @@
 <div class="row main-row">
 	<div class="col-xs-6 col-xs-offset-3">
 		<h3>Brainstorm</h3>
-		<form action="mailto:brainstorm@libraring.co.uk" class="form-horizontal" enctype="text/plain" method="post" id="brainstorm_form">
-			<div class="form-group">
-				<label for="input_name" class="col-sm-3">Your name</label>
-				<div class="col-sm-6">
-					<input name="name" id="input_name" class="form-control">
+		<form action="" class="form-horizontal" method="post" id="brainstorm_form">
+			{%csrf_token%}
+			{% for field in form %}
+
+			<div class="form-group {%if field.errors %}has-feedback has-error{%endif%}">
+				<label for="{{field.id_for_label}}" class="col-sm-3 control-label">
+					{{field.label}}
+				</label>
+				<div class="col-sm-9">
+					{% render_field field class='form-control' placeholder=field.label %}
+					{% for error in field.errors %}
+						<span class="help-block">
+							{{error}}
+						</span>
+					{% endfor %}	
 				</div>
 			</div>
-			<div class="form-group">
-				<label for="input_email" class="col-sm-3">Your e-mail</label>
-				<div class="col-sm-6">
-					<input class="form-control" name="email" type="email" id="input_email">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="input_comment" class="col-sm-3">Comment</label>
-				<div class="col-sm-6">
-					<textarea name="comment" class="form-control" rows="5" id="input_comment"></textarea>
-				</div>
-			</div>
+			{% endfor %}
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-9">
 					<button class="btn btn-primary">Submit</button>

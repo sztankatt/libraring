@@ -14,6 +14,7 @@ class RegisterPersonForm(ModelForm):
     first_name = forms.CharField(max_length=100, required=True)
     last_name = forms.CharField(max_length=100, required=True)
     terms_conditions = forms.BooleanField(required=True)
+    privacy_policy = forms.BooleanField(required=True)
 
     class Meta:
         datetimeOptions = {
