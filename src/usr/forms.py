@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from usr.models import Person, Class, Institution, COUNTRIES, alphanumeric_regex
+from usr.models import Person, Class, Institution, AppNotifications, EmailNotifications
 from django import forms
 from django.contrib.auth import forms as auth_forms
 from django.contrib.auth.models import User
@@ -14,6 +14,7 @@ class RegisterPersonForm(ModelForm):
     first_name = forms.CharField(max_length=100, required=True)
     last_name = forms.CharField(max_length=100, required=True)
     terms_conditions = forms.BooleanField(required=True)
+    privacy_policy = forms.BooleanField(required=True)
 
     class Meta:
         datetimeOptions = {
@@ -99,3 +100,15 @@ class LoginForm(forms.Form):
     password = forms.CharField(
         max_length=50,
         widget=forms.PasswordInput(attrs={'placeholder': 'Password'}))
+
+
+class AppNotificationsForm(forms.ModelForm):
+    class Meta:
+        exclude = ('user',)
+        model = AppNotifications
+
+
+class EmailNotificationsForm(forms.ModelForm):
+    class Meta:
+        exclude = ('user',)
+        model = EmailNotifications

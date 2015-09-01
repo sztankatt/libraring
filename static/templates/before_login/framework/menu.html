@@ -11,7 +11,7 @@
 
         <ul class="main-menu-left">
             <li><a class="main-menu-item" href="{% url 'manager:our_team' %}">{% trans "Our team" %}</a></li>
-            <li><a class="main-menu-item" href="{% url 'manager:tour' %}">{% trans "Tour" %}</a></li>
+            {% comment %}<li><a class="main-menu-item" href="{% url 'manager:tour' %}">{% trans "Tour" %}</a></li>{% endcomment %}
             <li><a class="main-menu-item" href="{% url 'manager:brainstorm' %}">{% trans "Brainstorm" %}</a></li>
         </ul>
         <ul class="main-menu-right">

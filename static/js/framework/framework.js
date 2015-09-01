@@ -1,3 +1,46 @@
+ function notification_delete($button){
+    $id = $button.attr('data-notification-id');
+    $.ajax({
+        method: 'POST',
+        url: '/ajax/delete/notification/',
+        dataType: 'json',
+        data: {'pk':$id, 'csrfmiddlewaretoken': $.cookie('csrftoken')},
+        success: function(data){
+            if(data.success){
+                $item = $button.parent().parent();
+                $item.slideUp(400, function(){
+                    $(this).remove();
+                });
+            }
+        }
+
+    });
+ }
+
+ function mark_notification_read($button){
+    $id = $button.attr('data-notification-id');
+    $.ajax({
+        method: 'POST',
+        url: '/ajax/mark/notification/read/',
+        dataType: 'json',
+        data: {'pk':$id, 'csrfmiddlewaretoken': $.cookie('csrftoken')},
+        success: function(data){
+            if(data.success){
+                $item = $button.parent().parent();               
+                $item.slideUp(400, function(){
+                    $this = $(this).detach();
+                    console.log($this.html());
+                    $('#read-notifications .first-row').after($this);
+                    $this.show();
+                    $('#read-notifications h4').remove();
+                    $button.remove();
+                    $this.children('.notifications-item-read').append('<div class="notifications-button-replace"></div>');
+                });
+            }
+        }
+    })
+ }
+
  $(document).ready(function(){
     var $container = $('#genre_books_all');
 
@@ -163,4 +206,25 @@
     $('#delete_offer_form').ajaxForm(function(data){
         $('.modal').modal('hide');
     });
-});
+
+    $('.notifications-item-delete').click(function(){
+        notification_delete($(this));
+    });
+
+     $('.notifications-item-mark-read').click(function(){
+        mark_notification_read($(this));
+    });
+
+    $('.notifications-delete-all').click(function(){
+        $(this).parent().parent().find('.notifications-item-delete').each(function(){
+            notification_delete($(this));
+        });
+    });
+
+    $('.notifications-mark-read-all').click(function(){
+        $(this).parent().parent().find('.notifications-item-mark-read').each(function(){
+            mark_notification_read($(this));
+        });
+    });
+
+ });

@@ -1,4 +1,5 @@
 @font-face{font-family:'KG Beneath Your Beautiful';src:url('../fonts/kg_beneath_your_beautiful/kg_beneath_your_beautiful.eot');src:url('../fonts/kg_beneath_your_beautiful/kg_beneath_your_beautiful.eot?#iefix') format('embedded-opentype'),url('../fonts/kg_beneath_your_beautiful/kg_beneath_your_beautiful.svg#KG Beneath Your Beautiful') format('svg'),url('../fonts/kg_beneath_your_beautiful/kg_beneath_your_beautiful.woff') format('woff'),url('../fonts/kg_beneath_your_beautiful/kg_beneath_your_beautiful.ttf') format('truetype');font-weight:normal;font-style:normal}body{width:100%;background-color:#fff;font-family:'ABeeZee',sans-serif;color:#555}
+input,textarea{border-radius:0 !important}
 p{text-align:justify}
 h1,h2,h3,h4,h5,h6{color:#00b6d1;font-family:'ABeeZee',sans-serif;text-shadow:-1px #000}
 h1{margin-bottom:25px}
@@ -84,7 +85,7 @@ nav.main-menu-navbar ul.main-menu-left{float:left !important;padding-left:0}
 .loading-modal{display:none;position:fixed;z-index:2000;top:0;left:0;height:100%;width:100%;background:rgba(255,255,255,0.8) url('/static/img/ajax-loader.gif') 50% 50% no-repeat}
 body.loading{overflow:hidden}
 body.loading .loading-modal{display:block}
-input.form-control{padding:0 !important}
+input.form-control{padding:5px !important}
 .input-group-addon{background-color:#80dae8;color:#26747f;border:1px solid #00b6d1}
 .rating-input{color:#26747f;font-size:18px;padding-right:20px}
 .form-horizontal .has-feedback .form-control-feedback{right:-30px !important}
@@ -115,7 +116,7 @@ input.form-control{padding:0 !important}
 #new-email-success{display:none}
 #email_confirmation_form{margin-top:20px;margin-bottom:20px}
 #email_confirmation_code{width:100px}
-.main-row{margin:0 !important}
+.main-row{margin:0 !important;padding-top:50px;padding-bottom:50px}
 .previous-education-delete-confirm{display:none;padding-top:15px;padding-bottom:15px;background-color:#80dae8}
 #error .modal-header{color:#fff;background-color:#bd362f}
 .modal-content{border-radius:0 !important}
@@ -129,6 +130,7 @@ input.form-control{padding:0 !important}
 .profile-update label{padding:6px 12px;margin:0 !important}
 .profile-field ul li{border:none;border-radius:0 !important}
 .profile-field .list-group-item{padding-bottom:0 !important}
+.profile-main{padding-top:20px;padding-bottom:20px;padding-left:50px;padding-right:50px}
 #error .modal-header{color:#fff;background-color:#bd362f}
 .book-field .book-field-header{font-weight:700;border-bottom:2px solid #00b6d1 !important}
 .book-field .book-field-val{padding:10px 5px}.book-field .book-field-val ul{list-style-type:none;padding:0}.book-field .book-field-val ul li{display:block;padding:5px 0}
@@ -181,5 +183,24 @@ input.form-control{padding:0 !important}
 #index-page{padding:20px}#index-page .panel-body{text-align:justify !important}
 #index-page .panel-heading{font-color:#60686f}
 #index-page .index-page-content{background-color:rgba(255,255,255,0.85);padding:20px;border-radius:10px;margin-bottom:35px}#index-page .index-page-content .index-page-content-body{padding-left:10px}
-#index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{float:left;margin-top:4px;margin-bottom:4px;padding-right:20px}
+#index-page .index-page-share{background-color:#fff}#index-page .index-page-share h3{margin-top:4px;margin-bottom:4px;padding-right:20px}
 #index-page .index-page-login{height:350px}
+.notifications-main .notifications-mark-all-as-read{float:right}
+.notifications-main .notifications-all-action-btn{height:50px}
+.notifications-main .row{margin:0}
+.notifications-main .nav-tabs{margin-bottom:0}
+.notifications-main h4{color:#26747f}
+.notifications-main .notifications-item{padding:0}.notifications-main .notifications-item .notification-item-header{font-size:20px;margin-bottom:10px}
+.notifications-main .notifications-item a{display:block;border-bottom:1px solid #26747f;padding:10px;color:#26747f;background-color:rgba(27,81,89,0.09);min-height:100px;border-right:1px dotted #26747f}
+.notifications-main .notifications-item a:hover{text-decoration:none;background-color:rgba(27,81,89,0.04)}
+.notifications-main .notifications-item-first{padding:15px;background-color:#26747f;color:#fff;font-weight:700}
+.notifications-main .notifications-item-read{padding:0}.notifications-main .notifications-item-read button{background-color:rgba(27,81,89,0.09);color:#26747f;margin:0;height:50px}
+.notifications-main .notifications-item-read button:hover{background-color:rgba(27,81,89,0.01)}
+.notifications-main .notifications-item-read .notifications-item-mark-read{border-bottom:1px solid #26747f}
+.notifications-main .notifications-item-read .notifications-button-replace{background-color:rgba(27,81,89,0.09);display:block;height:50px;border-bottom:1px solid #26747f}
+.index-page-content{position:relative}.index-page-content .slider-navigation{color:#26747f;padding-bottom:20px;position:absolute}
+.index-page-content .fa-arrow-right{float:right;top:50%;right:5px}
+.index-page-content .fa-arrow-left{float:left;top:50%;left:5px}
+.index-page-content .fa{cursor:pointer}
+.index-page-content .before-login-book-container{clear:both}.index-page-content .before-login-book-container .thumbnail{border:0;margin-left:5px;margin-right:5px;background-colo:transparent}.index-page-content .before-login-book-container .thumbnail img{width:100%;height:auto}
+.index-page-content .before-login-book-container .thumbnail .caption{inline-height:100px;height:100px;background-color:#26747f;color:#fff;font-size:18px}

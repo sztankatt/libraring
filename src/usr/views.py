@@ -2,7 +2,7 @@
 # Created by: Tamas Sztanka-Toth
 
 from django.shortcuts import render_to_response, get_object_or_404, render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.contrib.formtools.wizard.views import SessionWizardView
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -14,34 +14,40 @@ from django.template import Context, RequestContext
 from django.db.models import Q
 from django.utils.translation import ugettext as _
 
-from usr.forms import RegisterPersonForm, ClassForm, NClassForm, UserCreationForm, LoginForm
-from usr.models import Class, Person, PageMessages
+from usr.forms import RegisterPersonForm, UserCreationForm, LoginForm, \
+    AppNotificationsForm, EmailNotificationsForm
+from usr.models import Person, AppNotifications, EmailNotifications
 from usr.project import user_is_not_blocked, ProfileUpdate, \
-    confirmation_code_generator, last_logged_user_exists, user_not_authenticated
-from books.models import Genre, Book
-from books.forms import GenreForm, BookForm
+    confirmation_code_generator, last_logged_user_exists, \
+    user_not_authenticated
+from books.models import Book
+from books.forms import GenreForm
+from notifications.models import Notification
+from usr.models import AppNotifications, EmailNotifications
+from usr.forms import NClassForm
+
 
 def test(request):
-    return render_to_response('ajaxSubmit.html');
+    return render_to_response('ajaxSubmit.html')
 
-#Data and functions for RegisterWizardView
+# Data and functions for RegisterWizardView
 FORMS = [("user", UserCreationForm),
-         ("person", RegisterPersonForm)  #("class",ClassForm)
-]
+         ("person", RegisterPersonForm)]
 
 TEMPLATES = {
     "user": "before_login/registration/user.html",
-    "person": "before_login/registration/person.html",  #"class":"before_login/registration/class.html",
-    #"institution":"before_login/registration/institution.html"
-}
+    "person": "before_login/registration/person.html"
+    }
 
-#returns true iff the checkbox is set to student
+
+# returns true iff the checkbox is set to student
 def is_student(wizard):
-    cleaned_data = wizard.get_cleaned_data_for_step('person') or {'person_type': 'none'}
+    cleaned_data = wizard.get_cleaned_data_for_step('person') or \
+        {'person_type': 'none'}
     return cleaned_data['person_type'] == 'S'
 
 
-#return true iff the checkbox is not set to student
+# return true iff the checkbox is not set to student
 def is_not_student(wizard):
     return not is_student(wizard)
 
@@ -64,61 +70,48 @@ def send_confirmation_email(user):
     m.send()
 
 
-#register wizard, using the Django's wizardView implementation
+# register wizard, using the Django's wizardView implementation
 class RegisterWizard(SessionWizardView):
-    #TODO: debugi this section properly
-    #condition_dict = {'class':is_student, 'institution':is_not_student}
-
     def get_template_names(self):
         return [TEMPLATES[self.steps.current]]
 
-    #after the last form has been submitted, ie everything is correct
+    # after the last form has been submitted, ie everything is correct
     def done(self, form_list, **kwargs):
-        #fetching and saving the user from the data of the first form
+        # fetching and saving the user from the data of the first form
         user = form_list[0].save(commit=False)
 
-
-        #fetching the details of user from the second form
-        #user.email = form_list[2].cleaned_data['email']
+        # fetching the details of user from the second form
+        # user.email = form_list[2].cleaned_data['email']
         user.first_name = form_list[1].cleaned_data['first_name']
         user.last_name = form_list[1].cleaned_data['last_name']
         user.is_active = False
 
-
-        #fetching the user's person object
+        # fetching the user's person object
         person = form_list[1].save(commit=False)
 
         person_data = form_list[1].cleaned_data
 
-        #managing the user's person object
-        person.person_type = 'S'  #education_data = form_list[2].cleaned_data
-        #obj, created = Class.objects.get_or_create(
-        #	institution=education_data['institution'],
-        #	course=education_data['course'],
-        #	start_year=education_data['start_year'],
-        #	end_year=education_data['end_year'])
-
-        #institution = None
-
+        # managing the user's person object
+        person.person_type = 'S'
         email = person_data['email']
 
-        #if not email.endswith(education_data['institution'].email_ending):
-        #	pass #return error
-
-        #saving user.email, according to which institution was selected
+        # saving user.email, according to which institution was selected
         user.email = email
         user.save()
 
+        # adding notification objects
+        app_not = AppNotifications(user=user)
+        app_not.save()
+
+        email_not = EmailNotifications(user=user)
+        email_not.save()
+
         person.user = user
-        #person.institution = institution
+        # person.institution = institution
         person.date_born = form_list[1].cleaned_data['date_born']
         person.confirmation_code = confirmation_code_generator()
         person.block_code = 3
         person.save()
-
-        #if obj is not None:
-        #    person.education.add(obj)
-        #person.save()
 
         send_confirmation_email(user)
 
@@ -127,12 +120,11 @@ class RegisterWizard(SessionWizardView):
         return HttpResponseRedirect(reverse('usr:register_confirmation'))
 
 
-#managing user login. If there is a next parameter, sending the user to the next page.
-#otherwise sending him to '/'
-#/usr/login/
+# managing user login.
+# If there is a next parameter, sending the user to the next page.
+# otherwise sending him to '/'
+# /usr/login/
 def login_view(request):
-    data = {}
-    username = password = ''
     user = None
     error = ''
 
@@ -142,9 +134,11 @@ def login_view(request):
     if request.POST:
         form = LoginForm(request.POST)
         if form.is_valid():
-            user = authenticate(username=request.POST['username'], \
-                                password=request.POST['password'])
-            error = _('Your username/password is incorrect. Are you registered?')
+            user = authenticate(username=request.POST['username'],
+                                password=request.POST['password']
+                                )
+            error = _(
+                'Your username/password is incorrect. Are you registered?')
 
     else:
         form = LoginForm()
@@ -154,9 +148,9 @@ def login_view(request):
     if request.GET:
         next = request.GET['next']
 
-    #if the user exists
+    # if the user exists
     if user is not None:
-        if user.is_active == True:
+        if user.is_active is True:
             try:
                 del request.session['last_logged_user']
             except KeyError:
@@ -171,26 +165,27 @@ def login_view(request):
             request.session['last_logged_user'] = user.id
             return HttpResponseRedirect(reverse('usr:blocked_profile'))
 
-    return render(request, 'before_login/auth/login.html', \
+    return render(request, 'before_login/auth/login.html',
                   {
                       'form': form,
                       'error': error
                   })
 
 
-#loggin out the user.
-#/usr/logout
+# loggin out the user.
+# /usr/logout
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
 
 
-#view which handles the loading of main page for logged in users. Only called within 'index' view
+# view which handles the loading of main page for logged in users.
+# Only called within 'index' view
 @user_is_not_blocked
 def home(
         request,
         template='after_login/usr/home.html',
-        home_books_template ='after_login/usr/load_books.html'
+        home_books_template='after_login/usr/load_books.html'
         ):
     list = request.GET.getlist('genres')
     first_page = request.GET.get('page-number', 1)
@@ -209,109 +204,113 @@ def home(
     context = {
         'books': books,
         'home_books_template': home_books_template,
-        'form':GenreForm(request.GET),
-        'list':list,
-        'first_page':first_page
+        'form': GenreForm(request.GET),
+        'list': list,
+        'first_page': first_page
     }
     if request.is_ajax():
         template = home_books_template
 
-    return render_to_response(template, context, context_instance=RequestContext(request))
-    #g = Genre.objects.annotate(book_num=Count('book')).order_by('-book_num').exclude(book_num=0)
-
-    #return render(request, 'after_login/usr/home.html', {'books': books})
+    return render_to_response(
+        template, context, context_instance=RequestContext(request))
 
 
-#view which handles the access to the '/'
+# view which handles the access to the '/'
 def index(request):
-    #checks if the user is logged-in
+    # checks if the user is logged-in
     if request.user.is_authenticated():
         return home(request)
 
-    return render(request, 'before_login/framework/index.html', {'form': LoginForm()})
+    recent_books = Book.objects.all().order_by('-upload_date')[:10]
+
+    return render(
+        request, 'before_login/framework/index.html',
+        {'form': LoginForm(), 'books': recent_books})
 
 
-#view which loads the profile
+# view which loads the profile
 @login_required
 @user_is_not_blocked
-def load_profile(request, id=""):
-    #becomes true if the user is viewing his own profile
+def load_profile(request):
+    # becomes true if the user is viewing his own profile
     account_settings = False
 
-    #checking whether the id in the request was specified
-    if id == "":
-        id = request.user.id
-        account_settings = True
-    else:
-        id = int(id)
+    # checking whether the id in the request was specified
+    id = request.user.id
+    account_settings = True
 
-    #return  HttpResponse(id)
+    # return  HttpResponse(id)
 
-    #fetching the user object
+    # fetching the user object
     user = get_object_or_404(User, pk=id)
 
-    #checking if the usser is viewging his/her own profile
+    # checking if the usser is viewging his/her own profile
     if id == request.user.id:
         account_settings = True
 
-    #will be true if the user is a student
+    # will be true if the user is a student
     student = False
 
-    #checking if the user is a student
+    # checking if the user is a student
     if user.person.person_type == 'S':
         student = True
 
-    #passing fields for the profile
+    # passing fields for the profile
     fields = [
-        {  #username
-           'label': 'Username',
-           'data': user.username,
-           'update': False,
+        {
+            'label': 'Username',
+            'data': user.username,
+            'update': False,
         },
-        {  #first-name
-           'label': 'First Name',
-           'data': user.first_name,
-           'update' : True,
-		    'update_id' : 'first_name',
-		    'form_id'	: 'first_name_form',
-		},
-		{
-		    #last-name
-		    'label'	: 'Last Name',
-		    'data'	: user.last_name,
-		    'update'	: True,
-		    'update_id' : 'last_name',
-		    'form_id'	: 'last_name_form',
-		},
-		{
-		    #email
-		    'label'	: 'e-mail',
-		    'data'	: user.email,
-		    'update'	: False,
-		},
-	]
-	
-	
+        {
+            'label': 'First Name',
+            'data': user.first_name,
+            'update': True,
+            'update_id': 'first_name',
+            'form_id': 'first_name_form',
+        },
+        {
+            'label': 'Last Name',
+            'data': user.last_name,
+            'update': True,
+            'update_id': 'last_name',
+            'form_id': 'last_name_form',
+        },
+        {
+            'label'	: 'e-mail',
+            'data'	: user.email,
+            'update'	: False,
+        }]
+
+    app_notifications, created = AppNotifications.objects.get_or_create(
+        user=request.user)
+    email_notifications, created = EmailNotifications.objects.get_or_create(
+        user=request.user)
+
     return render(request, 'after_login/usr/profile.html', {
-	    'user' : user,
-	    'fields':fields,
+        'user': user,
+        'fields': fields,
         'settings': account_settings,
         'student': student,
-        #'new_current_education_form': ClassForm(auto_id='new_current_education_%s'),
-        'new_previous_education_form': NClassForm(auto_id='new_previous_education_%s')
-    })
+        'app_notifications_form': AppNotificationsForm(
+            instance=app_notifications),
+        'email_notifications_form': EmailNotificationsForm(
+            instance=email_notifications),
+        'new_previous_education_form': NClassForm(
+            auto_id='new_previous_education_%s')
+        })
 
 
-#not used anymore
+# not used anymore
 @login_required
 def change_current_education(request):
     p_u = ProfileUpdate(request)
 
-    #try:	
+    # try:
     user = p_u.update_current_education()
     logout(request)
-    #    except KeyError as e:
-    #	return HttpResponseRedirect(reverse('usr:own_profile'))
+    # except KeyError as e:
+    # return HttpResponseRedirect(reverse('usr:own_profile'))
 
     request.session['last_logged_user'] = user.id
 
@@ -322,10 +321,10 @@ def change_current_education(request):
 def add_previous_education(request):
     p_u = ProfileUpdate(request)
 
-    #try:
+    # try:
     user = p_u.add_new_education()
-    #    except KeyError as e:
-    #	pass
+    # except KeyError as e:
+    # pass
 
     return HttpResponseRedirect(reverse('usr:own_profile'))
 
@@ -349,17 +348,20 @@ def blocked_profile(request):
 def deactivated_profile(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
     return render(request, 'before_login/messages.html',
-                  {'user': user, 'type':'deactivated_profile'})
+                  {'user': user, 'type': 'deactivated_profile'})
 
 
 @user_not_authenticated
 @last_logged_user_exists
 def new_email_confirmation(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
-    return render(request, 'before_login/registration/confirm_email.html', {'user': user})
+    return render(
+        request,
+        'before_login/registration/confirm_email.html',
+        {'user': user})
 
 
-#confirmation page handling function
+# confirmation page handling function
 @user_not_authenticated
 @last_logged_user_exists
 def register_confirmation(request):
@@ -382,6 +384,60 @@ def register_confirmation_code(request, confirmation_code=None):
     return render(
         request,
         'before_login/messages.html',
-        {'user': user, 'registration_complete': True,
-        'type': 'registry_confirmation_email'})
+        {
+            'user': user, 'registration_complete': True,
+            'type': 'registry_confirmation_email'
+        }
+    )
 
+
+@login_required
+def notifications(request):
+    notifications = {
+        'unread': request.user.notifications.unread(),
+        'read': request.user.notifications.read().order_by('-timestamp')[:10],
+    }
+
+    return render(
+        request,
+        'after_login/usr/notifications.html',
+        {'notifications': notifications})
+
+
+@login_required
+@user_is_not_blocked
+def notifications_read(request, id=None):
+    if id is None:
+        raise Http404
+    else:
+        obj = get_object_or_404(Notification, pk=id, recipient=request.user)
+        obj.mark_as_read()
+
+        return HttpResponseRedirect(obj.target.get_absolute_url())
+
+
+@login_required
+@user_is_not_blocked
+def app_notifications_save(request):
+    if request.POST:
+        app_notifications = AppNotifications.objects.get(user=request.user)
+        form = AppNotificationsForm(request.POST, instance=app_notifications)
+        form.save()
+
+        return HttpResponseRedirect(reverse('usr:own_profile'))
+    else:
+        raise Http404
+
+
+@login_required
+@user_is_not_blocked
+def email_notifications_save(request):
+    if request.POST:
+        email_notifications = EmailNotifications.objects.get(user=request.user)
+        form = EmailNotificationsForm(
+            request.POST, instance=email_notifications)
+        form.save()
+
+        return HttpResponseRedirect(reverse('usr:own_profile'))
+    else:
+        raise Http404

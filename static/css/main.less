@@ -36,6 +36,10 @@ body {
     color: @font-color;
 }
 
+input, textarea{
+  border-radius: @border-radius!important;
+}
+
 p{
     text-align: justify;
 }
@@ -691,7 +695,7 @@ body.loading .loading-modal {
 }
 
 input.form-control{
-    padding:0px!important;
+    padding:5px!important;
 }
 
 .input-group-addon{
@@ -854,6 +858,8 @@ input.form-control{
 
 .main-row{
     margin:0px!important;
+    padding-top: 50px;
+    padding-bottom:50px;
 }
 
 .previous-education-delete-confirm{
@@ -925,6 +931,13 @@ input.form-control{
 
 .profile-field .list-group-item{
     padding-bottom: 0px!important;
+}
+
+.profile-main{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
 /* BOOK'S PAGE */
@@ -1296,7 +1309,6 @@ input.form-control{
 
   .index-page-share{
     h3{
-      float: left;
       margin-top: 4px;
       margin-bottom: 4px;
       padding-right: 20px;
@@ -1306,5 +1318,136 @@ input.form-control{
 
   .index-page-login{
     height: 350px;
+  }
+}
+
+.notifications-main{
+  .notifications-mark-all-as-read{
+    float:right;
+  }
+
+  .notifications-all-action-btn {
+    height: 50px;
+  }
+
+  .row{
+    margin:0px;
+  }
+
+  .nav-tabs{
+    margin-bottom: 0px;
+  }
+ 
+
+  h4{
+    color: @dark-color;
+  }
+
+  .notifications-item{
+    padding: 0px;
+    .notification-item-header{
+      font-size: 20px;
+      margin-bottom: 10px;
+      
+    }
+
+     a{
+    display:block;
+    border-bottom: 1px solid @dark-color;
+    padding: 10px;
+    color: @dark-color;
+    background-color: rgba(27,81,89,0.09);
+    min-height: 100px;  
+    border-right: 1px dotted @dark-color;
+  }
+
+  a:hover{
+    text-decoration: none;
+    background-color: rgba(27,81,89,0.04);
+  } 
+  
+  }
+
+  .notifications-item-first:extend(.notifications-item){
+    padding: 15px;
+    background-color: @dark-color;
+    color: white;
+    font-weight: 700;
+    //height: 50px;
+  }
+
+  .notifications-item-read{
+    padding:0px;
+
+    button{
+      background-color: rgba(27,81,89,0.09);
+      color: @dark-color;
+      margin:0px;
+      height: 50px;
+    }
+
+    button:hover{
+      background-color: rgba(27,81,89,0.01);
+    }
+
+    .notifications-item-mark-read{
+      border-bottom: 1px solid @dark-color;
+    }
+    .notifications-button-replace{
+        background-color: rgba(27,81,89,0.09);
+        display:block;
+        height:50px;
+        border-bottom: 1px solid @dark-color;
+      }
+  }
+}
+
+.index-page-content{
+  position:relative;
+  .slider-navigation{
+        color: @dark-color;
+    padding-bottom: 20px;
+
+    position:absolute;
+
+  }
+  .fa-arrow-right{
+      float: right;
+      top: 50%;
+      right: 5px;
+    }
+
+    .fa-arrow-left{
+      float: left;
+      top: 50%;
+      left: 5px;
+    }
+
+    .fa{
+      cursor: pointer;
+    }
+
+
+  .before-login-book-container{
+    clear: both;
+
+    .thumbnail{
+      border: 0px;
+      margin-left: 5px;
+      margin-right: 5px;
+      background-colo: transparent;
+      img{
+        width: 100%;
+        height: auto;
+      }
+
+      .caption{
+        inline-height: 100px;
+        height: 100px;
+        background-color: @dark-color;
+        color: white;
+        font-size: 18px;
+      }
+    }
   }
 }

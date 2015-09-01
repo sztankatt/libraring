@@ -1,4 +1,4 @@
-{% load i18n static widget_tweaks%}
+{% load i18n static widget_tweaks notifications_tags %}
 <nav class="main-menu-navbar" role="navigation">
     <!-- BRAND START-->
 
@@ -41,7 +41,12 @@
 
         <!-- RIGHT SIDE START -->
         <ul class="main-menu-right">
-            <li><a href="#"><i class="fa fa-bell"></i></a></li>
+            <li><a href="{% url 'usr:notifications' %}">
+           {% notifications_unread as unread_count %}
+              {% if unread_count %}
+                 <span class="badge">{{unread_count}}</span>
+              {% endif %}
+            <i class="fa fa-bell"></i></a></li>
            <li class="dropdown">
                <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                    <span class="main-menu-big">{{ request.user.username }}</span>

@@ -1,18 +1,20 @@
 {% extends "after_login/framework/base.html"%}
 {%block title%}{{project.name}} profile{%endblock%}
-{% load widget_tweaks %}
+{% load widget_tweaks notifications_tags %}
 {% block content%}
-    
+<div class="profile-main">
+    <div class="row">
+        <div class="col-md-6">
     {% if settings %}
-        <h2 class="profile-user-name">My profile</h2>
+        <h2 class="profile-user-name">profile settings</h2>
     {% else %}
         <h2 class="profile-user-name">Profile of {{user.first_name}} {{user.last_name}}</h2>
     {% endif %}
        {% for field in fields %}
         <div class="profile-field" {% if field.update and settings %}id="{{field.update_id}}_container"{%endif%}>
             <div class="profile-field-header row">
-                <div class="profile-field-header-title col-md-2">{{field.label}}</div>
-                <div class="profile-field-header-body col-md-2"><span class="field-data">{{field.data}}</span>
+                <div class="profile-field-header-title col-md-3">{{field.label}}</div>
+                <div class="profile-field-header-body col-md-9"><span class="field-data">{{field.data}}</span>
                     {% if field.update and settings %}
                         <a class="profile-update-button">
                             <i class="fa fa-pencil"></i>
@@ -31,8 +33,6 @@
                                 <button type="submit" class=" btn btn-primary profile-update-save" value="{{field.update_id}}">save</button>
                                 <button type="button" class=" btn btn-default profile-update-cancel">cancel</button>
                         </div>
-                            
-                       
                     </form>
             </div>
             {% endif %}
@@ -40,87 +40,9 @@
         {% endfor %}
     
     {% if student %}
-        {% comment %}
-        <div class="profile-field" id="current_education_container">
-            <div class="profile-field-header row">
-                <div class="profile-field-header-title col-md-2">Current educaton</div>
-                <div class="profile-field-header-body col-md-10">
-                    <span class="field-data">{{user.person.current_education}}</span>
-                    {% if settings %}
-                        <a class="profile-update-button">
-                            <i class="fa fa-pencil"></i>
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
-            {% if settings %}
-            <div class="profile-update">
-                <form id="current_education_form" action="/usr/change/current/education/" method="post"
-                    class="profile-update-form form-horizontal">
-                    {% csrf_token %}
-                    {% with new_current_education_form as form %}
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                <label for="{{form.institution.id_for_label}}" class="control-label">new Institution</label>
-                            </div>
-                            <div class="col-md-3">
-                                {{form.institution|add_class:'form-control'}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                <label for="{{form.course.id_for_label}}" class="control-label">new Course</label>
-                            </div>
-                            <div class="col-md-3">
-                                {{form.course|add_class:'form-control'}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                <label for="{{form.start_year.id_for_label}}" class="control-label">new Start year</label>
-                            </div>
-                            <div class="col-md-2">
-                                {{form.start_year|add_class:'form-control'}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                <label for="{{form.end_year.id_for_label}}" class="control-label">new End year</label>
-                            </div>
-                            <div class="col-md-2">
-                                {{form.end_year|add_class:'form-control'}}
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-2">
-                                <label for="{{form.email.id_for_label}}" class="control-label">new Email</label>
-                            </div>
-                            <div class="col-md-3">
-                                
-                                    {{form.email|add_class:'form-control'}}
-                                    <p class="help-block email-ending-help"></p>
-                                
-                            </div>
-                        </div>
-                        <div class="profile-update-field">
-                            <div class="form-helper-field"></div>
-                        </div>
-                    {% endwith %}
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-primary profile-update-save" value="current_education">save</button>
-                            <button type="button" class="btn btn-default profile-update-cancel">cancel</button>
-                        </div>
-                    </div>
-                 </form>
-
-            </div>
-            {% endif %}    
-        </div>
-        {% endcomment %}
         <div class="profile-field" id="previous_education_all">
             <div class="profile-field-header row">
-                <div class="profile-field-header-title col-md-2">Education</div>
+                <div class="profile-field-header-title col-md-3">Education</div>
                 <div class="col-md-9">&nbsp;</div>
             </div>
             {% if user.person.education.all %}
@@ -128,7 +50,7 @@
             {% for class in user.person.education.all%}
                 <li class="list-group-item">
                     <div class="row">
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             {{class}}{% if settings %}<a class="previous-education-delete"><i class="fa fa-times"></i></a>{%endif%}
                         </div>
                     </div>
@@ -152,52 +74,43 @@
             {% if settings %}
         <div class="profile-field" id="previous_education_container">
             <div class="profile-field-header row">
-                <div class="profile-field-header-title col-md-2">Add educaton</div>
-                <button id="add_new_education" class="btn btn-primary">Add education</button>
+                <button id="add_new_education" class="btn btn-primary col-md-3">Add education</button>
+                <div class="profile-field-header-title col-md-6">&nbsp;</div>
             </div>
-            <!--<div id="add_new_education_container">
-                {% for field in new_previous_education_form%}
-                    <div class="profile-update-field">
-                        {{field.label_tag}} {{field}}
-                        <div class="form-helper-field"></div>
-                    </div>
-                {%endfor %}
-                  <button class="profile-update-save" value="previous_education">add</button>
-            </div>-->
             <div id="add_new_education_container" class="profile-update">
                 <form id="previous_education_form" action="/usr/add/previous/education/" method="post"
                     class="profile-update-form form-horizontal">
                     {% csrf_token %}
                     {% with new_previous_education_form as form %}
                         <div class="form-group">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="{{form.institution.id_for_label}}" class="control-label">Institution</label>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 {{form.institution|add_class:'form-control'}}
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="{{form.course.id_for_label}}" class="control-label">Course</label>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 {{form.course|add_class:'form-control'}}
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="{{form.start_year.id_for_label}}" class="control-label">Start year</label>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-6">
                                 {{form.start_year|add_class:'form-control'}}
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label for="{{form.end_year.id_for_label}}" class="control-label">End year</label>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-6">
                                 {{form.end_year|add_class:'form-control'}}
                             </div>
                         </div>
@@ -216,7 +129,57 @@
             Institution: {{user.person.institution}}
         </div>
     {% endif %}
-    
+        </div>
+    </div>
+    <div class="col-md-6">
+        {% if settings %}
+            <h2 class="profile-user-name">notification settings</h2>
+        {% else %}
+            
+        {% endif %}
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#app-notifications">website notifications</a></li>
+          <li><a data-toggle="tab" href="#email-notifications">e-mail notifications</a></li>
+        </ul>
+            <div class="tab-content">
+                <div id="app-notifications" class="tab-pane active">
+                    <div class="usr-settings-notification">Notify me whenever:</div>
+                    <form method="post" action="{% url 'usr:app_notifications_save' %}"> 
+                        {% csrf_token %}
+                        {% for field in app_notifications_form %}
+                        <div class="profile-field">
+                            <div class="profile-field-header row">
+                                <div class="profile-field-header-title col-xs-9">{{field.label}}</div>
+                                <div class="profile-field-header-body col-xs-3"><span class="field-data">{{field}}</span></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="profile-field-header row">
+                            <button class="btn btn-primary col-md-3">Update</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="email-notifications" class="tab-pane fade">
+                    <div class="usr-settings-notification">Notify me whenever:</div>
+                    <form method="post" action="{% url 'usr:email_notifications_save' %}"> 
+                        {% csrf_token %}
+                        {% for field in email_notifications_form %}
+                        <div class="profile-field">
+                            <div class="profile-field-header row">
+                                <div class="profile-field-header-title col-xs-9">{{field.label}}</div>
+                                <div class="profile-field-header-body col-xs-3"><span class="field-data">{{field}}</span></div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <div class="profile-field-header row">
+                            <button class="btn btn-primary col-md-3">Update</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% load staticfiles %}

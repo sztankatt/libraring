@@ -1,0 +1,56 @@
+{% extends "after_login/framework/base.html"%}
+{%block title%}{{project.name}} profile{%endblock%}
+{% load widget_tweaks i18n%}
+{% block content %}
+<div class="profile-main notifications-main">
+	<div class="row">
+		<div class="col-sm-6 col-sm-offset-3">
+		<ul class="nav nav-tabs">
+		  <li class="active"><a data-toggle="tab" href="#unread-notifications">unread notifications</a></li>
+		  <li><a data-toggle="tab" href="#read-notifications">read notifications</a></li>
+		</ul>
+
+			<div class="tab-content">
+				<div id="unread-notifications" class="tab-pane active">
+					<div class="row first-row">
+						<div class="notifications-item-first col-xs-10">
+							{% trans "all" %}
+						</div>
+						<button class="btn btn-secondary notifications-all-action-btn notifications-mark-read-all col-xs-1">
+							<i class="fa fa-check"></i>
+						</button>
+						<button class="btn btn-secondary notifications-all-action-btn notifications-delete-all col-xs-1">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+			    {% if notifications.unread %}
+					{% for notification in notifications.unread %}
+						{% include 'after_login/usr/notifications_item.html' with notification=notification%}
+					{% endfor %}
+				{% else %}
+				{% comment %}<h4>{% trans "no unread notifications" %}</h4>{% endcomment %}
+				{% endif %}
+			  </div>
+			  <div id="read-notifications" class="tab-pane fade">
+			  <div class="row first-row">
+					<div class="notifications-item-first col-xs-11">
+						{% trans "all" %}
+					</div>
+					<button class="btn btn-secondary notifications-all-action-btn notifications-delete-all col-xs-1">
+						<i class="fa fa-times"></i>
+					</button>
+				</div>
+			    {% if notifications.read %}	
+					{% for notification in notifications.read %}
+						{% include 'after_login/usr/notifications_item.html' with notification=notification unread=True %}
+					{% endfor %}
+				{% else %}
+				{% comment %}<h4>{% trans "no read notifications" %}</h4>{% endcomment %}
+				{% endif %}
+			  </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

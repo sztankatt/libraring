@@ -10,30 +10,35 @@ from books.models import BOOK_STATUS_OPTIONS
 from django_select2.widgets import AutoHeavySelect2TagWidget, AutoHeavySelect2Widget
 from django_select2.fields import AutoModelSelect2TagField, AutoModelSelect2Field, AutoSelect2Field
 
+
 class AuthorWidget(AutoHeavySelect2TagWidget):
     def init_options(self):
         super(AuthorWidget, self).init_options()
         self.options['tokenSeparators'] = [","]
 
+
 class AuthorField(AutoModelSelect2TagField):
     queryset = Author.objects
     search_fields = ['name__startswith']
-    
+
     def get_model_field_values(self, value):
         return {'name': value}
-    
+
+
 class PublisherWidget(AutoHeavySelect2Widget):
     def init_options(self):
         super(AutoHeavySelect2Widget, self).init_options()
         self.options['tokenSeparators'] = [","]
+
 
 class PublisherField(AutoModelSelect2Field):
     queryset = Publisher.objects
     search_fields = ['name__startswith']
 
     def extra_data_from_instance(self, obj):
-        return {'aa':'bb'}
-    
+        return {'aa': 'bb'}
+
+
 #TODO tokenseparators only ","
 #TODO: Check if super(autoheavyselect2tagwidget) is the right thing to do
 class GenreWidget(AutoHeavySelect2TagWidget):
@@ -41,14 +46,15 @@ class GenreWidget(AutoHeavySelect2TagWidget):
         super(GenreWidget, self).init_options()
         self.options['tokenSeparators'] = [","]
 
+
 class GenreField(AutoModelSelect2TagField):
     queryset = Genre.objects
     search_fields = ['name__startswith']
-    
+
     def get_model_field_values(self, value):
         return {'name': value}
 
-g = GenreWidget(attrs={'type':''})
+g = GenreWidget(attrs={'type': ''})
 
 g.init_options()
 

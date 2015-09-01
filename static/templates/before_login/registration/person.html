@@ -12,44 +12,53 @@
             <h4>{% trans "Personal information" %}</h4>
             </div>
         </div>
-        <div class="form-group">
-			{{ form.email.errors }}
+        <div class="form-group {%if form.email.errors %}has-feedback has-error{%endif%}" >
 			<label for="id_email" class="col-sm-3 control-label">Email address:</label>
 			<div class="col-sm-3">
 				{% render_field form.email class='form-control' placeholder=form.email.label %}
+				{% for error in form.email.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
 		</div>
-		<div class="form-group">
-			{{ form.first_name.errors }}
+		<div class="form-group {%if form.first_name.errors %}has-feedback has-error{%endif%}">
 			<label for="{{form.first_name.id_for_label}}" class="col-sm-3 control-label">
 				{{form.first_name.label}}
 			</label>
 			<div class="col-sm-5">
 				{% render_field form.first_name class='form-control' placeholder=form.first_name.label %}
+				{% for error in form.first_name.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
 		</div>
-		<div class="form-group">
-			{{ form.last_name.errors }}
+		<div class="form-group {%if form.last_name.errors %}has-feedback has-error{%endif%}">
 			<label for="{{form.last_name.id_for_label}}" class="col-sm-3 control-label">
 				{{form.last_name.label}}
 			</label>
 			<div class="col-sm-5">
 				{% render_field form.last_name class='form-control' placeholder=form.last_name.label %}
+				{% for error in form.last_name.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
 		</div>
-		<div class="form-group">
-			{{ form.date_born.errors }}
+		<div class="form-group {%if form.date_born.errors %}has-feedback has-error{%endif%}">
 			<label for="{{form.date_born.id_for_label}}" class="col-sm-3 control-label">{% trans "When were you born?" %}</label>
 			<div class="col-sm-4">
 				{% render_field form.date_born class='form-control' placeholder=form.date_born.label %}
 				<span class="help-block">{{form.date_born.help_text}}</span>
-			</div>
-		</div>
-		<div class="form-group">
-			{{ form.about.errors }}
-			<label for="{{form.about.id_for_label}}" class="col-sm-3 control-label">{{form.about.label}}</label>
-			<div class="col-sm-9">
-				{% render_field form.about class='form-control' placeholder=form.about.label %}
+				{% for error in form.date_born.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
 		</div>
         <div class="row">
@@ -57,34 +66,61 @@
             <h4>{% trans "Location" %}</h4>
             </div>
         </div>
-        <div class="form-group">
-			{{ form.city.errors }}
+        <div class="form-group {% if form.city.errors %}has-feedback has-error{%endif%}">
 			<label for="{{form.city.id_for_label}}" class="col-sm-3 control-label">
 				{% trans "City" %}
 			</label>
 			<div class="col-sm-6">
 				{% render_field form.city class='form-control' placeholder=form.city.label %}
 				<span class="help-block">{{form.city.help_text}}</span>
+				{% for error in form.city.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
 		</div>
 
-        <div class="form-group">
-			{{ form.location.errors }}
+        <div class="form-group {%if form.location.errors %}has-feedback has-error{%endif%}">
 			<div class="col-sm-3 col-sm-offset-3">
-				{% render_field form.location class='form-control' disabled='true' %}
+				{% render_field form.location class='form-control' %}
+				{% for error in form.location.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-sm-9 col-sm-offset-3">
-            <h4>{% trans "Terms and Conditions" %}</h4>
+            <h4>{% trans "Terms, Conditions and Privacy Policy" %}</h4>
         	</div>
         </div>
-        <div class="form-group">
-        	{{ form.terms_conditions.errors }}
-			<div class="col-sm-1 col-sm-offset-3">
+        <div class="form-group {%if form.terms_conditions.errors %}has-feedback has-error{%endif%}">
+        	 	<div class="col-sm-9 col-sm-offset-3">
+				<span class="help-block">
+				{% trans "I accept the" %} <a href="#" data-toggle="modal" data-target="#terms-conditions-modal">{% trans "Terms and Conditions" %}</a>
+				</span>
 				{% render_field form.terms_conditions %}
+				{% for error in form.terms_conditions.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
 			</div>
-			<span class="help-block col-sm-8">{% trans "You need to accept the Terms and conditions to finish the registration" %}</span>
+        </div>
+        <div class="form-group {%if form.privacy_policy.errors %}has-feedback has-error{%endif%}">
+        	 	<div class="col-sm-9 col-sm-offset-3">
+				<span class="help-block">
+				{% trans "I accept the" %} <a href="#" data-toggle="modal" data-target="#privacy-modal">{% trans "Privacy Policy" %}</a>
+				</span>
+				{% render_field form.privacy_policy %}
+				{% for error in form.privacy_policy.errors %}
+					<span class="help-block">
+						{{error}}
+					</span>
+				{% endfor %}	
+			</div>
         </div>
 		{% endblock %}
 		<div class="form-group">	    
@@ -94,4 +130,31 @@
 		</div>
 	{%endwith%}
 	</form>
+
+	<div class="modal fade" id="terms-conditions-modal" tabindex="-1" role="dialog" aria-labelledby="terms-conditions-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="terms-conditions-modal-label">{% trans "Terms and Conditions" %}</h4>
+				</div>
+				<div class="modal-body">
+					{% include 'before_login/manager/terms_conditions_content.html' %}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="privacy-modal" tabindex="-1" role="dialog" aria-labelledby="privacy-modal-label">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="privacy-modal-label">{% trans "Privacy Policy" %}</h4>
+				</div>
+				<div class="modal-body">
+					{% include 'before_login/manager/privacy_content.html' %}
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
