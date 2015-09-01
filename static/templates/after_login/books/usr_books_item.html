@@ -147,7 +147,7 @@
             </div>
         </div>
             {% elif data.type == 'watchlist' %}
-            <div class="col-xs-4 alert alert-info usr-book-status">
+            <dv class="col-xs-4 alert alert-info usr-book-status">
                 <div class="usr-book-status-title">
                     {% trans "Book status" %}
                 </div>
@@ -207,7 +207,7 @@
             </div>
             {% elif data.type == 'offers' %}
             <div class="col-xs-4 alert 
-            {% if book.get_highest_offer.made_by == request.user %}
+            {% if book.get_highest_offer.made_by == request.user or book.status == 'selling' %}
             alert-success
             {% elif request.user in book.get_offer_users %}
             alert-warning
@@ -216,34 +216,54 @@
             {%endif%}
              usr-book-status">
                 <div class="usr-book-status-title">
-                    {% trans "Book status" %}
+                    {% if book.get_highest_offer.made_by == request.user%}
+                        {% trans "Your offer is the highest" %}
+                    {% elif book.status == 'selling'%}
+                        {% trans "You have bought this book" %}
+                    {% elif request.user in book.get_offer_users %}
+                        {% trans "Your offer is not the highest one!" %}
+                    {%endif%}
                 </div>
                 <div class="usr-book-status-body">
-                {% if book.get_highest_offer.made_by == request.user %}
-                    <p>
-                    {% blocktrans trimmed with offer=book.get_highest_offer.offered_price%}
-                        Your offer of &pound;{{offer}} is the highest so far. Well done! 
-                    {%endblocktrans%}
-                    </p>
-                    <p>{% trans "Change offer below" %}</p>
-
-                {% elif request.user in book.get_offer_users %}
-                    <p>
-                    {% blocktrans trimmed with offer=book.get_highest_offer.offered_price%}
-                        Currently your offer of &pound;{{offer}} is the is not the highest. If you wan't to get this book, increase your offer! 
-                    {%endblocktrans%}
-                    </p>
-                    <p>{% trans "Increase offer below" %}</p>
-                {%else%}
-                    <p>{% blocktrans trimmed with offered_price=book.get_highest_offer.offered_price %}
-                            This book have several offers, the highest being &pound;{{offered_price}}.
-                    {%endblocktrans %}</p>
-                    <p>
-                        {%blocktrans trimmed %}
-                            You haven't made any offers for this book yet. Do not hesitate and make one!
+                {% if book.status == 'selling' %}
+                    {% blocktrans trimmed with user=book.accepted_offer.made_by%}
+                        Your offer for this book has been accepted by <b>{{user}}</b>. You will be contacted by {{book.accepted_offer.made_by}} via email to discuss the details of this transaction. Once you are happy with it, please click <b>'Finalise'</b> below:
+                    {% endblocktrans %}</p><p>
+                    {% if not book.accepted_offer.transaction.finalised_by_buyer %}
+                        <form id="finalised_form" method="post" action="{% url "books:finalise_transaction" %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
+                            <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                        </form>
+                    {% else %}</p>
+                        <p><b>{% trans "You have already finalised this transaction." %}</b></p>
+                    {% endif %}
+                {% else %}
+                    {% if book.get_highest_offer.made_by == request.user %}
+                        <p>
+                        {% blocktrans trimmed with offer=book.get_highest_offer.offered_price%}
+                            Your offer of &pound;{{offer}} is the highest so far. Well done! 
                         {%endblocktrans%}
-                    </p>
-                {%endif%}
+                        </p>
+                        <p>{% trans "Change offer below" %}</p>
+
+                    {% elif request.user in book.get_offer_users %}
+                        <p>
+                        {% blocktrans trimmed with offer=book.get_highest_offer.offered_price%}
+                            Currently your offer of &pound;{{offer}} is the is not the highest. If you wan't to get this book, increase your offer! 
+                        {%endblocktrans%}
+                        </p>
+                        <p>{% trans "Increase offer below" %}</p>
+                    {%else%}
+                        <p>{% blocktrans trimmed with offered_price=book.get_highest_offer.offered_price %}
+                                This book have several offers, the highest being &pound;{{offered_price}}.
+                        {%endblocktrans %}</p>
+                        <p>
+                            {%blocktrans trimmed %}
+                                You haven't made any offers for this book yet. Do not hesitate and make one!
+                            {%endblocktrans%}
+                        </p>
+                    {%endif%}
                     {% if data.form %}
                         {% with form=data.form %}
                         <form class="form-horizontal" role="form" action="{% url 'books:offer' %}"
@@ -286,7 +306,10 @@
                         </form>
                         {% endwith %}
                     {% endif %}
-                    </p>
+                {%endif%}
+                    </div>
+                
+        </div>
                 {%endif%}        
             </div>
 {%endwith%}

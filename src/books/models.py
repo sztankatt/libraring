@@ -118,14 +118,11 @@ class Book(models.Model, QueuedModel):
     def get_location(self):
         return self.user.person.city
 
-
     def get_absolute_url(self):
         return '/'+get_language()+'/books/book/%s/' % (self.id)
 
-
     def _get_all_offers(self):
         return Offer.objects.filter(book=self).order_by('-offered_price')
-
 
     def get_highest_offer(self):
         try:
@@ -136,7 +133,6 @@ class Book(models.Model, QueuedModel):
     def get_offer_users(self):
         return [x.made_by for x in self._get_all_offers()]
 
-
     def get_watchlist_users(self):
         watchlist = WatchList.objects.filter(book=self)
         return [x.usr for x in watchlist]
@@ -145,16 +141,27 @@ class Book(models.Model, QueuedModel):
         ordering = ['-upload_date']
 
 
+class BoughtBook(models.Model):
+    book = models.OneToOneField(Book, null=True)
+    user = models.ForeignKey(User)
+    date_bought = models.DateTimeField(auto_now_add=True, blank=True)
+    accepted_price = IntegerRangeField(min_value=1, max_value=200)
+
+    def __unicode__(self):
+        return self.book.__unicode__()
+
 
 class TransactionRating(models.Model):
     seller = models.ForeignKey(User, related_name='seller_transaction_rating')
     buyer = models.ForeignKey(User, related_name='buyer_transaction_rating')
 
-    RATING_CHOICES = [(x,x) for x in range(1,6)]
+    RATING_CHOICES = [(x, x) for x in range(1, 6)]
 
-    seller_rating = models.IntegerField(blank=True, null=True, choices=RATING_CHOICES)
+    seller_rating = models.IntegerField(
+        blank=True, null=True, choices=RATING_CHOICES)
 
-    buyer_rating = models.IntegerField(blank=True, null=True, choices=RATING_CHOICES)
+    buyer_rating = models.IntegerField(
+        blank=True, null=True, choices=RATING_CHOICES)
 
 
 class Transaction(models.Model):
@@ -165,6 +172,9 @@ class Transaction(models.Model):
 
     def is_finalised(self):
         return (self.finalised_by_seller and self.finalised_by_buyer)
+
+    def __unicode__(self):
+        return unicode(_('Transaction'))
 
 
 class Offer(models.Model):

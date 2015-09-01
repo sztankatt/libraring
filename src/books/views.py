@@ -4,7 +4,6 @@ from django.http import Http404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import ensure_csrf_cookie
-from django.core.paginator import Paginator, EmptyPage
 from django.template.loader import get_template
 from django.template import Context
 from django.core import mail
@@ -14,7 +13,8 @@ from django.db.models import Q
 
 from usr.project import user_is_not_blocked
 from books.forms import OfferForm, BookStatusForm
-from books.models import Book, Genre, Author, Publisher, Offer, Transaction,TransactionRating
+from books.models import Book, Genre, Author, Publisher,\
+    Offer, Transaction, TransactionRating, BoughtBook
 from usr.signals import *
 
 
@@ -49,7 +49,6 @@ def usr_book_page(request, type='books'):
 
     elif type == 'watchlist':
         books = [x.book for x in request.user.watchlist_set.all()]
-        # books = filter(lambda x: x not in [y.book for y in request.user.offer_set.all()],books)
 
     out['books'] = books
 
@@ -160,7 +159,7 @@ def make_an_offer(request):
                 if changed_offer:
                     if (offer.offered_price >= previous_highest['price'] and
                             offer.made_by.pk != previous_highest['user'].pk):
-                        new_highest_offer(
+                        new_highest_offer.send(
                             sender=offer.user.__class__,
                             offer=offer,
                             user=request.user,
@@ -169,7 +168,7 @@ def make_an_offer(request):
                             book=offer.book)
                 else:
                     if offer.offered_price >= previous_highest['price']:
-                        new_highest_offer(
+                        new_highest_offer.send(
                             sender=offer.user.__class__,
                             offer=offer,
                             user=request.user,
@@ -228,7 +227,7 @@ def accept_the_offer(request):
     if request.method == 'POST':
         offer_id = request.POST.get('offer_id', False)
 
-        if offer_id == False:
+        if offer_id is False:
             raise Http404
 
         # geting the offer and marking as accepted
@@ -243,20 +242,25 @@ def accept_the_offer(request):
         offer.transaction = transaction
         offer.save()
 
-        #getting the book
+        # getting the book
         book = offer.book
 
-        #updating the book
+        # updating the book
         book.sold_to = offer.made_by
         book.status = 'selling'
         book.save()
 
-        #Seding the email to buyer
-        send_accepted_offer_email(book.user, book.sold_to, book)
+        # Seding the email to buyer
+        # send_accepted_offer_email(book.user, book.sold_to, book)
+        accepted_offer.send(
+            sender=book.user.__class__,
+            seller=book.user,
+            buyer=book.sold_to,
+            book=book)
 
-        #redirect to the page of the book
-        return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
-
+        # redirect to the page of the book
+        return HttpResponseRedirect(reverse(
+            'books:book_page', args=(book.id,)))
 
     else:
         raise Http404
@@ -268,34 +272,36 @@ def accept_the_offer(request):
 @user_is_not_blocked
 def finalise_transaction(request):
     if request.method == 'POST':
-        seller = request.POST.get('seller', None)
         transaction_id = request.POST.get('transaction', None)
         user = request.user
 
-        if seller == None or transaction_id == None:
+        if transaction_id is None:
             raise Http404
 
         transaction = Transaction.objects.get(pk=int(transaction_id))
 
-        book = transaction.offer.book
+        finalised_by_seller = False
 
-        if seller == 'true':
-            transaction.finalised_by_seller = True
-            transaction.save()
-        elif seller == 'false':
-            transaction.finalised_by_buyer = True
-            transaction.save()
+        if request.user == transaction.offer.book.user:
+            seller = request.user
+            buyer = transaction.offer.made_by
+            finalised_by_seller = True
+        elif request.user == transaction.offer.made_by:
+            seller = transaction.offer.book.user
+            buyer = request.user
         else:
             raise Http404
 
-        if transaction.finalised_by_buyer and transaction.finalised_by_seller:
-            if seller == 'true':
-                seller = user
-                buyer = transaction.offer.made_by
-            else:
-                seller = transaction.offer.made_by
-                buyer = user
+        book = transaction.offer.book
 
+        if finalised_by_seller:
+            transaction.finalised_by_seller = True
+            transaction.save()
+        else:
+            transaction.finalised_by_buyer = True
+            transaction.save()
+
+        if transaction.finalised_by_buyer and transaction.finalised_by_seller:
             tr = TransactionRating(buyer=buyer, seller=seller)
             tr.save()
 
@@ -306,7 +312,29 @@ def finalise_transaction(request):
             transaction.rating = tr
             transaction.save()
 
-        return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
+            BoughtBook.objects.create(
+                user=transaction.offer.made_by,
+                book=book,
+                accepted_price=transaction.offer.offered_price)
+
+            book_finalised_by_other_user.send(
+                sender=transaction.__class__,
+                finalised_by_seller=finalised_by_seller,
+                seller=seller,
+                buyer=buyer,
+                transaction=transaction)
+        else:
+            book_finalised_by_other_user.send(
+                sender=user.__class__,
+                finalised_by_seller=finalised_by_seller,
+                seller=seller,
+                buyer=buyer,
+                transaction=transaction)
+
+        # sending a signal, which will be handled in signal.py
+
+        return HttpResponseRedirect(reverse(
+            'books:book_page', args=(book.id,)))
 
     else:
         raise Http404
@@ -348,8 +376,8 @@ def rate_transaction(request):
         raise Http404
 
         # TODO: possible cleanup of unused methods
-        #TODO: check if book status is correct every time
-        #TODO: send an email to the user actually
+        # TODO: check if book status is correct every time
+        # TODO: send an email to the user actually
 
 
 """

@@ -149,6 +149,13 @@ class NotificationMixin(models.Model):
             )
         )
 
+    accepted_offer = models.BooleanField(
+        default=True,
+        verbose_name=_(
+            'One of your offers has been accepted'
+            )
+        )
+
     class Meta:
         abstract = True
 
