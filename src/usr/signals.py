@@ -47,7 +47,7 @@ def book_new_offer_receiver(sender, **kwargs):
                 % {
                     'price': offer.offered_price,
                     'user': offer.made_by.username})
-    subject = _('Nef offer for %(book)s' % {'book': offer.book})
+    subject = _('New offer for %(book)s' % {'book': offer.book})
     target = offer.book
     verb = _('has made a new offer for your book: ')
     if recipient.app_notifications.my_book_new_offer:
@@ -67,7 +67,7 @@ def book_new_offer_receiver(sender, **kwargs):
 @receiver(new_highest_offer, sender=User)
 def new_highest_offer_receiver(sender, **kwargs):
     previous_user = kwargs['previous_user']
-    previous_offer = kwargs['previous_higher']
+    previous_price = kwargs['previous_highest']
     book = kwargs['book']
     target = book
     recipient = kwargs['user']
@@ -81,7 +81,7 @@ def new_highest_offer_receiver(sender, **kwargs):
                     'user': recipient,
                     'book': book,
                     'price': offer.offered_price,
-                    'previous_offer': previous_offer})
+                    'previous_price': previous_price})
     subject = _("""%(user)s has the new highest offer for %(book)s""" % {
             'user': previous_user, 'book': book
         })
@@ -236,7 +236,8 @@ def accepted_offer_receiver(sender=User, **kwargs):
 
     if buyer.email_notifications.accepted_offer:
         send_notification_mail(
-            seller, verb, subject, email_body, buyer, target)
+            seller, verb, subject, email_body, buyer, target,
+            sender_address=seller.username+'<'+seller.email+'>')
 
 
 @receiver(new_message, sender=User)

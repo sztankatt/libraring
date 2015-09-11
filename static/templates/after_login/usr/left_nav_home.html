@@ -10,6 +10,8 @@
                     {%trans "My books"%}
                 {% elif data.type == 'offers' %}
                     {% trans "My offers" %}
+                {% elif data.type == 'bought' %}
+                    {% trans "Bought books" %}
                 {% else %}
                     {% trans "My watchlist" %}
                 {% endif %}
@@ -55,7 +57,7 @@
             {% if request.user.id != book.user.id %}
                 <h4>User rating</h4>
                 {% if book.user.person.get_average_rating %}
-                    {{ book.user.person.get_average_rating }}
+                    {{ book.user.person.get_average_rating|floatformat:2 }}
                 {% else %}
                     {% trans "user hasn't been rated yet" %}
                 {% endif %} 

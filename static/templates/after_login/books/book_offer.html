@@ -43,7 +43,7 @@
 		</div>
 	</form>
 	{%elif request.user == offer.made_by%}
-		<form action="{% url 'books:delete_the_offer' %}" method="post" id="delete_offer_form">
+		<form action="{% url 'books:delete_the_offer' %}" method="post" class="delete_offer_form">
 		{% csrf_token %}
 		<input type="hidden" name="offer_id" value="{{offer.id}}" />
 		<button type="button" data-toggle="modal" data-target="#{{offer.id}}_delete_offer_modal" class="btn btn-block btn-primary"><i class="fa fa-times"></i></button>

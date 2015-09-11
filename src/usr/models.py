@@ -95,8 +95,8 @@ class Person(models.Model):
     def get_average_rating(self):
         rating = None
 
-        as_seller = TransactionRating.objects.filter(seller=self.user)
-        as_buyer = TransactionRating.objects.filter(buyer=self.user)
+        as_seller = TransactionRating.objects.filter(seller=self.user).exclude(seller_rating=None)
+        as_buyer = TransactionRating.objects.filter(buyer=self.user).exclude(buyer_rating=None)
 
         seller_count = as_seller.count()
         buyer_count = as_buyer.count()

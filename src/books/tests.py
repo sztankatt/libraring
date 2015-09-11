@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 from books.forms import BookForm
 from books.models import Author, Genre, Publisher, Book, Offer
 from django.contrib.auth.models import User
-from usr.models import Person
+from usr.models import Person, EmailNotifications, AppNotifications
 from usr.project import confirmation_code_generator
 
 import datetime
@@ -43,27 +43,33 @@ class BookTestCase(TestCase):
         u2 = User.objects.create_user(
             username='user2', password='wasd', email='bb@gmail.com')
 
+        EmailNotifications.objects.create(user=u1)
+        EmailNotifications.objects.create(user=u2)
+        AppNotifications.objects.create(user=u1)
+        AppNotifications.objects.create(user=u2)
+        EmailNotifications.objects.create(user=self.foo)
+        EmailNotifications.objects.create(user=self.bar)
+        AppNotifications.objects.create(user=self.foo)
+        AppNotifications.objects.create(user=self.bar)
+
+
         Person.objects.create(
             user=self.foo,
-            title='MR',
             confirmation_code=confirmation_code_generator(),
             block_code=0)
 
         Person.objects.create(
             user=self.bar,
-            title='MS',
             confirmation_code=confirmation_code_generator(),
             block_code=0)
 
         Person.objects.create(
             user=u1,
-            title='MRS',
             confirmation_code=confirmation_code_generator(),
             block_code=0)
 
         Person.objects.create(
             user=u2,
-            title='MR',
             confirmation_code=confirmation_code_generator(),
             block_code=0)
 
@@ -145,7 +151,6 @@ class BookTestCase(TestCase):
 
         self.assertEqual(b.title, 'Hamlet')
         self.assertEqual(b.accepted_offer(), None)
-        self.assertEqual(b.get_location().city, 'Cambridge')
         self.assertEqual(b.is_sold(), False)
         self.assertEqual(b.is_finalised(), False)
         self.assertEqual(b.get_highest_offer(), None)

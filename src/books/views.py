@@ -21,16 +21,16 @@ from usr.signals import *
 @login_required
 @ensure_csrf_cookie
 @user_is_not_blocked
-def usr_book_page(request, type='books'):
+def usr_book_page(request, rtype='books'):
     out = {
-        'type': type,
+        'type': rtype,
         'books': None,
         'form': OfferForm({
             'made_by': request.user
         })
     }
 
-    if type == 'books':
+    if rtype == 'books':
         out['book_status_form'] = BookStatusForm(request.GET)
         statuses = request.GET.getlist('book_status')
 
@@ -44,11 +44,15 @@ def usr_book_page(request, type='books'):
 
             books = books.filter(flt).distinct()
 
-    elif type == 'offers':
-        books = set([x.book for x in request.user.offer_set.all()])
+    elif rtype == 'offers':
+        books = filter(
+            lambda x: not x.is_finalised(),
+            set([x.book for x in request.user.offer_set.all()]))
 
-    elif type == 'watchlist':
+    elif rtype == 'watchlist':
         books = [x.book for x in request.user.watchlist_set.all()]
+    elif rtype == 'bought':
+        books = [x.book for x in request.user.boughtbook_set.all()]
 
     out['books'] = books
 
@@ -160,7 +164,7 @@ def make_an_offer(request):
                     if (offer.offered_price >= previous_highest['price'] and
                             offer.made_by.pk != previous_highest['user'].pk):
                         new_highest_offer.send(
-                            sender=offer.user.__class__,
+                            sender=offer.made_by.__class__,
                             offer=offer,
                             user=request.user,
                             previous_highest=previous_highest['price'],
@@ -169,7 +173,7 @@ def make_an_offer(request):
                 else:
                     if offer.offered_price >= previous_highest['price']:
                         new_highest_offer.send(
-                            sender=offer.user.__class__,
+                            sender=offer.made_by.__class__,
                             offer=offer,
                             user=request.user,
                             previous_highest=previous_highest['price'],
@@ -185,13 +189,11 @@ def make_an_offer(request):
         raise Http404
 
     if request.method == 'POST' and request.is_ajax():
-            template = get_template('after_login/books/book_offer.html')
+            template = 'after_login/books/book_offer.html'
 
-            context = Context({'offer': offer, 'request': request})
+            context = {'offer': offer, 'request': request}
 
-            output = template.render(context)
-
-            return HttpResponse(output)
+            return render(request, template, context)
     else:
             return HttpResponseRedirect(
                 reverse('books:book_page', args=(book.id,))
@@ -199,8 +201,15 @@ def make_an_offer(request):
 
 
 def delete_the_offer(request):
-    if request.is_ajax:
-        return HttpResponse(request.POST['offer_id'])
+    if request.is_ajax and request.method == 'POST':
+        offer = get_object_or_404(Offer, id=request.POST['offer_id'])
+        if offer.made_by == request.user:
+            offer.delete()
+            return HttpResponse(request.user.id)
+        else:
+            raise Http404
+    else:
+        raise Http404
 
 
 def send_accepted_offer_email(seller, buyer, book):

@@ -38,13 +38,36 @@
                     {% trans "No authors specified" %}
                 {% endfor%}
             </div>
-            <div class="book-overview-element big">
-                {% trans "Goal price" %}: &pound;{{book.price}}
-            </div>
-            {% if data.type == 'books' %}
-            <div class="book-overview-element big">
-                Upload date: {{book.upload_date}}
-            </div>
+            {% if not book.is_finalised %}
+                <div class="book-overview-element big">
+                    {% trans "Goal price" %}: &pound;{{book.price}}
+                </div>
+                {% if data.type == 'books' %}
+                <div class="book-overview-element big">
+                    {% trans "Upload date" %}: {{book.upload_date}}
+                </div>
+                {% endif %}
+
+            {% else %}
+                <div class="book-overview-element big">
+                {% if book.user == request.user %}
+                    {% trans "You have sold this book" %}
+                {% elif book.boughtbook.user == request.user %}
+                    {% trans "You have bought this book" %}
+                {% else %}  
+                    {% trans "This book has been sold" %}
+                {% endif %}
+                </div>
+                <div class="book-overview-element">
+                    <b>
+                        {% blocktrans %}Summary:{% endblocktrans %}
+                    </b>
+                    {% blocktrans trimmed with user=book.boughtbook.user price=book.accepted_offer.offered_price %}Book sold to {{ user }} for &pound;{{ price }}.
+                    {% endblocktrans %}
+                </div>
+                <div class="book-overview-element">
+                    <b>{% trans "Bought date:" %} </b>{{book.boughtbook.date_bought}}
+                </div>
             {% endif %}
         </div>
         {% if data.type == 'books' %}
@@ -217,9 +240,9 @@
              usr-book-status">
                 <div class="usr-book-status-title">
                     {% if book.get_highest_offer.made_by == request.user%}
-                        {% trans "Your offer is the highest" %}
-                    {% elif book.status == 'selling'%}
                         {% trans "You have bought this book" %}
+                    {% elif book.status == 'selling'%}
+                        {% trans "Your offer is the highest" %}
                     {% elif request.user in book.get_offer_users %}
                         {% trans "Your offer is not the highest one!" %}
                     {%endif%}

@@ -184,7 +184,6 @@ def logout_view(request):
 @user_is_not_blocked
 def home(
         request,
-        template='after_login/usr/home.html',
         home_books_template='after_login/usr/load_books.html'
         ):
     list = request.GET.getlist('genres')
@@ -210,6 +209,8 @@ def home(
     }
     if request.is_ajax():
         template = home_books_template
+    else:
+        template='after_login/usr/home.html'
 
     return render_to_response(
         template, context, context_instance=RequestContext(request))

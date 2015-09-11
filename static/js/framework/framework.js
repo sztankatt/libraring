@@ -203,8 +203,9 @@
         $('#id_offered_price').val('');
     });
 
-    $('#delete_offer_form').ajaxForm(function(data){
+    $('.delete_offer_form').ajaxForm(function(data){
         $('.modal').modal('hide');
+        $('div[data-offer-made-by='+data+']').slideUp();
     });
 
     $('.notifications-item-delete').click(function(){

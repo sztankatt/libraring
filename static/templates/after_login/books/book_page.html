@@ -61,14 +61,14 @@
             <div class="alert alert-info">
                 <h3>
                     {% blocktrans trimmed %}
-                    Transaction closed, you have successfully sold this book! Please rate the transaction below.
+                        You have successfully sold this book!
                     {% endblocktrans %}
                 </h3>
                 <div class="rate-row">
                 {% if book.accepted_offer.transaction.rating.buyer_rating %}
-                <h4>
+                <p>
                     {% blocktrans %}You have already rated this transaction!{% endblocktrans %}
-                </h4>
+                </p>
                 </div>
                 {% else %}
                     <h4>
@@ -140,7 +140,7 @@
         {% elif book.status == 'finalised' %}
             <div class="alert alert-info">
                 <h3>
-                    {% blocktrans trimmed %}Transaction closed, you have successfully acquired this book! Please rate the transaction below.
+                    {% blocktrans trimmed %}You have successfully bought this book!
                     {% endblocktrans %}
                 </h3>
                 <p>
@@ -150,14 +150,17 @@
                     {% blocktrans trimmed with user=book.user price=book.accepted_offer.offered_price %}You have bought this book from {{ user }} for &pound;{{ price }}.
                     {% endblocktrans %}
                 </p>
+                <p>
+                    <b>{% trans "Bought date:" %} </b>{{book.boughtbook.date_bought}}
+                </p>
                 <br />
                 <div>
                 {% if book.accepted_offer.transaction.rating.seller_rating %}
-                    <h4>
+                    <p>
                         {% blocktrans trimmed %}
                         You have already rated this transaction!
                         {% endblocktrans %}
-                    </h4>
+                    </p>
                 </div>
                 {% else %}
                     <h4>
@@ -252,7 +255,7 @@
                 </div>
                 <div class="book-field">
                     <div class="book-field-header">
-                        {% trans "Username" %}
+                        {% trans "Seller" %}
                     </div>
                     <div class="book-field-val">
                         {{ book.user }}
@@ -264,7 +267,7 @@
         <div class="book-field">
             <h3>{% trans "Goal price" %}: &pound;{{ book.price }}</h3>
         </div>
-        {% if request.user in book.get_offer_users%}
+        {% if request.user in book.get_offer_users and not book.is_sold %}
         <div class="book-field">
             <h4>{% trans "You already have an offer for this book. You may change it by filling the form below" %}</h4>
         </div> 

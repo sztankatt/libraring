@@ -173,6 +173,9 @@ class Transaction(models.Model):
     def is_finalised(self):
         return (self.finalised_by_seller and self.finalised_by_buyer)
 
+    def get_book(self):
+        return Offer.objects.get(transaction=self).book
+
     def __unicode__(self):
         return unicode(_('Transaction'))
 

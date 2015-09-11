@@ -54,9 +54,10 @@
                </a>
                <ul class="dropdown-menu">
                    <li><a href="{% url 'books:main_page' 'books' %}">{% trans "My Books" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'bought' %}">{% trans "Bought books" %}</a></li>
                    <li role="separator" class="divider"></li>
-                   <li><a href="{% url 'books:main_page' 'offers' %}">{% trans "Offers" %}</a></li>
-                   <li><a href="{% url 'books:main_page' 'watchlist' %}">{% trans "Watchlist" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'offers' %}">{% trans "My Offers" %}</a></li>
+                   <li><a href="{% url 'books:main_page' 'watchlist' %}">{% trans "My Watchlist" %}</a></li>
                    <li role="separator" class="divider"></li>
                    <li><a href="{% url 'usr:own_profile' %}"><i class="fa fa-cog"></i> {% trans "Settings" %}</a></li>
                    <li role="separator" class="divider"></li>

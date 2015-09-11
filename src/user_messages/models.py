@@ -3,9 +3,7 @@ from django.contrib.auth.models import User
 
 from books.models import Transaction
 
-import datetime
 
-    
 class Message(models.Model):
     transaction = models.ForeignKey(Transaction)
     sender = models.ForeignKey(User)

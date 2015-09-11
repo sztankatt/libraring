@@ -17,7 +17,12 @@
     </a>
         <div class="caption">
             <div class="book-container-body">
-               <a href="{{book.get_absolute_url}}">{{book.title}}</a>
+               <a href="{{book.get_absolute_url}}">
+               {% if query %}
+               {%highlight book.title with query %}
+               {%else%}
+               {{book.title}}
+               {%endif%}</a>
             </div>
             <div class="book-container-body authors">
             {% trans "Author(s)" %}:
