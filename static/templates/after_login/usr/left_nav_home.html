@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n books_tags%}
 <div class="left-nav">
     <div class="left-nav-body">
         <div class="left-nav-body-title">
@@ -58,6 +58,7 @@
                 <h4>User rating</h4>
                 {% if book.user.person.get_average_rating %}
                     {{ book.user.person.get_average_rating|floatformat:2 }}
+                    {{book.user.person.get_average_rating|star_rating}}
                 {% else %}
                     {% trans "user hasn't been rated yet" %}
                 {% endif %} 

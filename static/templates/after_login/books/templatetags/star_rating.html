@@ -1,0 +1,9 @@
+{% for star in stars %}
+	{% if star == 1.0 %}
+		<i class="fa fa-star"></i>
+	{% elif star == 0.5 %}
+		<i class="fa fa-star-half-o"></i>
+	{% else %}
+		<i class="fa fa-star-o"></i>
+	{% endif %}
+{% endfor %}
