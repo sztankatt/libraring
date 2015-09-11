@@ -10,14 +10,14 @@ def star_rating(rating):
     template = get_template('after_login/books/templatetags/star_rating.html')
     number = int(rating)
 
-    half = 0.0
+    half = 0
 
     if (rating - number) >= 0.5:
-        half = 0.5
+        half = 1
 
     remaining = 4-number
 
-    stars = number*[1.0] + [half] + remaining*[0.0]
+    stars = number*[1.0] + [0.5]*half + remaining*[0.0]
 
     c = Context({'stars':stars})
 
