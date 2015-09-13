@@ -23,7 +23,6 @@ from usr.project import user_is_not_blocked, ProfileUpdate, \
 from books.models import Book
 from books.forms import GenreForm
 from notifications.models import Notification
-from usr.models import AppNotifications, EmailNotifications
 from usr.forms import NClassForm
 
 

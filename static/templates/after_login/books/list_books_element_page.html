@@ -48,7 +48,7 @@
                 {% trans "Location" %}: {{ book.user.person.location }}
             </div>
             <div class="book-container-body">
-                {% trans "Goal price" %}: &pound;{{ book.price }}
+                {% trans "Goal price" %}: <b>&pound;{{ book.price }}</b>
             </div>
             <div class="book-container-body">
                 {% trans "Highest offer" %}: {% if book.get_highst_offer %}&pound;{{ book.get_highest_offer }}{% else %}{% trans "No offers for this book, yet"%}{% endif %}

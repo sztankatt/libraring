@@ -15,11 +15,11 @@ def star_rating(rating):
     if (rating - number) >= 0.5:
         half = 1
 
-    remaining = 4-number
+    remaining = 5-number
 
     stars = number*[1.0] + [0.5]*half + remaining*[0.0]
 
-    c = Context({'stars':stars})
+    c = Context({'stars': stars})
 
     content = template.render(c)
 

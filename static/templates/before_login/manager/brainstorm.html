@@ -7,6 +7,11 @@
 <div class="row main-row">
 	<div class="col-xs-6 col-xs-offset-3">
 		<h3>Brainstorm</h3>
+		{% if success %}
+		<p>
+		Thank you very much for your comment!
+		</p>
+		{%else %}
 		<form action="" class="form-horizontal" method="post" id="brainstorm_form">
 			{%csrf_token%}
 			{% for field in form %}
@@ -27,10 +32,11 @@
 			{% endfor %}
 			<div class="form-group">
 				<div class="col-sm-offset-3 col-sm-9">
-					<button class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary">Submit</button>
 				</div>
 			</div>
 		</form>
+		{% endif %}
 		<h4>Your opinion is important to Us!</h4>
 		<h5>The <span class="brand">Libraring</span> team</h5>
 	</div>

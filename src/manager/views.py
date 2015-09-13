@@ -8,6 +8,7 @@ def brainstorm(request):
     if request.POST:
         bf = BrainstormForm(request.POST)
         if bf.is_valid():
+            bf.save()
             return render(
                 request,
                 template, {'success': True})
