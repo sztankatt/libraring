@@ -116,10 +116,10 @@ class Book(models.Model, QueuedModel):
             return None
 
     def get_location(self):
-        return self.user.person.city0
+        return self.user.person.city
 
     def get_absolute_url(self):
-        return '/'+get_language()+'/books/book/%s/' % (self.id)
+        return '/books/book/%s/' % (self.id)
 
     def _get_all_offers(self):
         return Offer.objects.filter(book=self).order_by('-offered_price')

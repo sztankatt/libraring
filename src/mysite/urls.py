@@ -17,10 +17,7 @@ admin.autodiscover()
 urlpatterns = [
     url(r'^ajax/', include('ajax.urls', namespace='ajax')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
-    url(r'^select2/', include('django_select2.urls'))
-]
-
-urlpatterns += i18n_patterns('',
+    url(r'^select2/', include('django_select2.urls')),
     # url('^inbox/notifications/', include(notifications.urls)),
     url(r'^$', 'usr.views.index', name='index'),
     url(r'^register/$', RegisterWizard.as_view(FORMS), name='register'),
@@ -31,7 +28,7 @@ urlpatterns += i18n_patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/', 'usr.views.test'),
     url(r'^', include('manager.urls', namespace='manager')),
-)
+]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
