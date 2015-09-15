@@ -120,7 +120,7 @@ class Person(models.Model):
             else:
                 rating_sum += 0.0
             rating = rating_sum/(seller_count+buyer_count)
-        elif seller_count == 0:
+        elif seller_count == 0 and buyer_count != 0:
             as_buyer_sum = as_buyer.aggregate(
                 Sum('buyer_rating'))['buyer_rating__sum']
             if as_buyer_sum is int:
@@ -131,7 +131,7 @@ class Person(models.Model):
                 rating = 0.0
 
             rating /= buyer_count
-        elif buyer_count == 0:
+        elif buyer_count == 0 and seller_count != 0:
             as_seller_sum = as_seller.aggregate(
                 Sum('seller_rating'))['seller_rating__sum']
             if as_seller_sum is int:
