@@ -102,22 +102,44 @@ class Person(models.Model):
         buyer_count = as_buyer.count()
 
         if seller_count != 0 and buyer_count != 0:
-            rating_sum = float(
-                as_seller.aggregate(Sum('seller_rating'))['seller_rating__sum']
-            )
-            rating_sum += float(
-                as_buyer.aggregate(Sum('buyer_rating'))['buyer_rating__sum']
-            )
+            as_seller_sum = as_seller.aggregate(
+                Sum('seller_rating'))['seller_rating__sum']
+            as_buyer_sum = as_buyer.aggregate(
+                Sum('buyer_rating'))['buyer_rating__sum']
+            if as_seller_sum is int:
+                rating_sum = float(
+                    as_seller_sum
+                )
+            else:
+                rating_sum = 0.0
+
+            if as_buyer_sum is int:
+                rating_sum += float(
+                    as_buyer_sum
+                )
+            else:
+                rating_sum += 0.0
             rating = rating_sum/(seller_count+buyer_count)
         elif seller_count == 0:
-            rating = float(
-                as_buyer.aggregate(Sum('buyer_rating'))['buyer_rating__sum']
-            )
+            as_buyer_sum = as_buyer.aggregate(
+                Sum('buyer_rating'))['buyer_rating__sum']
+            if as_buyer_sum is int:
+                rating = float(
+                    as_buyer_sum
+                )
+            else:
+                rating = 0.0
+
             rating /= buyer_count
         elif buyer_count == 0:
-            rating = float(
-                as_seller.aggregate(Sum('seller_rating'))['seller_rating__sum']
-            )
+            as_seller_sum = as_seller.aggregate(
+                Sum('seller_rating'))['seller_rating__sum']
+            if as_seller_sum is int:
+                rating = float(
+                    as_seller_sum
+                )
+            else:
+                rating = 0.0
             rating /= seller_count
 
         return rating
