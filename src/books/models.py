@@ -116,7 +116,7 @@ class Book(models.Model, QueuedModel):
             return None
 
     def get_location(self):
-        return self.user.person.city
+        return self.user.person.city0
 
     def get_absolute_url(self):
         return '/'+get_language()+'/books/book/%s/' % (self.id)

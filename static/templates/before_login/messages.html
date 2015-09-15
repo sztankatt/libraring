@@ -3,7 +3,7 @@
 {% block content%}
     <div class="row main-row">
         <div class="col-md-9 col-md-offset-2">
-            <div id="messages" class="messages-field alert alert-{{message.type}}">
+            <div id="messages" class="messages-field alert alert-{{message_type}}">
                 <div class="messages-field-header">
                     {% if type == 'deactivated_profiel' %}
                         {% trans "Deactivated profiel" %}
@@ -20,8 +20,8 @@
                             Unfortunately, your profile has been deactivated. For further information about resolving this please contact <a href="mailto:deactivated-profile@libraring.co.uk">deactivated-profile@libraring.co.uk</a>.
                         {% endblocktrans %}
                     {% elif type == 'registry_confirmation' %}
-                        {% blocktrans trimmed %}
-                            Thank you for your registration! An email has been sent to you to your address: {{user.email}}. Please click on the link in the email in order to confirm your registration.
+                        {% blocktrans trimmed with email=user.email%}
+                            Thank you for your registration! An email has been sent to you to your address: {{email}}. Please click on the link in the email in order to confirm your registration.
                         {% endblocktrans %}
                     {% elif type == 'registry_confirmation_code' %}
                         {% blocktrans trimmed %}    

@@ -366,8 +366,12 @@ def new_email_confirmation(request):
 @last_logged_user_exists
 def register_confirmation(request):
     user = User.objects.get(pk=request.session['last_logged_user'])
+    #return HttpResponse(user.email)
     return render(request, 'before_login/messages.html',
-                  {'user': user, 'type': 'registry_confirmation'})
+                  { 
+                    'user': user,
+                    'type': 'registry_confirmation',
+                    'message_type':'info'})
 
 
 @user_not_authenticated
@@ -386,7 +390,8 @@ def register_confirmation_code(request, confirmation_code=None):
         'before_login/messages.html',
         {
             'user': user, 'registration_complete': True,
-            'type': 'registry_confirmation_email'
+            'type': 'registry_confirmation_code',
+            'message_type': 'success'
         }
     )
 
