@@ -178,35 +178,6 @@ def add_to_watchlist(request):
         raise Http404
 
 @login_required
-def upload_new_book(request):
-    #if request.is_ajax():
-        success = False
-        if request.method == 'POST':
-            form = BookForm(request.POST, request.FILES)
-            if form.is_valid():
-                new_book = form.save(commit=False)
-                new_book.user = request.user 
-                new_book.upload_date = datetime.date.today()
-                
-                if new_book.publisher == None and form.cleaned_data['new_publisher'] != "":
-                    p = Publisher(name=form.cleaned_data['new_publisher'])
-                    p.save()
-
-                    new_book.publisher = p
-
-                new_book.save()
-                form.save_m2m()
-                success = True
-            else:
-                return HttpResponse(json.dumps({'success':success}))
-        else:
-            raise Http404
-        
-        return HttpResponse(json.dumps({'success':success}))
-    #else:
-     #   raise Http404
-    
-@login_required
 def list_books(request):
     if request.is_ajax():
         user = request.user

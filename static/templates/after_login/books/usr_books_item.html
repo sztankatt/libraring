@@ -93,7 +93,26 @@
                             {% csrf_token %}
                             <input type="hidden" name="seller" value="true" />
                             <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
-                            <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                            <button type="button" data-toggle="modal" data-target="#finalise_transaction_{{book.accepted_offer.transaction.id}}" class="btn btn-block btn-primary">{% trans "Finalise" %}</i></button>
+                            <div class="modal fade" role="dialog" aria-hidden="true" id="finalise_transaction_{{book.accepted_offer.transaction.id}}">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3>{% trans "Are you sure?" %}</h3></div>
+                                        <div class="modal-body">
+                                            <p>
+                                                {% blocktrans trimmed with price=offer.offered_price user=offer.made_by %}
+                                                Are you sure that you finalise this transaction?
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">{% trans "Yes" %}</button>
+                                            <button data-dismiss="modal" type="button" class="btn btn-default">{% trans "No" %}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     {% else %}</p>
                         <p><b>{% trans "You have already finalised this transaction." %}</b></p>
@@ -186,7 +205,7 @@
                     {% endif %}
                     {% if data.form %}
                         {% with form=data.form %}
-                        <form class="form-horizontal" role="form" action="{% url 'books:offer' %}"
+                        <form class="form-horizontal book-offer-form" role="form" action="{% url 'books:offer' %}"
                             method="post">
                             {% csrf_token %}
                             {% for field in form %}
@@ -256,7 +275,26 @@
                         <form id="finalised_form" method="post" action="{% url "books:finalise_transaction" %}">
                             {% csrf_token %}
                             <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
-                            <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                            <button type="button" data-toggle="modal" data-target="#finalise_transaction_{{book.accepted_offer.transaction.id}}" class="btn btn-block btn-primary">{% trans "Finalise" %}</i></button>
+                            <div class="modal fade" role="dialog" aria-hidden="true" id="finalise_transaction_{{book.accepted_offer.transaction.id}}">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3>{% trans "Are you sure?" %}</h3></div>
+                                        <div class="modal-body">
+                                            <p>
+                                                {% blocktrans trimmed with price=offer.offered_price user=offer.made_by %}
+                                                Are you sure that you finalise this transaction?
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">{% trans "Yes" %}</button>
+                                            <button data-dismiss="modal" type="button" class="btn btn-default">{% trans "No" %}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     {% else %}</p>
                         <p><b>{% trans "You have already finalised this transaction." %}</b></p>

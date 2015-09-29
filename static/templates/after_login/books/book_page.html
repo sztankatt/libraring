@@ -52,7 +52,26 @@
                         {% csrf_token %}
                         <input type="hidden" name="seller" value="true" />
                         <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
-                        <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                        <button type="button" data-toggle="modal" data-target="#finalise_transaction_{{book.accepted_offer.transaction.id}}" class="btn btn-primary">{% trans "Finalise" %}</i></button>
+                            <div class="modal fade" role="dialog" aria-hidden="true" id="finalise_transaction_{{book.accepted_offer.transaction.id}}">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3>{% trans "Are you sure?" %}</h3></div>
+                                        <div class="modal-body">
+                                            <p>
+                                                {% blocktrans trimmed with price=offer.offered_price user=offer.made_by %}
+                                                Are you sure that you finalise this transaction?
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">{% trans "Yes" %}</button>
+                                            <button data-dismiss="modal" type="button" class="btn btn-default">{% trans "No" %}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </form>
                 {% endif %}
                 </p>
@@ -132,7 +151,26 @@
                         {% csrf_token %}
                         <input type="hidden" name="seller" value="false" />
                         <input type="hidden" name="transaction" value="{{ book.accepted_offer.transaction.id }}" />
-                        <button class="btn btn-primary" type="submit">{% trans "Finalise" %}</button>
+                        <button type="button" data-toggle="modal" data-target="#finalise_transaction_{{book.accepted_offer.transaction.id}}" class="btn btn-primary">{% trans "Finalise" %}</i></button>
+                            <div class="modal fade" role="dialog" aria-hidden="true" id="finalise_transaction_{{book.accepted_offer.transaction.id}}">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3>{% trans "Are you sure?" %}</h3></div>
+                                        <div class="modal-body">
+                                            <p>
+                                                {% blocktrans trimmed with price=offer.offered_price user=offer.made_by %}
+                                                Are you sure that you finalise this transaction?
+                                                {% endblocktrans %}
+                                            </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">{% trans "Yes" %}</button>
+                                            <button data-dismiss="modal" type="button" class="btn btn-default">{% trans "No" %}</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                     </form>
                 {% endif %}
                 </p>
@@ -342,8 +380,7 @@
                     {% trans "Publisher information" %}
                 </div>
                 <div class="book-field-val">
-                    <ul><li>{% trans "Publisher name" %}: {% if book.publisher %}{{ book.publisher }}{% else %}{% trans "Not specified" %}{% endif %}</li>
-                   <li>{% trans "Publication city" %}: {% if book.publication_city %}{{ book.publication_city }}{% else %}{% trans "Not specified" %}{% endif %}</li>
+                    <li>{% trans "Publication city" %}: {% if book.publication_city %}{{ book.publication_city }}{% else %}{% trans "Not specified" %}{% endif %}</li>
                     <li>{% trans "Publication country" %}: {% if book.publication_country %}{{ book.publication_country }}{% else %}{% trans "Not specified" %}{% endif %}</li>
                     <li>{% trans "Publication year" %}: {% if book.publication_year %}{{ book.publication_year }}{% else %}{% trans "Not specified" %}{% endif %}</li></ul>
                 </div>

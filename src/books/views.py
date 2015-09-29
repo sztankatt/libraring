@@ -12,10 +12,12 @@ from django.db.models import Q
 
 
 from usr.project import user_is_not_blocked
-from books.forms import OfferForm, BookStatusForm
+from books.forms import OfferForm, BookStatusForm, BookForm, DetailedBookForm
 from books.models import Book, Genre, Author, Publisher,\
     Offer, Transaction, TransactionRating, BoughtBook
 from usr.signals import *
+
+import json
 
 
 @login_required
@@ -185,6 +187,9 @@ def make_an_offer(request):
             book = offer.book
             book.status = 'offered'
             book.save()
+
+        else:
+            return HttpResponseRedirect(reverse('books:book_page', args=(form.cleaned_data['book'].id,)))
     else:
         raise Http404
 
@@ -468,8 +473,48 @@ def transaction_rate(request, pk):
 
         tr = obj
 
-        return render(request, 'after_login/books/transaction_rate.html', {'selling': selling, 'tr': tr})
-
+        return render(
+            request,
+            'after_login/books/transaction_rate.html',
+            {'selling': selling, 'tr': tr})
 
     except Transaction.DoesNotExist:
         raise Http404
+
+
+@login_required
+def upload_new_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_book = form.save(commit=False)
+            new_book.user = request.user
+            new_book.save()
+            form.save_m2m()
+            return HttpResponseRedirect(
+                reverse('books:book_page', args=(new_book.id,)))
+        else:
+            return HttpResponseRedirect(request.POST.get('next', '/'))
+    else:
+        raise Http404
+
+
+@login_required
+@user_is_not_blocked
+def detailed_upload_new_book(request):
+    if request.method == 'POST':
+        form = DetailedBookForm(request.POST, request.FILES)
+        if form.is_valid():
+            pass
+        else:
+            return render(
+                request,
+                'after_login/books/detailed_upload_new_book.html',
+                {'form': form})
+    else:
+        form = DetailedBookForm()
+
+        return render(
+            request,
+            'after_login/books/detailed_upload_new_book.html',
+            {'form': form})

@@ -57,8 +57,8 @@ class Book(models.Model, QueuedModel):
     title = models.CharField(max_length=50)
     author = models.ManyToManyField(Author)
     genre = models.ManyToManyField(Genre)
-    edition = models.IntegerField(choices=[(x, x) for x in range(1, 31)])
-    publisher = models.ForeignKey(Publisher, blank=True, null=True)
+    edition = models.IntegerField(choices=[(x, x) for x in range(1, 31)], blank=True, null=True)
+    publisher = models.ManyToManyField(Publisher, blank=True, null=True)
     publication_year = IntegerRangeField(
                             help_text='YYYY',
                             min_value=1000,
@@ -72,7 +72,7 @@ class Book(models.Model, QueuedModel):
                 max_value=200,
                 verbose_name='Goal price')
     includes_delivery_charges = models.BooleanField(default=False)
-    upload_date = models.DateField()
+    upload_date = models.DateField(auto_now_add=True)
     isbn = models.CharField(max_length=13, blank=True, null=True)
     image = models.ImageField(
                             upload_to='books',

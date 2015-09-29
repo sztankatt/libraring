@@ -19,5 +19,8 @@ urlpatterns = patterns('',
     url(r'^delete/the/offer/$', 'books.views.delete_the_offer', name='delete_the_offer'),
     url(r'^accept/the/offer/$', 'books.views.accept_the_offer', name='accept_the_offer'),
     url(r'^finalise/transaction/$', 'books.views.finalise_transaction', name='finalise_transaction'),
-    url(r'^rate/transaction/$', 'books.views.rate_transaction', name='rate_transaction')
+    url(r'^rate/transaction/$', 'books.views.rate_transaction', name='rate_transaction'),
+    url(r'^upload/new/book/$', 'books.views.upload_new_book', name='upload_new_book'),
+    url(r'^detailed/upload/new/book/$',
+        'books.views.detailed_upload_new_book', name='detailed_upload_new_book')
 )

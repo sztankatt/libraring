@@ -1,4 +1,4 @@
-{% load i18n static widget_tweaks notifications_tags %}
+{% load i18n static widget_tweaks notifications_tags books_tags %}
 <nav class="main-menu-navbar" role="navigation">
     <!-- BRAND START-->
 
@@ -51,7 +51,12 @@
             <i class="fa fa-bell"></i></a></li>
            <li class="dropdown">
                <a href="#" class="dropdown-toggle username-button menu-item" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                   <span class="main-menu-big">{{ request.user.username }}</span>
+                   <span class="main-menu-big">
+                    {{ request.user.username }}
+                    {% if request.user.person.get_average_rating %}
+                      {{request.user.person.get_average_rating|star_rating}}
+                    {% endif %}
+                    </span>
                    <span class="main-menu-small"><i class="fa fa-user"></i></span>
                </a>
                <ul class="dropdown-menu">

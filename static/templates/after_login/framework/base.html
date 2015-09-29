@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-    {% load staticfiles widget_tweaks django_select2_tags%}
+    {% load staticfiles widget_tweaks django_select2_tags %}
     <head>
-
        <!-- META TAGS -->
         <meta name="author" content="Tamás Sztanka-Tóth">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
@@ -23,22 +22,19 @@
         <!-- FONTAWESOME CSS -->
         <link href="{% static 'fontawesome/css/font-awesome.css' %}" rel="stylesheet" type="text/css" />
         <!-- TIMECIRCLES CSS -->
-        <link href="{%static 'css/TimeCircles.css'%}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/TimeCircles.css' %}" rel="stylesheet" type="text/css" />
         <!-- TOASTR CSS -->
-        <link href="{%static 'css/toastr.min.css'%}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'css/toastr.min.css' %}" rel="stylesheet" type="text/css"/>
         <!-- bootstrap validator -->
-        <link href="{%static 'css/bootstrapValidator.min.css'%}" rel="stylesheet" type="text/css" />
-        <link href="{%static 'css/select2-bootstrap.css'%}" rel="stylesheet" type="text/css" />
-        <link href="{%static 'css/awesome-bootstrap-checkbox.css' %}" rel="stylesheet" type="text/cc" />
+        <link href="{% static 'css/bootstrapValidator.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/select2-bootstrap.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'css/awesome-bootstrap-checkbox.css' %}" rel="stylesheet" type="text/cc" />
 
          <!-- FONTS -->
         <link href='https://fonts.googleapis.com/css?family=ABeeZee|Raleway' rel='stylesheet' type='text/css'>
         <!-- MAIN LESS -->
         {% import_django_select2_css %}
-        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}" />
-
-
-            
+        <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}" />    
     </head>
     <body>
         <!-- GOOGLE ANALYTICS COMES HERE -->
@@ -120,11 +116,13 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                    <h4 class="modal-title" id="book_upload">Upload a new book</h4>
+                    <h4 class="modal-title" id="book_upload">Quick upload</h4>
+                    <a href="{% url 'books:detailed_upload_new_book' %}">For detailed upload click here</a>
                 </div>
                 <div class="modal-body">
-                    <form action="/ajax/upload/new/book/" method="post" enctype="multipart/form-data" role="form" class="form-horizontal" id="book_upload">
+                    <form action="{%url 'books:upload_new_book' %}" method="post" enctype="multipart/form-data" role="form" class="form-horizontal" id="book_upload">
                         {% csrf_token %}
+                        <input type="hidden" name="next" value="{{request.path}}" />
                         {% for field in project.book_form %}
                         <div class="form-group">
                             <label for="{{field.id_for_label}}" class="col-xs-4 control-label">{{field.label}}{%if field.field.required%}*{%endif%}</label>
@@ -142,7 +140,6 @@
                             <p class="help-block">{{field.help_text}}</p>
                             </div>{{field.error}}
                         </div>
-                 
                             {% endfor %}
                         <div class="form-group">
                             <div class="col-xs-offset-4 col-xs-8">

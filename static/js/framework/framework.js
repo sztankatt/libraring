@@ -146,6 +146,19 @@
         }
     });   */
 
+    $('.book-offer-form').bootstrapValidator({
+        feedbackIcons : validators_feedback_icons,
+        fields: {
+            offered_price:{
+                validators:{
+                    notEmpty:{
+                        message: 'This field is required.'
+                    }
+                }
+            }
+        }
+    });
+    
     $('#book_offer_form').bootstrapValidator({
         feedbackIcons : validators_feedback_icons,
         fields: {

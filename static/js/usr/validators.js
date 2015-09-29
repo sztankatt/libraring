@@ -526,26 +526,26 @@ var validator_handle = function(validator){
     
     //$('#id_author').attr({'name':'author'});
     
-    $('#book_upload_form form')
-        .find('[id=id_author]')
+    $('form#book_upload')
+        .find('[id="id_author"]')
         .change(function(e){
-            $('#book_upload_form form').bootstrapValidator(
+            $('form#book_upload').bootstrapValidator(
                 'revalidateField', 'author'
-            )
+            );
         })
         .end()
-        .find('[id=id_genre]')
+        .find('[id="id_genre"]')
         .change(function(e){
-            $('#book_upload_form form').bootstrapValidator(
+            $('form#book_upload').bootstrapValidator(
                 'revalidateField', 'genre'
-            )
+            );
         })
         .end()
         .bootstrapValidator({
             feedbackIcons: validators_feedback_icons,
             fields:{
                 author:{
-                    selector: '#id_author',    
+                    //selector: '#id_author',    
                     validators:{
                         notEmpty:{
                             message: 'Please choose at least one Author'
@@ -553,7 +553,7 @@ var validator_handle = function(validator){
                     }
                 },
                 genre:{
-                    selector: '#id_genre',
+                    //selector: '#id_genre',
                     validators:{
                         notEmpty:{
                             message: 'Please choose at least one Genre.'
@@ -622,8 +622,8 @@ var validator_handle = function(validator){
                 }
                 
             }
-        })
-        .on('status.field.bv', function(e, data){
+        });
+        /*.on('status.field.bv', function(e, data){
             if (data.field == 'isbn' || data.field == 'publication_city') {
                 if ($(e.target).val() == ""){
                     var $parent = data.element.parents('.form-group');
@@ -646,10 +646,9 @@ var validator_handle = function(validator){
                    $('#book_upload_form').modal('hide');
                    $('body').removeClass('loading');
                    toastr.success('Uploaded!');
-                   load_books();
                }
             }, dataType:'json', semantic:true});
-        });
+        });*/
         
         
         //clearing the form
