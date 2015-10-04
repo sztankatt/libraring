@@ -1,13 +1,25 @@
 {% extends "after_login/framework/base.html"%}
-{% load widget_tweaks i18n%}
+{% load widget_tweaks i18n django_select2_tags%}
 {% block title %}
+{% if form_type == 'upload' %}
 	Detailed Book Upload
+{% elif form_type == 'update' %}
+    Update {{form.title.value}}
+{% endif %}
 {% endblock %}
 {% block content %}
 <div class="profile-main notifications-main">
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3">
-			<form action="" method="post" role="form" class="form-horizontal" id="book_upload">
+		<div class="alert-warning alert col-sm-6 col-sm-offset-3">
+            <h4>
+            {% if form_type == 'upload' %}
+                Uploading a new Book
+            {% elif form_type == 'update' %}
+                Update your book: {{form.title.value}}
+            {% endif %} 
+			</h4>
+            <form action="" method="post" role="form" class="form-horizontal" id="" enctype="multipart/form-data">
+            {{form.errors}}
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="form-group">
@@ -29,8 +41,13 @@
                     {% endfor %}
                 <div class="form-group">
                     <div class="col-xs-offset-4 col-xs-8">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Upload</button>
+                        <button type="submit" class="btn btn-primary">
+                        {% if form_type == 'upload' %}
+                            Upload
+                        {% elif form_type == 'update' %}
+                            Update
+                        {% endif %} 
+                        </button>
                     </div>
                 </div>
             </form>

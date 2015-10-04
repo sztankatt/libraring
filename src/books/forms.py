@@ -54,7 +54,7 @@ class GenreField(AutoModelSelect2TagField):
 
 
 class BookForm(ModelForm):
-    author = AuthorField(
+    author2 = AuthorField(
         label='Author(s)',
         widget=AuthorWidget(
             select2_options={
@@ -62,23 +62,23 @@ class BookForm(ModelForm):
             }
         ),
     )
-    genre = GenreField(widget=GenreWidget())
-    publisher = PublisherField(widget=PublisherWidget(), required=False)
+    genre2 = GenreField(widget=GenreWidget())
+    publisher2 = PublisherField(widget=PublisherWidget(), required=False)
 
     class Meta:
         model = Book
         fields = [
                 'title',
-                'author',
-                'genre',
-                'publisher',
+                'author2',
+                'genre2',
+                'publisher2',
                 'publication_year',
                 'price',
                 'image'
             ]
 
 
-class DetailedBookForm(forms.ModelForm):
+class DetailedBookForm(ModelForm):
     author = AuthorField(
         label='Author(s)',
         widget=AuthorWidget(

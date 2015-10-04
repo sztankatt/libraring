@@ -22,5 +22,12 @@ urlpatterns = patterns('',
     url(r'^rate/transaction/$', 'books.views.rate_transaction', name='rate_transaction'),
     url(r'^upload/new/book/$', 'books.views.upload_new_book', name='upload_new_book'),
     url(r'^detailed/upload/new/book/$',
-        'books.views.detailed_upload_new_book', name='detailed_upload_new_book')
+        'books.views.detailed_upload_new_book',
+        name='detailed_upload_new_book'),
+    url(r'^update/book/(?P<book_id>[0-9]+)/$',
+        'books.views.update_book',
+        name='update_book'),
+    url(r'^delete/book/(?P<book_id>[0-9]+)/$',
+        'books.views.delete_book',
+        name='delete_book')
 )

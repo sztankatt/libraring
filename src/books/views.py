@@ -490,7 +490,9 @@ def upload_new_book(request):
             new_book = form.save(commit=False)
             new_book.user = request.user
             new_book.save()
-            form.save_m2m()
+            new_book.author.add(*[x for x in form.cleaned_data['author2']])
+            new_book.genre.add(*[x for x in form.cleaned_data['genre2']])
+            new_book.publisher.add(*[x for x in form.cleaned_data['publisher2']])
             return HttpResponseRedirect(
                 reverse('books:book_page', args=(new_book.id,)))
         else:
@@ -505,16 +507,58 @@ def detailed_upload_new_book(request):
     if request.method == 'POST':
         form = DetailedBookForm(request.POST, request.FILES)
         if form.is_valid():
-            pass
+            book = form.save(commit=False)
+            book.user = request.user
+            book.save()
+            form.save_m2m()
+
+            return HttpResponseRedirect(reverse(
+                'books:book_page', args=(book.id,)))
         else:
             return render(
                 request,
                 'after_login/books/detailed_upload_new_book.html',
-                {'form': form})
+                {'form': form, 'form_type': 'upload'})
     else:
         form = DetailedBookForm()
 
         return render(
             request,
             'after_login/books/detailed_upload_new_book.html',
-            {'form': form})
+            {'form': form, 'form_type': 'upload'})
+
+@login_required
+@user_is_not_blocked
+def update_book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+
+    if book.user != request.user:
+        raise Http404
+
+    form = DetailedBookForm(request.POST or None, request.FILES or None, instance=book)
+    if form.is_valid():   
+        book = form.save(commit=False)
+        book.save()
+        form.save_m2m()
+        return HttpResponseRedirect(reverse('books:book_page', args=(book.id,)))
+
+    return render(
+        request,
+        'after_login/books/detailed_upload_new_book.html', 
+        {'form': form, 'form_type': 'update'})
+
+
+@login_required
+@user_is_not_blocked
+def delete_book(request, book_id):
+    if request.method == 'POST':
+        book = get_object_or_404(Book, pk=book_id)
+
+        if book.user != request.user:
+            raise Http404
+
+        book.delete()
+
+        return HttpResponseRedirect(reverse('index'))
+    else:
+        raise Http404
