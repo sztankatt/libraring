@@ -62,8 +62,11 @@ class BookForm(ModelForm):
             }
         ),
     )
-    genre2 = GenreField(widget=GenreWidget())
-    publisher2 = PublisherField(widget=PublisherWidget(), required=False)
+    genre2 = GenreField(widget=GenreWidget(), label='Genre')
+    publisher2 = PublisherField(
+        widget=PublisherWidget(),
+        required=False,
+        label='Publisher')
 
     class Meta:
         model = Book
